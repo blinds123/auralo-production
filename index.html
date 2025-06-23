@@ -1641,238 +1641,7 @@
             font-size: 1rem;
         }
         
-        /* COMPARISON SECTION - BIG DAY STYLE */
-        .comparison-section {
-            padding: var(--space-xl) 0;
-            background: var(--big-day-white);
-            border-radius: 12px;
-            margin: var(--space-xl) 0;
-            box-shadow: var(--shadow-light);
-        }
         
-        .comparison-table {
-            margin: var(--space-lg) 0;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 2px;
-            background: var(--border-subtle);
-        }
-        
-        @media (max-width: 768px) {
-            .comparison-grid {
-                grid-template-columns: 1fr;
-                gap: var(--space-sm);
-            }
-            
-            .comparison-cell {
-                padding: var(--space-sm);
-                border-radius: 8px;
-                margin-bottom: var(--space-xs);
-            }
-            
-            .comparison-feature-cell {
-                background: var(--border-subtle);
-                font-weight: 600;
-                margin-bottom: var(--space-sm);
-            }
-            
-            .comparison-header-cell {
-                display: none;
-            }
-            
-            .comparison-mobile-label {
-                display: inline;
-                font-weight: 600;
-                margin-right: var(--space-xs);
-            }
-            border-radius: 12px;
-            overflow: hidden;
-            min-width: 300px;
-        }
-        
-        .comparison-cell {
-            background: var(--big-day-white);
-            padding: var(--space-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            min-height: 60px;
-        }
-        
-        .comparison-header-cell {
-            background: var(--simpleswap-light-blue);
-            font-weight: 700;
-            color: var(--big-day-black);
-        }
-        
-        .comparison-feature-cell {
-            background: var(--big-day-light-gray);
-            font-weight: 600;
-            color: var(--big-day-black);
-        }
-        
-        .comparison-highlight {
-            background: var(--simpleswap-blue);
-            color: var(--big-day-white);
-            font-weight: 700;
-        }
-        
-        .comparison-positive {
-            color: #10b981;
-            font-weight: 600;
-        }
-        
-        .comparison-negative {
-            color: #ef4444;
-            font-weight: 600;
-        }
-
-        /* TABLET BREAKPOINT */
-        @media (max-width: 1024px) and (min-width: 469px) {
-            .wardrobe-title {
-                font-size: 2.2rem;
-            }
-            
-            .outfit-combinations {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
-                max-width: 500px;
-            }
-            
-            .comparison-grid {
-                grid-template-columns: 1fr 1fr 1fr;
-                gap: 1px;
-                font-size: 0.95rem;
-            }
-            
-            .comparison-cell {
-                padding: 12px;
-                min-height: 60px;
-            }
-        }
-
-        @media (max-width: 468px) {
-            .comparison-grid {
-                grid-template-columns: 1fr;
-                gap: 1px;
-                min-width: auto;
-            }
-            
-            .comparison-cell {
-                padding: var(--space-sm);
-                min-height: 50px;
-                font-size: 0.9rem;
-            }
-            
-            .comparison-mobile-label {
-                display: inline;
-                font-weight: 700;
-                margin-right: 8px;
-                color: var(--simpleswap-blue);
-            }
-            
-            .comparison-header-cell {
-                display: none;
-            }
-        }
-        
-        @media (min-width: 469px) {
-            .comparison-mobile-label {
-                display: none;
-            }
-        }
-        
-        @media (min-width: 480px) {
-            .comparison-header,
-            .comparison-row {
-                display: grid;
-                grid-template-columns: 1.2fr 1fr 1fr;
-                gap: var(--space-sm);
-            }
-        }
-        
-        .comparison-header {
-            font-weight: 700;
-            border-bottom: 3px solid var(--simpleswap-blue);
-            padding-bottom: var(--space-sm);
-            font-size: 1rem;
-        }
-        
-        .comparison-col,
-        .comparison-feature,
-        .comparison-traditional,
-        .comparison-ours {
-            padding: var(--space-sm);
-            text-align: center;
-            font-size: 0.9rem;
-            border-radius: 6px;
-            margin-bottom: var(--space-xs);
-            word-wrap: break-word;
-        }
-        
-        @media (max-width: 479px) {
-            .comparison-col,
-            .comparison-feature,
-            .comparison-traditional,
-            .comparison-ours {
-                font-size: 0.8rem;
-                padding: var(--space-xs);
-            }
-        }
-        
-        .comparison-col.highlight {
-            background: var(--simpleswap-blue);
-            color: var(--big-day-white);
-            border-radius: 4px;
-            font-weight: 700;
-        }
-        
-        .comparison-feature {
-            font-weight: 600;
-            text-align: center;
-            color: var(--big-day-black);
-            background: var(--border-subtle);
-            margin-bottom: var(--space-sm);
-        }
-        
-        @media (min-width: 480px) {
-            .comparison-feature {
-                text-align: left;
-            }
-        }
-        
-        .comparison-ours {
-            background: var(--simpleswap-blue);
-            color: var(--big-day-white);
-            font-weight: 700;
-            box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
-        }
-        
-        .comparison-traditional {
-            background: #ffebee;
-            color: #d32f2f;
-            font-weight: 400;
-            position: relative;
-        }
-        
-        .comparison-traditional::before {
-            content: '❌ ';
-            font-size: 1.2rem;
-        }
-        
-        .comparison-conclusion {
-            text-align: center;
-            margin-top: var(--space-lg);
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--simpleswap-blue);
-        }
 
         /* REVIEWS - AUTHENTIC SOCIAL PROOF */
         .reviews-section {
@@ -2466,7 +2235,124 @@
                 max-width: 280px;
             }"
         }
-    </style>
+    
+        /* MOBILE-FIRST COMPARISON CARDS */
+        .comparison-cards-mobile {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+            margin: var(--space-xl) 0;
+        }
+        
+        .comparison-feature-card {
+            background: var(--big-day-white);
+            border-radius: 16px;
+            padding: var(--space-lg);
+            box-shadow: var(--shadow-light);
+            border: 2px solid var(--border-subtle);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .comparison-feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-elevated);
+        }
+        
+        .feature-title {
+            font-family: var(--font-headline);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: var(--space-md);
+            color: var(--text-primary);
+        }
+        
+        .feature-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+            align-items: center;
+        }
+        
+        .traditional-option,
+        .eco-option {
+            text-align: center;
+            padding: var(--space-md);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .traditional-option {
+            background: #ffebee;
+            border: 2px solid #ffcdd2;
+        }
+        
+        .eco-option {
+            background: var(--simpleswap-light-blue);
+            border: 2px solid var(--simpleswap-blue);
+        }
+        
+        .option-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+            opacity: 0.8;
+        }
+        
+        .option-value {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .option-value.negative {
+            color: #d32f2f;
+        }
+        
+        .option-value.positive {
+            color: var(--simpleswap-blue);
+        }
+        
+        /* Desktop Enhancement */
+        @media (min-width: 768px) {
+            .comparison-cards-mobile {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: var(--space-lg);
+            }
+            
+            .feature-comparison {
+                grid-template-columns: 1fr;
+                gap: var(--space-sm);
+            }
+            
+            .traditional-option,
+            .eco-option {
+                padding: var(--space-sm);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .comparison-cards-mobile {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        /* Mobile Specific Improvements */
+        @media (max-width: 479px) {
+            .comparison-feature-card {
+                padding: var(--space-md);
+            }
+            
+            .feature-title {
+                font-size: 1.1rem;
+            }
+            
+            .option-value {
+                font-size: 0.9rem;
+            }
+        }
+        </style>
 
     <script>
         // Lazy loading implementation
@@ -3231,59 +3117,66 @@
     </section>
 
     
+    
     <section class="comparison-section">
         <div class="container">
             <h2 class="section-title">Why Choose Our Sustainable Checkout?</h2>
             
-            <div class="comparison-table">
-                <div class="comparison-grid">
-                    
-                    <div class="comparison-cell comparison-feature-cell"></div>
-                    <div class="comparison-cell comparison-header-cell">Traditional</div>
-                    <div class="comparison-cell comparison-header-cell comparison-highlight">Our Eco-Checkout</div>
-                    
-                    
-                    <div class="comparison-cell comparison-feature-cell">
-                        <span class="comparison-mobile-label">Processing Fees:</span>Processing Fees
+            <!-- Mobile-First Comparison Cards -->
+            <div class="comparison-cards-mobile">
+                <div class="comparison-feature-card">
+                    <h3 class="feature-title">💰 Processing Fees</h3>
+                    <div class="feature-comparison">
+                        <div class="traditional-option">
+                            <div class="option-label">Traditional</div>
+                            <div class="option-value negative">❌ HIGH: $3.00-$5.00</div>
+                        </div>
+                        <div class="eco-option">
+                            <div class="option-label">Our Eco-Checkout</div>
+                            <div class="option-value positive">✅ LOW: $0.25</div>
+                        </div>
                     </div>
-                    <div class="comparison-cell comparison-negative">
-                        <span class="comparison-mobile-label">Traditional:</span>❌ HIGH: $3.00-$5.00
+                </div>
+                
+                <div class="comparison-feature-card">
+                    <h3 class="feature-title">🌱 Environmental Impact</h3>
+                    <div class="feature-comparison">
+                        <div class="traditional-option">
+                            <div class="option-label">Traditional</div>
+                            <div class="option-value negative">❌ ZERO Impact</div>
+                        </div>
+                        <div class="eco-option">
+                            <div class="option-label">Our Eco-Checkout</div>
+                            <div class="option-value positive">✅ Plants 5 Trees</div>
+                        </div>
                     </div>
-                    <div class="comparison-cell comparison-positive">
-                        <span class="comparison-mobile-label">Our Eco-Checkout:</span>✅ LOW: $0.10
+                </div>
+                
+                <div class="comparison-feature-card">
+                    <h3 class="feature-title">⏱️ Checkout Time</h3>
+                    <div class="feature-comparison">
+                        <div class="traditional-option">
+                            <div class="option-label">Traditional</div>
+                            <div class="option-value negative">❌ SLOW: 3-5 min</div>
+                        </div>
+                        <div class="eco-option">
+                            <div class="option-label">Our Eco-Checkout</div>
+                            <div class="option-value positive">✅ FAST: 60 sec</div>
+                        </div>
                     </div>
-                    
-                    
-                    <div class="comparison-cell comparison-feature-cell">
-                        <span class="comparison-mobile-label">Environmental Impact:</span>Environmental Impact
-                    </div>
-                    <div class="comparison-cell comparison-negative">
-                        <span class="comparison-mobile-label">Traditional:</span>❌ ZERO Impact
-                    </div>
-                    <div class="comparison-cell comparison-positive">
-                        <span class="comparison-mobile-label">Our Eco-Checkout:</span>✅ Plants 5 Trees
-                    </div>
-                    
-                    
-                    <div class="comparison-cell comparison-feature-cell">
-                        <span class="comparison-mobile-label">Checkout Time:</span>Checkout Time
-                    </div>
-                    <div class="comparison-cell comparison-negative">
-                        <span class="comparison-mobile-label">Traditional:</span>❌ SLOW: 3-5 min
-                    </div>
-                    <div class="comparison-cell comparison-positive">
-                        <span class="comparison-mobile-label">Our Eco-Checkout:</span>✅ FAST: 60 sec
-                    </div>
-                    
-                    
-                    <div class="comparison-cell comparison-feature-cell">
-                        <span class="comparison-mobile-label">Your Savings:</span>Your Savings
-                    </div>
-                    <div class="comparison-cell comparison-negative">
-                        <span class="comparison-mobile-label">Traditional:</span>❌ $0 Saved
-                    </div>
-                    <div class="comparison-cell comparison-positive">
-                        <span class="comparison-mobile-label">Our Eco-Checkout:</span>✅ Save $3-5
+                </div>
+                
+                <div class="comparison-feature-card">
+                    <h3 class="feature-title">💸 Your Savings</h3>
+                    <div class="feature-comparison">
+                        <div class="traditional-option">
+                            <div class="option-label">Traditional</div>
+                            <div class="option-value negative">❌ $0 Saved</div>
+                        </div>
+                        <div class="eco-option">
+                            <div class="option-label">Our Eco-Checkout</div>
+                            <div class="option-value positive">✅ Save $3-5</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -3292,8 +3185,6 @@
                 <p>You save money. Planet gets trees. Everyone wins.</p>
             </div>
         </div>
-        
-        
         
         <div class="section-cta">
             <button class="buy-now-button" onclick="scrollToCheckout()">
