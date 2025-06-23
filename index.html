@@ -1661,6 +1661,35 @@
             grid-template-columns: 1fr 1fr 1fr;
             gap: 2px;
             background: var(--border-subtle);
+        }
+        
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-sm);
+            }
+            
+            .comparison-cell {
+                padding: var(--space-sm);
+                border-radius: 8px;
+                margin-bottom: var(--space-xs);
+            }
+            
+            .comparison-feature-cell {
+                background: var(--border-subtle);
+                font-weight: 600;
+                margin-bottom: var(--space-sm);
+            }
+            
+            .comparison-header-cell {
+                display: none;
+            }
+            
+            .comparison-mobile-label {
+                display: inline;
+                font-weight: 600;
+                margin-right: var(--space-xs);
+            }
             border-radius: 12px;
             overflow: hidden;
             min-width: 300px;
@@ -2332,6 +2361,25 @@
             .comparison-table {
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
+            }
+            
+            .comparison-cell {
+                min-height: 60px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                padding: var(--space-sm);
+            }
+            
+            .comparison-mobile-label {
+                display: none;
+            }
+            
+            @media (max-width: 768px) {
+                .comparison-mobile-label {
+                    display: inline;
+                }
             }
             
             .comparison-col,
@@ -3132,7 +3180,7 @@
                 
                 <p class="future-text">You're not just wearing clothes - you're wearing a <strong>statement</strong>. A <strong>movement</strong>.</p>
                 
-                <p class="future-text">And the best part? You're one of only 47 people who own this exact piece from the legendary June 2025 drop that everyone wanted but couldn't get.</p>
+                <p class="future-text">And the best part? You're one of only 1000 people who own this exact piece from the legendary June 2025 drop that everyone wanted but couldn't get.</p>
                 
                 <p class="future-text">While everyone else paid $200, you got it for $20. <strong>That's the power of being early.</strong></p>
                 
