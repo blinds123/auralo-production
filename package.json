@@ -1,0 +1,24 @@
+{
+  "name": "auralo-hoodie-landing",
+  "version": "1.0.0",
+  "description": "AURALO hoodie landing page - Production ready with sub-2 second load times",
+  "main": "index.html",
+  "scripts": {
+    "deploy": "vercel --prod",
+    "dev": "vercel dev",
+    "preview": "vercel"
+  },
+  "keywords": [
+    "auralo",
+    "hoodie",
+    "landing-page",
+    "ecommerce",
+    "fashion",
+    "vercel"
+  ],
+  "author": "AURALO",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
