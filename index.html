@@ -2236,63 +2236,73 @@
             }"
         }
     
-        /* MOBILE-FIRST COMPARISON CARDS */
-        .comparison-cards-mobile {
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-lg);
-            margin: var(--space-xl) 0;
+        
+            
+            .feature-title {
+                font-size: 1.1rem;
+            }
+            
+            .option-value {
+                font-size: 0.9rem;
+            }
         }
         
-        .comparison-feature-card {
+        /* PERFECT MOBILE COMPARISON */
+        .comparison-wrapper {
+            max-width: 100%;
+            margin: var(--space-xl) auto;
+            padding: 0 var(--space-sm);
+        }
+        
+        .comparison-row {
             background: var(--big-day-white);
             border-radius: 16px;
             padding: var(--space-lg);
-            box-shadow: var(--shadow-light);
-            border: 2px solid var(--border-subtle);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: var(--space-lg);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-subtle);
         }
         
-        .comparison-feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-elevated);
-        }
-        
-        .feature-title {
+        .feature-label {
             font-family: var(--font-headline);
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
             text-align: center;
             margin-bottom: var(--space-md);
             color: var(--text-primary);
         }
         
-        .feature-comparison {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-md);
+        .comparison-options {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
             align-items: center;
         }
         
-        .traditional-option,
-        .eco-option {
-            text-align: center;
+        .option {
+            width: 100%;
+            max-width: 280px;
             padding: var(--space-md);
             border-radius: 12px;
+            text-align: center;
+            border: 2px solid;
             transition: all 0.3s ease;
         }
         
-        .traditional-option {
+        .option.traditional {
             background: #ffebee;
-            border: 2px solid #ffcdd2;
+            border-color: #ffcdd2;
+            color: #d32f2f;
         }
         
-        .eco-option {
-            background: var(--simpleswap-light-blue);
-            border: 2px solid var(--simpleswap-blue);
+        .option.eco {
+            background: linear-gradient(135deg, var(--simpleswap-light-blue) 0%, var(--big-day-white) 100%);
+            border-color: var(--simpleswap-blue);
+            color: var(--simpleswap-blue);
+            box-shadow: 0 2px 8px rgba(33, 150, 243, 0.2);
         }
         
-        .option-label {
+        .option-header {
             font-size: 0.9rem;
             font-weight: 600;
             margin-bottom: var(--space-xs);
@@ -2305,51 +2315,86 @@
             line-height: 1.2;
         }
         
-        .option-value.negative {
-            color: #d32f2f;
+        .vs-divider {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            padding: var(--space-xs) 0;
+            text-align: center;
         }
         
-        .option-value.positive {
+        .comparison-conclusion {
+            text-align: center;
+            margin-top: var(--space-xl);
+            padding: var(--space-lg);
+            background: linear-gradient(135deg, var(--simpleswap-light-blue) 0%, var(--big-day-white) 100%);
+            border-radius: 16px;
+            border: 2px solid var(--simpleswap-blue);
+        }
+        
+        .comparison-conclusion p {
+            font-size: 1.1rem;
+            font-weight: 600;
             color: var(--simpleswap-blue);
+            margin: 0;
         }
         
-        /* Desktop Enhancement */
-        @media (min-width: 768px) {
-            .comparison-cards-mobile {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: var(--space-lg);
+        /* Tablet and Desktop */
+        @media (min-width: 600px) {
+            .comparison-options {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                gap: var(--space-md);
             }
             
-            .feature-comparison {
-                grid-template-columns: 1fr;
-                gap: var(--space-sm);
+            .option {
+                flex: 1;
+                max-width: none;
             }
             
-            .traditional-option,
-            .eco-option {
-                padding: var(--space-sm);
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .comparison-cards-mobile {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-        
-        /* Mobile Specific Improvements */
-        @media (max-width: 479px) {
-            .comparison-feature-card {
-                padding: var(--space-md);
-            }
-            
-            .feature-title {
+            .vs-divider {
+                flex-shrink: 0;
                 font-size: 1.1rem;
+                padding: 0 var(--space-md);
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .comparison-wrapper {
+                padding: 0;
+            }
+            
+            .comparison-row {
+                padding: var(--space-xl);
+            }
+            
+            .feature-label {
+                font-size: 1.4rem;
             }
             
             .option-value {
-                font-size: 0.9rem;
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Extra small mobile */
+        @media (max-width: 420px) {
+            .comparison-row {
+                padding: var(--space-md);
+                margin-bottom: var(--space-md);
+            }
+            
+            .feature-label {
+                font-size: 1.1rem;
+            }
+            
+            .option {
+                padding: var(--space-sm);
+            }
+            
+            .option-value {
+                font-size: 0.95rem;
             }
         }
         </style>
@@ -3118,64 +3163,72 @@
 
     
     
+    
     <section class="comparison-section">
         <div class="container">
             <h2 class="section-title">Why Choose Our Sustainable Checkout?</h2>
             
-            <!-- Mobile-First Comparison Cards -->
-            <div class="comparison-cards-mobile">
-                <div class="comparison-feature-card">
-                    <h3 class="feature-title">💰 Processing Fees</h3>
-                    <div class="feature-comparison">
-                        <div class="traditional-option">
-                            <div class="option-label">Traditional</div>
-                            <div class="option-value negative">❌ HIGH: $3.00-$5.00</div>
+            <div class="comparison-wrapper">
+                <!-- Processing Fees -->
+                <div class="comparison-row">
+                    <div class="feature-label">💰 Processing Fees</div>
+                    <div class="comparison-options">
+                        <div class="option traditional">
+                            <div class="option-header">Traditional</div>
+                            <div class="option-value">❌ $3.00-$5.00</div>
                         </div>
-                        <div class="eco-option">
-                            <div class="option-label">Our Eco-Checkout</div>
-                            <div class="option-value positive">✅ LOW: $0.25</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="comparison-feature-card">
-                    <h3 class="feature-title">🌱 Environmental Impact</h3>
-                    <div class="feature-comparison">
-                        <div class="traditional-option">
-                            <div class="option-label">Traditional</div>
-                            <div class="option-value negative">❌ ZERO Impact</div>
-                        </div>
-                        <div class="eco-option">
-                            <div class="option-label">Our Eco-Checkout</div>
-                            <div class="option-value positive">✅ Plants 5 Trees</div>
+                        <div class="vs-divider">VS</div>
+                        <div class="option eco">
+                            <div class="option-header">Our Eco-Checkout</div>
+                            <div class="option-value">✅ $0.25</div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="comparison-feature-card">
-                    <h3 class="feature-title">⏱️ Checkout Time</h3>
-                    <div class="feature-comparison">
-                        <div class="traditional-option">
-                            <div class="option-label">Traditional</div>
-                            <div class="option-value negative">❌ SLOW: 3-5 min</div>
+                <!-- Environmental Impact -->
+                <div class="comparison-row">
+                    <div class="feature-label">🌱 Environmental Impact</div>
+                    <div class="comparison-options">
+                        <div class="option traditional">
+                            <div class="option-header">Traditional</div>
+                            <div class="option-value">❌ Zero Impact</div>
                         </div>
-                        <div class="eco-option">
-                            <div class="option-label">Our Eco-Checkout</div>
-                            <div class="option-value positive">✅ FAST: 60 sec</div>
+                        <div class="vs-divider">VS</div>
+                        <div class="option eco">
+                            <div class="option-header">Our Eco-Checkout</div>
+                            <div class="option-value">✅ Plants 5 Trees</div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="comparison-feature-card">
-                    <h3 class="feature-title">💸 Your Savings</h3>
-                    <div class="feature-comparison">
-                        <div class="traditional-option">
-                            <div class="option-label">Traditional</div>
-                            <div class="option-value negative">❌ $0 Saved</div>
+                <!-- Checkout Time -->
+                <div class="comparison-row">
+                    <div class="feature-label">⏱️ Checkout Time</div>
+                    <div class="comparison-options">
+                        <div class="option traditional">
+                            <div class="option-header">Traditional</div>
+                            <div class="option-value">❌ 3-5 minutes</div>
                         </div>
-                        <div class="eco-option">
-                            <div class="option-label">Our Eco-Checkout</div>
-                            <div class="option-value positive">✅ Save $3-5</div>
+                        <div class="vs-divider">VS</div>
+                        <div class="option eco">
+                            <div class="option-header">Our Eco-Checkout</div>
+                            <div class="option-value">✅ 60 seconds</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Your Savings -->
+                <div class="comparison-row">
+                    <div class="feature-label">💸 Your Savings</div>
+                    <div class="comparison-options">
+                        <div class="option traditional">
+                            <div class="option-header">Traditional</div>
+                            <div class="option-value">❌ $0 Saved</div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="option eco">
+                            <div class="option-header">Our Eco-Checkout</div>
+                            <div class="option-value">✅ Save $3-5</div>
                         </div>
                     </div>
                 </div>
