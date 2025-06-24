@@ -1585,9 +1585,9 @@
             box-shadow: 0 4px 20px rgba(33, 150, 243, 0.3);
         }
         
-        /* Arrow pointing down at Exchange button */
+        /* Arrow pointing down at Exchange button - LOWERED TO TAP BUTTON */
         .arrow-exchange {
-            bottom: 15%;
+            bottom: 5%;
             left: 50%;
             transform: translateX(-50%);
         }
@@ -1596,6 +1596,8 @@
             content: '👆';
             font-size: 3rem;
             animation: pulse 1.5s ease-in-out infinite;
+            /* Position finger to actually tap the exchange button */
+            transform: translateY(10px);
         }
         
         /* Arrow pointing at wallet address field */
