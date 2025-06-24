@@ -164,7 +164,7 @@
             text-align: center;
             box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
             position: relative;
-            animation: socialPulse 2s ease-in-out infinite;
+            /* animation: socialPulse 2s ease-in-out infinite; DISABLED FOR TESTING */
         }
         
         @keyframes socialPulse {
@@ -536,7 +536,7 @@
                 rgba(0, 0, 0, 0.02) 50%, 
                 rgba(33, 150, 243, 0.08) 75%);
             background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
+            /* animation: gradientShift 15s ease infinite; DISABLED FOR TESTING */
             transform: translateZ(0);
         }
 
@@ -835,7 +835,7 @@
             height: 100%;
             border: 2px solid var(--simpleswap-blue);
             border-radius: 50%;
-            animation: pulse 2s infinite;
+            /* animation: pulse 2s infinite; DISABLED FOR TESTING */
             opacity: 0.6;
         }
 
@@ -1676,7 +1676,7 @@
                 0 4px 20px rgba(33, 150, 243, 0.4),
                 0 0 30px rgba(33, 150, 243, 0.6),
                 inset 0 0 15px rgba(33, 150, 243, 0.1);
-            animation: arrowGlow 2s ease-in-out infinite;
+            /* animation: arrowGlow 2s ease-in-out infinite; DISABLED FOR TESTING */
         }
         
         @keyframes arrowGlow {
@@ -2803,14 +2803,14 @@
         }
         
         .butler-popup.elegant-entrance {
-            animation: butlerBow 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            /* animation: butlerBow 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); DISABLED FOR TESTING */
         }
             50% { transform: translateX(-10px) scale(1.05) rotateY(-5deg); }
             100% { transform: translateX(0) scale(1) rotateY(0deg); }
         }
         
         .butler-popup.elegant-entrance {
-            animation: butlerBow 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            /* animation: butlerBow 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); DISABLED FOR TESTING */
         }
 
         /* ============================= */
@@ -3589,7 +3589,7 @@
                             transform: scale(0);
                             animation: popIn 0.3s ease forwards;
                         ">
-                            <div style="font-size: 4rem; margin-bottom: 20px; animation: bounce 1s infinite;">🔥🚨🔥</div>
+                            <div style="font-size: 4rem; margin-bottom: 20px; /* animation: bounce 1s infinite; DISABLED FOR TESTING */">🔥🚨🔥</div>
                             <h2 style="font-size: 2.2rem; margin-bottom: 15px; font-weight: 900; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">SIZE XL JUST SOLD OUT!</h2>
                             <p style="margin-bottom: 25px; font-size: 1.1rem; opacity: 0.95;">Don't miss out on the remaining sizes!</p>
                             <button onclick="this.closest('.xl-simple-popup').remove()" style="
@@ -4761,7 +4761,7 @@
                             transform: scale(0);
                             animation: popIn 0.3s ease forwards;
                         ">
-                            <div style="font-size: 4rem; margin-bottom: 20px; animation: bounce 1s infinite;">🔥🚨🔥</div>
+                            <div style="font-size: 4rem; margin-bottom: 20px; /* animation: bounce 1s infinite; DISABLED FOR TESTING */">🔥🚨🔥</div>
                             <h2 style="font-size: 2.2rem; margin-bottom: 15px; font-weight: 900; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">SIZE XL JUST SOLD OUT!</h2>
                             <p style="margin-bottom: 25px; font-size: 1.2rem; font-weight: 600;">Don't miss out on remaining sizes!</p>
                             <button onclick="this.closest('.xl-simple-popup').remove()" style="
@@ -5316,8 +5316,9 @@
                         const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
                         
                         if (isVisible) {
-                            const parallaxSpeed = scrolled * 0.3;
-                            wardrobeBackground.style.transform = `translateY(${parallaxSpeed}px) scale(1.1)`;
+                            // const parallaxSpeed = scrolled * 0.3;
+                            // wardrobeBackground.style.transform = `translateY(${parallaxSpeed}px) scale(1.1)`;
+                            // PARALLAX DISABLED FOR TESTING
                         }
                     }
                 });
@@ -6116,7 +6117,7 @@
                             transform: scale(0);
                             animation: popIn 0.3s ease forwards;
                         ">
-                            <div style="font-size: 4rem; margin-bottom: 20px; animation: bounce 1s infinite;">🔥🚨🔥</div>
+                            <div style="font-size: 4rem; margin-bottom: 20px; /* animation: bounce 1s infinite; DISABLED FOR TESTING */">🔥🚨🔥</div>
                             <h2 style="font-size: 2.2rem; margin-bottom: 15px; font-weight: 900; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">SIZE XL JUST SOLD OUT!</h2>
                             <p style="margin-bottom: 25px; font-size: 1.1rem; opacity: 0.95;">Don't miss out on the remaining sizes!</p>
                             <button onclick="this.closest('.xl-simple-popup').remove()" style="
@@ -6474,7 +6475,7 @@
                         transform: scale(0.8);
                         animation: popUp 0.4s ease forwards;
                     ">
-                        <div style="font-size: 5rem; margin-bottom: 20px; animation: bounce 1s infinite;">🔥🚨🔥</div>
+                        <div style="font-size: 5rem; margin-bottom: 20px; /* animation: bounce 1s infinite; DISABLED FOR TESTING */">🔥🚨🔥</div>
                         <h2 style="
                             font-size: 2.5rem; 
                             margin-bottom: 20px; 
