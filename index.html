@@ -3780,21 +3780,21 @@
                     'storyCarousel', 
                     'storySlides', 
                     '#storySlides .story-slide',
-                    { autoAdvanceTime: 4000 }
+                    { autoAdvanceTime: 0 } // DISABLED FOR MOBILE SCROLL FIX
                 );
                 
                 window.tiktokCarousel = new UniversalCarousel(
                     'tiktokCarousel',
                     'tiktokSlides', 
                     '#tiktokSlides .review-slide',
-                    { autoAdvanceTime: 5000 }
+                    { autoAdvanceTime: 0 } // DISABLED FOR MOBILE SCROLL FIX
                 );
                 
                 window.trustpilotCarousel = new UniversalCarousel(
                     'trustpilotCarousel',
                     'trustpilotSlides',
                     '#trustpilotSlides .review-slide', 
-                    { autoAdvanceTime: 6000 }
+                    { autoAdvanceTime: 0 } // DISABLED FOR MOBILE SCROLL FIX
                 );
                 
                 console.log('🎆 ALL SYSTEMS INITIALIZED - FERRARI LEVEL ACHIEVED!');
@@ -5119,6 +5119,22 @@
             }
         }
 
+        // iOS/Mobile fix for buy buttons - add touch event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            const buyButtons = document.querySelectorAll('.buy-now-button');
+            console.log('📱 Found', buyButtons.length, 'buy buttons - adding mobile touch support');
+            
+            buyButtons.forEach(button => {
+                // Add both click and touch events for iOS compatibility
+                button.addEventListener('click', scrollToCheckout);
+                button.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    console.log('📱 Touch event on buy button');
+                    scrollToCheckout();
+                });
+            });
+        });
+
         // Size chart toggle - Mobile safe
         function toggleSizeChart() {
             try {
@@ -6332,21 +6348,21 @@
                 'storyCarousel', 
                 'storySlides', 
                 '#storySlides .story-slide',
-                { autoAdvanceTime: 4000 }
+                { autoAdvanceTime: 0 } // DISABLED FOR MOBILE SCROLL FIX
             );
             
             window.tiktokCarousel = new UniversalCarousel(
                 'tiktokCarousel',
                 'tiktokSlides', 
                 '#tiktokSlides .review-slide',
-                { autoAdvanceTime: 5000 }
+                { autoAdvanceTime: 0 } // DISABLED FOR MOBILE SCROLL FIX
             );
             
             window.trustpilotCarousel = new UniversalCarousel(
                 'trustpilotCarousel',
                 'trustpilotSlides',
                 '#trustpilotSlides .review-slide', 
-                { autoAdvanceTime: 6000 }
+                { autoAdvanceTime: 0 } // DISABLED FOR MOBILE SCROLL FIX
             );
             
             console.log('🏆 FERRARI-LEVEL INITIALIZATION COMPLETE!');
