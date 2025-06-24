@@ -4658,8 +4658,8 @@
             }
         }
         
-        // Start the countdown timer
-        setInterval(updateCountdown, 1000);
+        // Start the countdown timer - DISABLED FOR DEBUGGING AUTO-SCROLL
+        // setInterval(updateCountdown, 1000);
         updateCountdown();
         
         
@@ -5105,12 +5105,17 @@
 
         // Smooth scroll to checkout section
         function scrollToCheckout() {
+            console.log('🎯 scrollToCheckout called');
             const checkoutSection = document.getElementById('complete-exchange-section');
+            console.log('📍 Checkout section found:', checkoutSection);
             if (checkoutSection) {
+                console.log('✅ Scrolling to checkout section...');
                 checkoutSection.scrollIntoView({ 
                     behavior: 'smooth',
                     block: 'center'
                 });
+            } else {
+                console.error('❌ Checkout section not found!');
             }
         }
 
@@ -5338,7 +5343,8 @@
             
             setTimeout(copyBonusCode, 1000);
 
-            // Parallax effect for wardrobe background
+            // Parallax effect for wardrobe background - COMPLETELY DISABLED FOR DEBUGGING
+            /*
             const wardrobeBackground = document.querySelector('.wardrobe-background');
             if (wardrobeBackground) {
                 window.addEventListener('scroll', function() {
@@ -5357,6 +5363,7 @@
                     }
                 });
             }
+            */
 
             // Moment card hover effects
             const momentCards = document.querySelectorAll('.moment-card');
@@ -6025,7 +6032,8 @@
             runDiagnostic: runFullDiagnostic
         };
         
-        // Auto-run diagnostic when DOM is ready
+        // Auto-run diagnostic when DOM is ready - DISABLED FOR DEBUGGING AUTO-SCROLL
+        /*
         if (document.readyState === 'complete') {
             setTimeout(runFullDiagnostic, 5000);
         } else {
@@ -6033,6 +6041,7 @@
                 setTimeout(runFullDiagnostic, 5000);
             });
         }
+        */
         
         console.log('🔧 Debug functions available at window.debugCarousels');
         
@@ -6435,7 +6444,7 @@
             }
             
             updateCountdown(); // Initial update
-            setInterval(updateCountdown, 1000); // Update every second
+            // setInterval(updateCountdown, 1000); // Update every second - DISABLED FOR DEBUGGING
             console.log('⏰ Countdown timer started successfully!');
         }
         
