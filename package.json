@@ -20,5 +20,16 @@
   "license": "MIT",
   "engines": {
     "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blinds123/auralo-production.git"
+  },
+  "bugs": {
+    "url": "https://github.com/blinds123/auralo-production/issues"
+  },
+  "homepage": "https://github.com/blinds123/auralo-production#readme",
+  "dependencies": {
+    "puppeteer": "^24.10.2"
   }
 }
