@@ -4621,12 +4621,7 @@
 
     
     
-    <!-- SOCIAL PROOF NOTIFICATION REMOVED - WAS CAUSING MOBILE AUTO-SCROLL ISSUES -->
-    <!--
-    <div class="social-notification" id="socialProof">
-        <div id="proofText">Sarah from Chicago just ordered hers! 🔥</div>
-    </div>
-    -->
+    <!-- SOCIAL PROOF COMPLETELY ELIMINATED -->
 
     <script>
         const CHECKOUT_URL = 'https://simpleswap.io/?from=usd&to=pol&amount=20&partner=auralo';
@@ -5056,6 +5051,9 @@
             }
             
             setupMobileSwipe() {
+                // MOBILE SWIPE DISABLED TO FIX IPHONE AUTO-SCROLL ISSUE
+                // e.preventDefault() calls in touch events were interfering with native scroll
+                /*
                 if (!this.slides) return;
                 
                 let startX = 0;
@@ -5089,6 +5087,8 @@
                 }, { passive: true });
                 
                 console.log(`👆 ${this.containerId} mobile swipe enabled`);
+                */
+                console.log(`👆 ${this.containerId} mobile swipe DISABLED for scroll fix`);
             }
             
             updateControls() {
@@ -5856,9 +5856,10 @@
                 // Setup everything
                 setupSizeSelectors();
                 setupBuyButtons();
-                setupMobileHotspots();
-                setupMobileCarousels();
-                setupMobileToggles();
+                // MOBILE FUNCTIONS DISABLED TO FIX IPHONE AUTO-SCROLL ISSUE
+                // setupMobileHotspots();
+                // setupMobileCarousels();
+                // setupMobileToggles();
                 
                 console.log('✅ GUARANTEED BUTTON & MOBILE SYSTEM ACTIVE');
                 
