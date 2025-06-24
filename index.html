@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>You Are Not For Everyone - $20</title>
     <link rel="preload" href="./images/main-hoodie.jpg" as="image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -938,6 +938,28 @@
             }
         }
 
+        @keyframes tooltipAppear {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        @keyframes tooltipDisappear {
+            from {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+        }
+
         /* Alternative positioning for small screens */
         @media (max-width: 468px) {
             .hotspot:hover::after {
@@ -1659,6 +1681,8 @@
             display: flex;
             transition: transform 0.4s ease;
             width: 100%;
+            will-change: transform;
+            transform: translateZ(0); /* Hardware acceleration */
         }
 
         .review-slide {
@@ -2616,9 +2640,9 @@
                         <span class="size-label">L</span>
                         <span class="size-status">Available</span>
                     </button>
-                    <button class="size-option sold-out" disabled>
+                    <button class="size-option available" data-size="XL">
                         <span class="size-label">XL</span>
-                        <span class="size-status">Sold Out</span>
+                        <span class="size-status">Available</span>
                     </button>
                     <button class="size-option sold-out" disabled>
                         <span class="size-label">XXL</span>
@@ -3456,43 +3480,13 @@
         // FIXED SIZE SELECTOR FUNCTIONALITY
         let selectedSize = null;
         
-        // Initialize size selector event listeners
+        // XL SELLOUT TIMER - Moved to guaranteed button system
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🔧 Initializing size selectors...');
-            
-            // Size grid functionality - FIXED
-            document.querySelectorAll('.size-option').forEach(button => {
-                console.log('Adding listener to:', button.querySelector('.size-label').textContent);
-                
-                button.addEventListener('click', function() {
-                    console.log('Size clicked:', this.querySelector('.size-label').textContent);
-                    
-                    if (!this.disabled && !this.classList.contains('sold-out')) {
-                        // Remove selected from all buttons
-                        document.querySelectorAll('.size-option').forEach(btn => {
-                            btn.classList.remove('selected');
-                        });
-                        
-                        // Add selected to clicked button
-                        this.classList.add('selected');
-                        selectedSize = this.dataset.size || this.querySelector('.size-label').textContent;
-                        
-                        console.log('Selected size:', selectedSize);
-                        
-                        // Show instant feedback
-                        showSizeSelectedFeedback(selectedSize);
-                    } else {
-                        // Show XL sellout toast if they click XL
-                        const sizeLabel = this.querySelector('.size-label').textContent;
-                        if (sizeLabel === 'XL') {
-                            showXLSelloutToast();
-                        }
-                    }
-                });
-            });
-            
-            // Show XL sellout toast after 8 seconds
-            setTimeout(showXLSelloutToast, 8000);
+            // Show XL sellout toast after 12 seconds
+            setTimeout(function() {
+                makeXLSoldOut();
+                showXLSelloutToast();
+            }, 12000);
         });
         
         function showSizeSelectedFeedback(size) {
@@ -3500,83 +3494,154 @@
             console.log('Size selected:', size);
         }
         
+        function makeXLSoldOut() {
+            const xlButton = document.querySelector('.size-option[data-size="XL"]');
+            if (xlButton) {
+                xlButton.classList.remove('available');
+                xlButton.classList.add('sold-out');
+                xlButton.disabled = true;
+                
+                const statusSpan = xlButton.querySelector('.size-status');
+                if (statusSpan) {
+                    statusSpan.textContent = 'Just Sold Out';
+                }
+                
+                console.log('✅ XL size marked as sold out after 12 seconds');
+            }
+        }
+        
         function showXLSelloutToast() {
-            const toast = document.getElementById('xlSelloutToast');
-            if (!toast) return;
+            // Remove any existing toast
+            const existingToast = document.querySelector('.xl-sellout-toast');
+            if (existingToast) {
+                existingToast.remove();
+            }
             
-            toast.classList.add('show');
+            // Create beautiful sellout notification
+            const toast = document.createElement('div');
+            toast.className = 'xl-sellout-toast';
+            toast.innerHTML = `
+                <div class="toast-icon">💔</div>
+                <div class="toast-content">
+                    <div class="toast-title">Size XL Just Sold Out</div>
+                    <div class="toast-message">Don't miss out on the remaining sizes!</div>
+                </div>
+            `;
             
-            // Auto-hide after 3 seconds (Iman's preference)
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #ff4757 0%, #ff3742 100%);
+                color: white;
+                padding: 16px 20px;
+                border-radius: 12px;
+                font-family: 'Source Code Pro', monospace;
+                font-size: 0.9rem;
+                font-weight: 500;
+                z-index: 10000;
+                max-width: 320px;
+                box-shadow: 0 10px 30px rgba(255, 71, 87, 0.4);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                backdrop-filter: blur(10px);
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                transform: translateX(350px);
+                transition: transform 0.4s ease;
+            `;
+            
+            document.body.appendChild(toast);
+            
+            // Animate in
             setTimeout(() => {
-                toast.classList.remove('show');
+                toast.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                toast.style.transform = 'translateX(350px)';
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.remove();
+                    }
+                }, 400);
             }, 3000);
+            
+            console.log('🔥 XL sellout notification shown');
         }
         });
 
-        // Story carousel
-        let currentStory = 0;
+        // Story carousel - Global variables for mobile access
+        window.currentStory = 0;
         const storySlides = document.getElementById('storySlides');
         const storyControls = document.querySelectorAll('#storyControls .story-control');
 
-        function showStory(index) {
-            currentStory = index;
-            storySlides.style.transform = `translateX(-${index * 100}%)`;
+        window.showStory = function(index) {
+            window.currentStory = index;
+            if (storySlides) {
+                storySlides.style.transform = `translate3d(-${index * 100}%, 0, 0)`;
+            }
             storyControls.forEach((control, i) => {
                 control.classList.toggle('active', i === index);
             });
         }
 
         storyControls.forEach((control, index) => {
-            control.addEventListener('click', () => showStory(index));
+            control.addEventListener('click', () => window.showStory(index));
         });
 
         setInterval(() => {
-            currentStory = (currentStory + 1) % 7;
-            showStory(currentStory);
+            window.currentStory = (window.currentStory + 1) % 7;
+            window.showStory(window.currentStory);
         }, 4000);
 
-        // TikTok review carousel
-        let currentTikTok = 0;
+        // TikTok review carousel - Global variables for mobile access
+        window.currentTikTok = 0;
         const tiktokSlides = document.getElementById('tiktokSlides');
         const tiktokControls = document.querySelectorAll('#tiktokControls .review-control');
 
-        function showTikTok(index) {
-            currentTikTok = index;
-            tiktokSlides.style.transform = `translateX(-${index * 100}%)`;
+        window.showTikTok = function(index) {
+            window.currentTikTok = index;
+            if (tiktokSlides) {
+                tiktokSlides.style.transform = `translate3d(-${index * 100}%, 0, 0)`;
+            }
             tiktokControls.forEach((control, i) => {
                 control.classList.toggle('active', i === index);
             });
         }
 
         tiktokControls.forEach((control, index) => {
-            control.addEventListener('click', () => showTikTok(index));
+            control.addEventListener('click', () => window.showTikTok(index));
         });
 
         setInterval(() => {
-            currentTikTok = (currentTikTok + 1) % 8;
-            showTikTok(currentTikTok);
+            window.currentTikTok = (window.currentTikTok + 1) % 8;
+            window.showTikTok(window.currentTikTok);
         }, 3000);
 
-        // Trustpilot review carousel
-        let currentTrustpilot = 0;
+        // Trustpilot review carousel - Global variables for mobile access
+        window.currentTrustpilot = 0;
         const trustpilotSlides = document.getElementById('trustpilotSlides');
         const trustpilotControls = document.querySelectorAll('#trustpilotControls .review-control');
 
-        function showTrustpilot(index) {
-            currentTrustpilot = index;
-            trustpilotSlides.style.transform = `translateX(-${index * 100}%)`;
+        window.showTrustpilot = function(index) {
+            window.currentTrustpilot = index;
+            if (trustpilotSlides) {
+                trustpilotSlides.style.transform = `translate3d(-${index * 100}%, 0, 0)`;
+            }
             trustpilotControls.forEach((control, i) => {
                 control.classList.toggle('active', i === index);
             });
         }
 
         trustpilotControls.forEach((control, index) => {
-            control.addEventListener('click', () => showTrustpilot(index));
+            control.addEventListener('click', () => window.showTrustpilot(index));
         });
 
         setInterval(() => {
-            currentTrustpilot = (currentTrustpilot + 1) % 5;
-            showTrustpilot(currentTrustpilot);
+            window.currentTrustpilot = (window.currentTrustpilot + 1) % 5;
+            window.showTrustpilot(window.currentTrustpilot);
         }, 3500);
 
         // Smooth scroll to checkout section
@@ -3594,43 +3659,119 @@
             }, 2000);
         }
 
-        // Size chart toggle
+        // Size chart toggle - Mobile safe
         function toggleSizeChart() {
-            const chart = document.getElementById('sizeChart');
-            const toggle = document.querySelector('.chart-toggle');
-            
-            if (chart.style.display === 'none') {
-                chart.style.display = 'block';
-                toggle.textContent = '📏 Hide Size Chart';
-            } else {
-                chart.style.display = 'none';
-                toggle.textContent = '📏 Size Chart';
+            try {
+                const chart = document.getElementById('sizeChart');
+                const toggle = document.querySelector('.chart-toggle');
+                
+                if (!chart || !toggle) {
+                    console.warn('Size chart elements not found');
+                    return;
+                }
+                
+                if (chart.style.display === 'none' || !chart.style.display) {
+                    chart.style.display = 'block';
+                    toggle.textContent = '📏 Hide Size Chart';
+                } else {
+                    chart.style.display = 'none';
+                    toggle.textContent = '📏 Size Chart';
+                }
+            } catch (error) {
+                console.error('Error toggling size chart:', error);
             }
         }
 
-        // Toggle store availability dropdown
+        // Toggle store availability dropdown - Mobile safe
         function toggleAvailability() {
-            const content = document.getElementById('storeAvailability');
-            const icon = document.querySelector('.availability-icon');
-            
-            if (content.classList.contains('open')) {
-                content.classList.remove('open');
-                icon.classList.remove('open');
-            } else {
-                content.classList.add('open');
-                icon.classList.add('open');
+            try {
+                const content = document.getElementById('storeAvailability');
+                const icon = document.querySelector('.availability-icon');
+                
+                if (!content) {
+                    console.warn('Store availability content not found');
+                    return;
+                }
+                
+                if (content.classList.contains('open')) {
+                    content.classList.remove('open');
+                    if (icon) icon.classList.remove('open');
+                } else {
+                    content.classList.add('open');
+                    if (icon) icon.classList.add('open');
+                }
+            } catch (error) {
+                console.error('Error toggling availability:', error);
             }
         }
 
-        // Auto-copy bonus code
+        // Auto-copy bonus code - Mobile safe
         function copyBonusCode() {
             try {
-                if (navigator.clipboard) {
-                    navigator.clipboard.writeText(BONUS_CODE);
+                const BONUS_CODE = 'AURALO20'; // Define the code
+                
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(BONUS_CODE).then(() => {
+                        console.log('✅ Bonus code copied to clipboard');
+                        showCopyFeedback('Code copied!');
+                    }).catch(err => {
+                        console.warn('Clipboard write failed:', err);
+                        fallbackCopyText(BONUS_CODE);
+                    });
+                } else {
+                    fallbackCopyText(BONUS_CODE);
                 }
             } catch (err) {
                 console.log('Copy not available');
+                fallbackCopyText('AURALO20');
             }
+        }
+        
+        function fallbackCopyText(text) {
+            try {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                const successful = document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                if (successful) {
+                    showCopyFeedback('Code copied!');
+                } else {
+                    showCopyFeedback('Copy failed - code is AURALO20');
+                }
+            } catch (err) {
+                showCopyFeedback('Copy not supported - code is AURALO20');
+            }
+        }
+        
+        function showCopyFeedback(message) {
+            const feedback = document.createElement('div');
+            feedback.textContent = message;
+            feedback.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                z-index: 10000;
+                font-size: 14px;
+                font-weight: 500;
+            `;
+            document.body.appendChild(feedback);
+            
+            setTimeout(() => {
+                if (feedback.parentNode) {
+                    feedback.remove();
+                }
+            }, 2000);
         }
         
         // EMERGENCY BUTTON FIX - WORKING VERSION
@@ -4047,17 +4188,221 @@
                     });
                 }
                 
+                // MOBILE HOTSPOT TOOLTIP FIX
+                function setupMobileHotspots() {
+                    const hotspots = document.querySelectorAll('.hotspot');
+                    console.log('🔵 Setting up', hotspots.length, 'hotspots for mobile');
+                    
+                    hotspots.forEach(function(hotspot) {
+                        hotspot.onclick = function(e) {
+                            e.preventDefault();
+                            console.log('🔵 Hotspot clicked:', this.getAttribute('data-tip'));
+                            
+                            // Remove any existing mobile tooltips
+                            const existingTooltips = document.querySelectorAll('.mobile-tooltip');
+                            existingTooltips.forEach(tooltip => tooltip.remove());
+                            
+                            // Create mobile tooltip
+                            const tooltip = document.createElement('div');
+                            tooltip.className = 'mobile-tooltip';
+                            tooltip.textContent = this.getAttribute('data-tip');
+                            tooltip.style.cssText = `
+                                position: fixed;
+                                top: 50%;
+                                left: 50%;
+                                transform: translate(-50%, -50%);
+                                background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(20, 20, 20, 0.9) 100%);
+                                color: white;
+                                padding: 20px 24px;
+                                border-radius: 12px;
+                                font-size: 1rem;
+                                font-weight: 500;
+                                line-height: 1.4;
+                                white-space: normal;
+                                text-align: center;
+                                z-index: 10000;
+                                max-width: calc(100vw - 40px);
+                                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+                                backdrop-filter: blur(15px) saturate(1.2);
+                                border: 1px solid rgba(255, 255, 255, 0.15);
+                                animation: tooltipAppear 0.3s ease;
+                            `;
+                            
+                            document.body.appendChild(tooltip);
+                            
+                            // Auto-remove after 3 seconds
+                            setTimeout(function() {
+                                if (tooltip && tooltip.parentNode) {
+                                    tooltip.style.animation = 'tooltipDisappear 0.3s ease';
+                                    setTimeout(() => tooltip.remove(), 300);
+                                }
+                            }, 3000);
+                            
+                            // Remove on click anywhere
+                            setTimeout(function() {
+                                document.addEventListener('click', function removeTooltip() {
+                                    if (tooltip && tooltip.parentNode) {
+                                        tooltip.style.animation = 'tooltipDisappear 0.3s ease';
+                                        setTimeout(() => tooltip.remove(), 300);
+                                    }
+                                    document.removeEventListener('click', removeTooltip);
+                                }, 100);
+                            }, 100);
+                        };
+                    });
+                }
+                
+                // MOBILE CAROUSEL SWIPE FIX
+                function setupMobileCarousels() {
+                    console.log('📱 Setting up mobile carousel swipe support');
+                    
+                    function addSwipeSupport(carousel, nextFunction, prevFunction) {
+                        let startX = 0;
+                        let currentX = 0;
+                        let isDragging = false;
+                        
+                        carousel.addEventListener('touchstart', function(e) {
+                            startX = e.touches[0].clientX;
+                            isDragging = true;
+                        }, { passive: true });
+                        
+                        carousel.addEventListener('touchmove', function(e) {
+                            if (!isDragging) return;
+                            e.preventDefault();
+                            currentX = e.touches[0].clientX;
+                        }, { passive: false });
+                        
+                        carousel.addEventListener('touchend', function(e) {
+                            if (!isDragging) return;
+                            isDragging = false;
+                            
+                            const diff = startX - currentX;
+                            const threshold = 50; // Minimum swipe distance
+                            
+                            if (Math.abs(diff) > threshold) {
+                                if (diff > 0) {
+                                    nextFunction(); // Swipe left - next slide
+                                } else {
+                                    prevFunction(); // Swipe right - prev slide
+                                }
+                            }
+                        }, { passive: true });
+                    }
+                    
+                    // Setup TikTok carousel swipe
+                    const tiktokCarousel = document.getElementById('tiktokSlides');
+                    if (tiktokCarousel) {
+                        addSwipeSupport(
+                            tiktokCarousel,
+                            () => {
+                                window.currentTikTok = (window.currentTikTok + 1) % 8;
+                                window.showTikTok(window.currentTikTok);
+                            },
+                            () => {
+                                window.currentTikTok = (window.currentTikTok - 1 + 8) % 8;
+                                window.showTikTok(window.currentTikTok);
+                            }
+                        );
+                    }
+                    
+                    // Setup Trustpilot carousel swipe
+                    const trustpilotCarousel = document.getElementById('trustpilotSlides');
+                    if (trustpilotCarousel) {
+                        addSwipeSupport(
+                            trustpilotCarousel,
+                            () => {
+                                window.currentTrustpilot = (window.currentTrustpilot + 1) % 5;
+                                window.showTrustpilot(window.currentTrustpilot);
+                            },
+                            () => {
+                                window.currentTrustpilot = (window.currentTrustpilot - 1 + 5) % 5;
+                                window.showTrustpilot(window.currentTrustpilot);
+                            }
+                        );
+                    }
+                    
+                    // Setup Story carousel swipe
+                    const storyCarousel = document.getElementById('storySlides');
+                    if (storyCarousel) {
+                        addSwipeSupport(
+                            storyCarousel,
+                            () => {
+                                window.currentStory = (window.currentStory + 1) % 7;
+                                window.showStory(window.currentStory);
+                            },
+                            () => {
+                                window.currentStory = (window.currentStory - 1 + 7) % 7;
+                                window.showStory(window.currentStory);
+                            }
+                        );
+                    }
+                    
+                    console.log('✅ Mobile carousel swipe support enabled');
+                }
+                
+                // MOBILE TOGGLE FIX
+                function setupMobileToggles() {
+                    console.log('📱 Setting up mobile toggle support');
+                    
+                    // Size chart mobile fix
+                    const sizeChartToggle = document.querySelector('.chart-toggle');
+                    if (sizeChartToggle) {
+                        sizeChartToggle.onclick = function(e) {
+                            e.preventDefault();
+                            const chart = document.getElementById('sizeChart');
+                            const toggle = this;
+                            
+                            if (chart.style.display === 'none' || !chart.style.display) {
+                                chart.style.display = 'block';
+                                toggle.textContent = '📏 Hide Size Chart';
+                                console.log('✅ Size chart opened');
+                            } else {
+                                chart.style.display = 'none';
+                                toggle.textContent = '📏 Size Chart';
+                                console.log('✅ Size chart closed');
+                            }
+                        };
+                    }
+                    
+                    // Store availability mobile fix
+                    const availabilityToggle = document.querySelector('.availability-toggle');
+                    if (availabilityToggle) {
+                        availabilityToggle.onclick = function(e) {
+                            e.preventDefault();
+                            const content = document.getElementById('storeAvailability');
+                            const icon = document.querySelector('.availability-icon');
+                            
+                            if (content.classList.contains('open')) {
+                                content.classList.remove('open');
+                                if (icon) icon.classList.remove('open');
+                                console.log('✅ Store availability closed');
+                            } else {
+                                content.classList.add('open');
+                                if (icon) icon.classList.add('open');
+                                console.log('✅ Store availability opened');
+                            }
+                        };
+                    }
+                    
+                    console.log('✅ Mobile toggle support enabled');
+                }
+                
                 // Setup everything
                 setupSizeSelectors();
                 setupBuyButtons();
+                setupMobileHotspots();
+                setupMobileCarousels();
+                setupMobileToggles();
                 
-                console.log('✅ GUARANTEED BUTTON SYSTEM ACTIVE');
+                console.log('✅ GUARANTEED BUTTON & MOBILE SYSTEM ACTIVE');
                 
                 // Test after 2 seconds
                 setTimeout(function() {
                     const sizeCount = document.querySelectorAll('.size-option').length;
                     const buyCount = document.querySelectorAll('.buy-now-button').length;
-                    console.log('📊 Final count - Sizes:', sizeCount, 'Buy buttons:', buyCount);
+                    const hotspotCount = document.querySelectorAll('.hotspot').length;
+                    const carouselCount = document.querySelectorAll('.review-carousel').length;
+                    console.log('📊 Final count - Sizes:', sizeCount, 'Buy buttons:', buyCount, 'Hotspots:', hotspotCount, 'Carousels:', carouselCount);
                 }, 2000);
                 
             }, 2000); // Wait 2 full seconds

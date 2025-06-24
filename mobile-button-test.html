@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📱 Mobile Button Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .device-simulator {
+            max-width: 375px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 8px solid #333;
+        }
+        h1 { text-align: center; color: #333; font-size: 1.2rem; }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 12px;
+        }
+        .size-option {
+            display: inline-block;
+            padding: 15px 20px;
+            margin: 5px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            min-width: 60px;
+            text-align: center;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .size-option.selected {
+            border-color: #ff006e;
+            background: linear-gradient(45deg, #ff006e, #8338ec);
+            color: white;
+        }
+        .size-option.sold-out {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f0f0f0;
+        }
+        .buy-now-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(45deg, #ff006e, #8338ec);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px 0;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .buy-now-button:active {
+            transform: scale(0.98);
+        }
+        .size-option:active {
+            transform: scale(0.95);
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .status.success { background: #d4edda; color: #155724; }
+        .status.error { background: #f8d7da; color: #721c24; }
+        .status.info { background: #d1ecf1; color: #0c5460; }
+        .device-info {
+            background: #333;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+        .cta-section {
+            margin: 40px 0;
+            padding: 20px;
+            background: #e3f2fd;
+            border-radius: 12px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="device-simulator">
+        <h1>📱 Mobile Button Test</h1>
+        
+        <div class="device-info" id="deviceInfo">
+            Loading device info...
+        </div>
+        
+        <div class="test-section">
+            <h3>🎯 Size Selector Test</h3>
+            <div>
+                <button class="size-option" data-size="S">
+                    <div class="size-label">S</div>
+                </button>
+                <button class="size-option" data-size="M">
+                    <div class="size-label">M</div>
+                </button>
+                <button class="size-option" data-size="L">
+                    <div class="size-label">L</div>
+                </button>
+                <button class="size-option sold-out" disabled>
+                    <div class="size-label">XL</div>
+                </button>
+            </div>
+            <div class="status info" id="sizeStatus">
+                Tap a size to test selection
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>💳 Buy Button Test</h3>
+            <button class="buy-now-button" id="testBuyButton">
+                Buy Now - Test Button
+            </button>
+            <div class="status info" id="buyStatus">
+                Tap buy button to test scroll
+            </div>
+        </div>
+        
+        <div class="test-section cta-section">
+            <h3>🎯 Checkout Section</h3>
+            <p>This is the target section that buy buttons should scroll to.</p>
+            <div class="status success" id="scrollStatus" style="display: none;">
+                ✅ Scroll test successful!
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>📊 Test Results</h3>
+            <div class="status info" id="overallStatus">
+                Run tests by tapping buttons above
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedSize = null;
+        let testResults = {
+            sizeSelector: false,
+            buyButton: false,
+            scrolling: false
+        };
+        
+        function updateDeviceInfo() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const userAgent = navigator.userAgent;
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+            const isTouch = 'ontouchstart' in window;
+            
+            document.getElementById('deviceInfo').innerHTML = `
+                📱 Screen: ${width}x${height}px<br>
+                🤚 Touch: ${isTouch ? 'Yes' : 'No'}<br>
+                📲 Mobile: ${isMobile ? 'Yes' : 'No'}<br>
+                🔧 Test: Mobile Button Functions
+            `;
+        }
+        
+        function updateOverallStatus() {
+            const totalTests = Object.keys(testResults).length;
+            const passedTests = Object.values(testResults).filter(Boolean).length;
+            
+            const statusElement = document.getElementById('overallStatus');
+            if (passedTests === totalTests) {
+                statusElement.className = 'status success';
+                statusElement.textContent = `✅ All ${totalTests} mobile tests passed!`;
+            } else {
+                statusElement.className = 'status info';
+                statusElement.textContent = `📊 ${passedTests}/${totalTests} tests passed`;
+            }
+        }
+        
+        // Test the exact same button system from the main site
+        window.addEventListener('load', function() {
+            console.log('🚨 Mobile button test loading...');
+            
+            setTimeout(() => {
+                // Size selector test
+                const sizeButtons = document.querySelectorAll('.size-option');
+                console.log('Found size buttons:', sizeButtons.length);
+                
+                sizeButtons.forEach((button, index) => {
+                    // Use the same onclick method from main site
+                    button.onclick = function() {
+                        console.log('📱 Mobile size clicked:', this.querySelector('.size-label').textContent);
+                        
+                        if (this.disabled || this.classList.contains('sold-out')) {
+                            document.getElementById('sizeStatus').innerHTML = '❌ Sold out size tapped';
+                            document.getElementById('sizeStatus').className = 'status error';
+                            return;
+                        }
+                        
+                        // Clear all selections
+                        sizeButtons.forEach(btn => btn.classList.remove('selected'));
+                        
+                        // Select this one
+                        this.classList.add('selected');
+                        selectedSize = this.querySelector('.size-label').textContent;
+                        
+                        document.getElementById('sizeStatus').innerHTML = `✅ Selected: ${selectedSize}`;
+                        document.getElementById('sizeStatus').className = 'status success';
+                        
+                        testResults.sizeSelector = true;
+                        updateOverallStatus();
+                        
+                        console.log('✅ Mobile size selected:', selectedSize);
+                    };
+                    
+                    // Add touch feedback
+                    button.addEventListener('touchstart', function() {
+                        if (!this.disabled && !this.classList.contains('sold-out')) {
+                            this.style.transform = 'scale(0.95)';
+                        }
+                    });
+                    
+                    button.addEventListener('touchend', function() {
+                        this.style.transform = '';
+                    });
+                });
+                
+                // Buy button test
+                const buyButton = document.getElementById('testBuyButton');
+                buyButton.onclick = function() {
+                    console.log('📱 Mobile buy button clicked');
+                    
+                    document.getElementById('buyStatus').innerHTML = '✅ Buy button tapped successfully';
+                    document.getElementById('buyStatus').className = 'status success';
+                    
+                    testResults.buyButton = true;
+                    updateOverallStatus();
+                    
+                    // Test scrolling
+                    const ctaSection = document.querySelector('.cta-section');
+                    if (ctaSection) {
+                        ctaSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                        
+                        setTimeout(() => {
+                            document.getElementById('scrollStatus').style.display = 'block';
+                            testResults.scrolling = true;
+                            updateOverallStatus();
+                        }, 1000);
+                    }
+                };
+                
+                // Add touch feedback for buy button
+                buyButton.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                buyButton.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                });
+                
+                console.log('✅ Mobile button test setup complete');
+                
+            }, 1000);
+        });
+        
+        // Initialize
+        updateDeviceInfo();
+        updateOverallStatus();
+        
+        // Update device info on resize
+        window.addEventListener('resize', updateDeviceInfo);
+        
+        console.log('📱 Mobile button test loaded');
+    </script>
+</body>
+</html>

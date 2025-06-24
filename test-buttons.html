@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Test</title>
+    <style>
+        body { padding: 20px; font-family: Arial, sans-serif; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        .size-option { 
+            padding: 10px 20px; 
+            margin: 5px; 
+            border: 2px solid #ddd; 
+            background: white; 
+            cursor: pointer; 
+        }
+        .size-option.selected { 
+            border-color: #ff006e; 
+            background: #ff006e; 
+            color: white; 
+        }
+        .size-option.sold-out { 
+            opacity: 0.5; 
+            cursor: not-allowed; 
+        }
+        .buy-now-button {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #ff006e, #8338ec);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #status { margin: 20px 0; padding: 10px; background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h1>Button Functionality Test</h1>
+    
+    <div id="status">Status: No action yet</div>
+    
+    <div class="test-section">
+        <h2>Size Selector Test</h2>
+        <button class="size-option" data-size="S">
+            <span class="size-label">S</span>
+            <span class="size-status">Available</span>
+        </button>
+        <button class="size-option" data-size="M">
+            <span class="size-label">M</span>
+            <span class="size-status">Few Left</span>
+        </button>
+        <button class="size-option" data-size="L">
+            <span class="size-label">L</span>
+            <span class="size-status">Available</span>
+        </button>
+        <button class="size-option sold-out" disabled>
+            <span class="size-label">XL</span>
+            <span class="size-status">Sold Out</span>
+        </button>
+    </div>
+    
+    <div class="test-section">
+        <h2>Buy Button Test</h2>
+        <button class="buy-now-button">Buy Now - Test Button</button>
+    </div>
+    
+    <div class="test-section cta-section">
+        <h2>Checkout Section (Target)</h2>
+        <p>This is where the buy button should scroll to.</p>
+    </div>
+    
+    <script>
+        let selectedSize = null;
+        
+        function updateStatus(message) {
+            document.getElementById('status').textContent = 'Status: ' + message;
+            console.log('Status:', message);
+        }
+        
+        // Test the exact same code from the main site
+        window.addEventListener('load', function() {
+            console.log('🚨 Emergency button fix loading...');
+            
+            setTimeout(() => {
+                // Fix size selectors
+                const sizeButtons = document.querySelectorAll('.size-option');
+                console.log('Found size buttons:', sizeButtons.length);
+                updateStatus('Found ' + sizeButtons.length + ' size buttons');
+                
+                sizeButtons.forEach((button, index) => {
+                    // Remove existing listeners by cloning
+                    const newButton = button.cloneNode(true);
+                    button.parentNode.replaceChild(newButton, button);
+                    
+                    newButton.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        if (this.disabled || this.classList.contains('sold-out')) {
+                            updateStatus('Sold out size clicked');
+                            return false;
+                        }
+                        
+                        // Remove selected from all
+                        document.querySelectorAll('.size-option').forEach(btn => {
+                            btn.classList.remove('selected');
+                        });
+                        
+                        // Add selected to this one
+                        this.classList.add('selected');
+                        
+                        // Set selected size
+                        const sizeText = this.querySelector('.size-label').textContent;
+                        selectedSize = sizeText;
+                        updateStatus('✅ Size selected: ' + sizeText);
+                        
+                        return false;
+                    });
+                });
+                
+                // Fix buy buttons
+                const buyButtons = document.querySelectorAll('.buy-now-button');
+                console.log('Found buy buttons:', buyButtons.length);
+                
+                buyButtons.forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        updateStatus('Buy button clicked! Selected size: ' + (selectedSize || 'None'));
+                        
+                        const cta = document.querySelector('.cta-section');
+                        if (cta) {
+                            cta.scrollIntoView({behavior: 'smooth', block: 'center'});
+                            updateStatus('Scrolling to checkout section...');
+                        }
+                        
+                        return false;
+                    });
+                });
+                
+                updateStatus('✅ Button fix complete - try clicking buttons!');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
