@@ -3097,9 +3097,14 @@
         /* ============================= */
 
         @media (pointer: coarse) {
-            .size-option, .buy-now-button, .simpleswap-link-button {
+            .size-option, .buy-now-button {
                 min-height: 44px; /* Apple's recommended touch target */
                 padding: 12px 16px;
+            }
+            
+            .simpleswap-link-button {
+                min-height: 53px; /* 20% larger than 44px */
+                padding: 14px 19px; /* 20% larger */
             }
 
             .carousel-nav {
@@ -3228,12 +3233,20 @@
         /* Button and Interactive Element Enhancement */
         @media (max-width: 480px) {
             /* Ensure ALL buttons meet touch standards */
-            .buy-now-button, .simpleswap-link-button, .size-option {
+            .buy-now-button, .size-option {
                 min-height: 48px !important;
                 padding: 12px 16px !important;
                 font-size: 1rem !important;
                 border-radius: 8px !important;
                 font-weight: 600 !important;
+            }
+            
+            .simpleswap-link-button {
+                min-height: 58px !important; /* 20% larger than 48px */
+                padding: 14px 19px !important; /* 20% larger */
+                font-size: 1.2rem !important; /* 20% larger than 1rem */
+                border-radius: 10px !important; /* 20% larger than 8px */
+                font-weight: 700 !important;
             }
             
             .carousel-nav {
@@ -3384,10 +3397,16 @@
                 margin-bottom: 24px !important;
             }
             
-            .buy-now-button, .simpleswap-link-button {
+            .buy-now-button {
                 min-height: 52px !important;
                 padding: 14px 20px !important;
                 font-size: 1.1rem !important;
+            }
+            
+            .simpleswap-link-button {
+                min-height: 62px !important; /* 20% larger than 52px */
+                padding: 17px 24px !important; /* 20% larger */
+                font-size: 1.32rem !important; /* 20% larger than 1.1rem */
             }
             
             .carousel-nav {
@@ -3422,10 +3441,16 @@
                 margin-bottom: 28px !important;
             }
             
-            .buy-now-button, .simpleswap-link-button {
+            .buy-now-button {
                 min-height: 56px !important;
                 padding: 16px 24px !important;
                 font-size: 1.2rem !important;
+            }
+            
+            .simpleswap-link-button {
+                min-height: 67px !important; /* 20% larger than 56px */
+                padding: 19px 29px !important; /* 20% larger */
+                font-size: 1.44rem !important; /* 20% larger than 1.2rem */
             }
             
             .carousel-nav {
@@ -5296,11 +5321,14 @@
                 });
             });
             
-            // Social proof timing
+            // Social proof timing - DISABLED TO FIX CHECKOUT MOVEMENT
+            // Missing showSocialProof function was causing errors every 12 seconds
+            /*
             setTimeout(() => {
                 showSocialProof();
                 setInterval(showSocialProof, 12000);
             }, 3000);
+            */
             
             setTimeout(copyBonusCode, 1000);
 
