@@ -3572,77 +3572,155 @@
         }
         });
 
-        // Story carousel - Global variables for mobile access
+        // FIXED STORY CAROUSEL - Mobile and Desktop Compatible
         window.currentStory = 0;
-        const storySlides = document.getElementById('storySlides');
-        const storyControls = document.querySelectorAll('#storyControls .story-control');
-
-        window.showStory = function(index) {
-            window.currentStory = index;
-            if (storySlides) {
-                storySlides.style.transform = `translate3d(-${index * 100}%, 0, 0)`;
+        
+        function initializeStoryCarousel() {
+            const storySlides = document.getElementById('storySlides');
+            const storyControls = document.querySelectorAll('#storyControls .story-control');
+            
+            if (!storySlides || storyControls.length === 0) {
+                console.warn('Story carousel elements not found');
+                return;
             }
-            storyControls.forEach((control, i) => {
-                control.classList.toggle('active', i === index);
+            
+            console.log('🎠 Initializing Story Carousel:', storyControls.length, 'controls');
+            
+            window.showStory = function(index) {
+                window.currentStory = index;
+                if (storySlides) {
+                    storySlides.style.transform = `translate3d(-${index * 100}%, 0, 0)`;
+                    storySlides.style.transition = 'transform 0.4s ease';
+                }
+                storyControls.forEach((control, i) => {
+                    control.classList.toggle('active', i === index);
+                });
+                console.log('📖 Story slide changed to:', index);
+            }
+
+            // Add click listeners
+            storyControls.forEach((control, index) => {
+                control.addEventListener('click', () => {
+                    console.log('📖 Story control clicked:', index);
+                    window.showStory(index);
+                });
             });
+
+            // Auto-advance
+            setInterval(() => {
+                window.currentStory = (window.currentStory + 1) % 7;
+                window.showStory(window.currentStory);
+            }, 4000);
+            
+            console.log('✅ Story carousel initialized successfully');
+        }
+        
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeStoryCarousel);
+        } else {
+            initializeStoryCarousel();
         }
 
-        storyControls.forEach((control, index) => {
-            control.addEventListener('click', () => window.showStory(index));
-        });
-
-        setInterval(() => {
-            window.currentStory = (window.currentStory + 1) % 7;
-            window.showStory(window.currentStory);
-        }, 4000);
-
-        // TikTok review carousel - Global variables for mobile access
+        // FIXED TIKTOK CAROUSEL - Mobile and Desktop Compatible
         window.currentTikTok = 0;
-        const tiktokSlides = document.getElementById('tiktokSlides');
-        const tiktokControls = document.querySelectorAll('#tiktokControls .review-control');
-
-        window.showTikTok = function(index) {
-            window.currentTikTok = index;
-            if (tiktokSlides) {
-                tiktokSlides.style.transform = `translate3d(-${index * 100}%, 0, 0)`;
+        
+        function initializeTikTokCarousel() {
+            const tiktokSlides = document.getElementById('tiktokSlides');
+            const tiktokControls = document.querySelectorAll('#tiktokControls .review-control');
+            
+            if (!tiktokSlides || tiktokControls.length === 0) {
+                console.warn('TikTok carousel elements not found');
+                return;
             }
-            tiktokControls.forEach((control, i) => {
-                control.classList.toggle('active', i === index);
+            
+            console.log('🎥 Initializing TikTok Carousel:', tiktokControls.length, 'controls');
+            
+            window.showTikTok = function(index) {
+                window.currentTikTok = index;
+                if (tiktokSlides) {
+                    tiktokSlides.style.transform = `translate3d(-${index * 100}%, 0, 0)`;
+                    tiktokSlides.style.transition = 'transform 0.4s ease';
+                }
+                tiktokControls.forEach((control, i) => {
+                    control.classList.toggle('active', i === index);
+                });
+                console.log('🎥 TikTok slide changed to:', index);
+            }
+
+            // Add click listeners
+            tiktokControls.forEach((control, index) => {
+                control.addEventListener('click', () => {
+                    console.log('🎥 TikTok control clicked:', index);
+                    window.showTikTok(index);
+                });
             });
+
+            // Auto-advance
+            setInterval(() => {
+                window.currentTikTok = (window.currentTikTok + 1) % 8;
+                window.showTikTok(window.currentTikTok);
+            }, 3000);
+            
+            console.log('✅ TikTok carousel initialized successfully');
+        }
+        
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeTikTokCarousel);
+        } else {
+            initializeTikTokCarousel();
         }
 
-        tiktokControls.forEach((control, index) => {
-            control.addEventListener('click', () => window.showTikTok(index));
-        });
-
-        setInterval(() => {
-            window.currentTikTok = (window.currentTikTok + 1) % 8;
-            window.showTikTok(window.currentTikTok);
-        }, 3000);
-
-        // Trustpilot review carousel - Global variables for mobile access
+        // FIXED TRUSTPILOT CAROUSEL - Mobile and Desktop Compatible
         window.currentTrustpilot = 0;
-        const trustpilotSlides = document.getElementById('trustpilotSlides');
-        const trustpilotControls = document.querySelectorAll('#trustpilotControls .review-control');
-
-        window.showTrustpilot = function(index) {
-            window.currentTrustpilot = index;
-            if (trustpilotSlides) {
-                trustpilotSlides.style.transform = `translate3d(-${index * 100}%, 0, 0)`;
+        
+        function initializeTrustpilotCarousel() {
+            const trustpilotSlides = document.getElementById('trustpilotSlides');
+            const trustpilotControls = document.querySelectorAll('#trustpilotControls .review-control');
+            
+            if (!trustpilotSlides || trustpilotControls.length === 0) {
+                console.warn('Trustpilot carousel elements not found');
+                return;
             }
-            trustpilotControls.forEach((control, i) => {
-                control.classList.toggle('active', i === index);
+            
+            console.log('⭐ Initializing Trustpilot Carousel:', trustpilotControls.length, 'controls');
+            
+            window.showTrustpilot = function(index) {
+                window.currentTrustpilot = index;
+                if (trustpilotSlides) {
+                    trustpilotSlides.style.transform = `translate3d(-${index * 100}%, 0, 0)`;
+                    trustpilotSlides.style.transition = 'transform 0.4s ease';
+                }
+                trustpilotControls.forEach((control, i) => {
+                    control.classList.toggle('active', i === index);
+                });
+                console.log('⭐ Trustpilot slide changed to:', index);
+            }
+
+            // Add click listeners
+            trustpilotControls.forEach((control, index) => {
+                control.addEventListener('click', () => {
+                    console.log('⭐ Trustpilot control clicked:', index);
+                    window.showTrustpilot(index);
+                });
             });
+
+            // Auto-advance
+            setInterval(() => {
+                window.currentTrustpilot = (window.currentTrustpilot + 1) % 5;
+                window.showTrustpilot(window.currentTrustpilot);
+            }, 3500);
+            
+            console.log('✅ Trustpilot carousel initialized successfully');
         }
-
-        trustpilotControls.forEach((control, index) => {
-            control.addEventListener('click', () => window.showTrustpilot(index));
-        });
-
-        setInterval(() => {
-            window.currentTrustpilot = (window.currentTrustpilot + 1) % 5;
-            window.showTrustpilot(window.currentTrustpilot);
-        }, 3500);
+        
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeTrustpilotCarousel);
+        } else {
+            initializeTrustpilotCarousel();
+        }
 
         // Smooth scroll to checkout section
         function scrollToCheckout() {
@@ -4364,13 +4442,21 @@
                         };
                     }
                     
-                    // Store availability mobile fix
-                    const availabilityToggle = document.querySelector('.availability-toggle');
+                    // Store availability mobile fix - CORRECTED SELECTOR
+                    const availabilityToggle = document.querySelector('.availability-header');
                     if (availabilityToggle) {
+                        // Remove the existing onclick and add our mobile-safe version
                         availabilityToggle.onclick = function(e) {
                             e.preventDefault();
+                            console.log('📱 Store availability toggle clicked');
+                            
                             const content = document.getElementById('storeAvailability');
                             const icon = document.querySelector('.availability-icon');
+                            
+                            if (!content) {
+                                console.warn('Store availability content not found');
+                                return;
+                            }
                             
                             if (content.classList.contains('open')) {
                                 content.classList.remove('open');
@@ -4379,9 +4465,11 @@
                             } else {
                                 content.classList.add('open');
                                 if (icon) icon.classList.add('open');
-                                console.log('✅ Store availability opened');
+                                console.log('✅ Store availability opened - Hamptons store visible');
                             }
                         };
+                    } else {
+                        console.warn('Store availability toggle not found');
                     }
                     
                     console.log('✅ Mobile toggle support enabled');
