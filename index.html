@@ -1802,49 +1802,63 @@
         }
         
         /* SPACING ADJUSTMENTS FOR STEP 2 */
-        /* Fix Step 2 blue box overlap and move Complete Your Exchange button down */
+        /* Move Step 2 higher to reduce white space between steps */
+        .process-step:nth-child(3) {
+            margin-top: -20px !important; /* Move entire Step 2 higher */
+        }
+        
         .process-step:nth-child(3) .step-number {
-            margin-top: 24px !important; /* Move Step 2 blue box down to prevent text overlap */
-            margin-bottom: 20px !important;
+            margin-top: 12px !important; /* Reduced from 24px - move Step 2 blue box up */
+            margin-bottom: 16px !important;
         }
         
         .process-step:nth-child(3) .step-title {
-            margin-top: 16px !important; /* Add space after moved step number */
+            margin-top: 8px !important; /* Reduced spacing after step number */
         }
         
         .process-step:nth-child(3) .simpleswap-direct-link {
-            margin-top: 40px !important; /* Move Complete Your Exchange button down significantly */
-            padding-top: 24px !important;
+            margin-top: 24px !important; /* Reduced from 40px but still spaced properly */
+            padding-top: 16px !important;
         }
         
         .process-step:nth-child(3) .exchange-subheadline {
-            margin-top: 16px !important; /* Move "Buy Now" text down with button */
+            margin-top: 12px !important; /* Move "Buy Now" text up with button */
         }
         
-        /* Replace finger arrows with clean website directional arrows */
+        /* Revert to finger arrows with circles in original directions */
         .arrow-exchange-bottom::before {
-            content: '⬇'; /* Clean down arrow instead of finger */
-            font-size: 2.5rem !important;
-            background: rgba(33, 150, 243, 0.1);
+            content: '👆'; /* Finger pointing up at Exchange button */
+            font-size: 3.5rem;
+            animation: pulse 1.5s ease-in-out infinite;
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
-            padding: 8px;
+            padding: 12px;
+            box-shadow: 
+                0 0 20px rgba(33, 150, 243, 0.4),
+                0 0 30px rgba(33, 150, 243, 0.6);
+            border: 3px solid var(--simpleswap-blue);
         }
         
         .arrow-wallet-bottom::before {
-            content: '⬅'; /* Clean left arrow instead of finger */
-            font-size: 2.5rem !important;
-            background: rgba(40, 167, 69, 0.1);
+            content: '👈'; /* Finger pointing left at wallet field */
+            font-size: 3.5rem;
+            animation: pulse 1.5s ease-in-out infinite;
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
-            padding: 8px;
+            padding: 12px;
+            box-shadow: 
+                0 0 20px rgba(40, 167, 69, 0.4),
+                0 0 30px rgba(40, 167, 69, 0.6);
+            border: 3px solid #28a745;
         }
         
-        /* Step connector arrow styling */
+        /* Step connector arrow styling - pointing down to guide to Step 2 */
         .step-connector {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 32px 0;
-            padding: 16px 0;
+            margin: 16px 0 8px 0; /* Reduced spacing to bring steps closer */
+            padding: 8px 0;
         }
         
         .connector-arrow svg {
@@ -5855,11 +5869,11 @@
                     <p class="step-description">👆 <strong>Click the blue "Exchange" button</strong> when you see $20. The arrow shows you exactly where!</p>
                 </div>
                 
-                <!-- Gentle directional arrow from Step 1 to Step 2 -->
+                <!-- Gentle downward arrow guiding to Step 2 -->
                 <div class="step-connector">
                     <div class="connector-arrow">
-                        <svg width="60" height="24" viewBox="0 0 60 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4 12H52M52 12L46 6M52 12L46 18" stroke="#2196f3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+                        <svg width="24" height="40" viewBox="0 0 24 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 4V32M12 32L6 26M12 32L18 26" stroke="#2196f3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
                         </svg>
                     </div>
                 </div>
