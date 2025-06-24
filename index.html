@@ -1076,7 +1076,6 @@
             font-size: 1.1rem;
             transition: all 0.3s ease;
             box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
-            animation: exchangeButtonPulse 2s ease-in-out infinite;
             transform: scale(1.1);
             min-height: 60px;
             display: flex;
@@ -1718,7 +1717,6 @@
         .arrow-exchange::before {
             content: '👆';
             font-size: 3rem;
-            animation: pulse 1.5s ease-in-out infinite;
             /* Position finger to EXACTLY touch the exchange button */
             transform: translateY(25px);
         }
@@ -1732,7 +1730,6 @@
         .arrow-wallet::before {
             content: '👈';
             font-size: 3rem;
-            animation: pulse 1.5s ease-in-out infinite;
         }
         
         /* BOTTOM SECTION ARROWS - "Complete Your Exchange" */
@@ -1747,7 +1744,6 @@
         .arrow-exchange-bottom::before {
             content: '👆';
             font-size: 3.5rem;
-            animation: pulse 1.5s ease-in-out infinite;
             /* Position finger lowered by 1.5cm total */
             transform: translateY(63px) !important;
             background: rgba(255, 255, 255, 0.9);
@@ -1768,7 +1764,6 @@
         .arrow-wallet-bottom::before {
             content: '👈';
             font-size: 3.5rem;
-            animation: pulse 1.5s ease-in-out infinite;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
             padding: 15px;
@@ -1829,7 +1824,6 @@
         .arrow-exchange-bottom::before {
             content: '👆'; /* Finger pointing up at Exchange button */
             font-size: 3.5rem;
-            animation: pulse 1.5s ease-in-out infinite;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
             padding: 12px;
@@ -1842,7 +1836,6 @@
         .arrow-wallet-bottom::before {
             content: '👈'; /* Finger pointing left at wallet field */
             font-size: 3.5rem;
-            animation: pulse 1.5s ease-in-out infinite;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
             padding: 12px;
@@ -1862,7 +1855,6 @@
         }
         
         .connector-arrow svg {
-            animation: gentle-pulse 3s ease-in-out infinite;
         }
         
         @keyframes gentle-pulse {
@@ -3952,7 +3944,7 @@
             </div>
             
             <div class="hero-cta">
-                <button class="buy-now-button">
+                <button class="buy-now-button" onclick="scrollToCheckout()">
                     Secure Your Hoodie - $20
                 </button>
                 <p class="hero-cta-text">60-second eco-checkout • Plants 5 trees • Free shipping</p>
@@ -4005,7 +3997,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button">
+                <button class="buy-now-button" onclick="scrollToCheckout()">
                     Claim This Value - $20
                 </button>
             </div>
@@ -4055,7 +4047,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button">
+                <button class="buy-now-button" onclick="scrollToCheckout()">
                     I Want This Story - $20
                 </button>
             </div>
@@ -4125,7 +4117,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button">
+                <button class="buy-now-button" onclick="scrollToCheckout()">
                     Join TikTok Community - $20
                 </button>
             </div>
@@ -4177,7 +4169,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button">
+                <button class="buy-now-button" onclick="scrollToCheckout()">
                     Verified Reviews - Buy Now $20
                 </button>
             </div>
@@ -4223,7 +4215,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button">
+                <button class="buy-now-button" onclick="scrollToCheckout()">
                     All Questions Answered - Get Mine $20
                 </button>
             </div>
@@ -4307,7 +4299,7 @@
         </div>
         
         <div class="section-cta">
-            <button class="buy-now-button">
+            <button class="buy-now-button" onclick="scrollToCheckout()">
                 Start My Eco-Checkout - $20
             </button>
         </div>
@@ -4421,7 +4413,7 @@
         
         
         <div class="container" style="padding: var(--space-sm) 0; text-align: center;">
-            <button class="buy-now-button">
+            <button class="buy-now-button" onclick="scrollToCheckout()">
                 Buy Now - $20
             </button>
         </div>
@@ -4454,7 +4446,7 @@
         </div>
         
         <div class="section-cta">
-            <button class="buy-now-button">
+            <button class="buy-now-button" onclick="scrollToCheckout()">
                 Add To My Wardrobe - $20
             </button>
         </div>
@@ -4478,7 +4470,7 @@
                 <p class="future-text">While everyone else paid $200, you got it for $20. <strong>That's the power of being early.</strong></p>
                 
                 <div class="future-cta">
-                    <button class="buy-now-button">
+                    <button class="buy-now-button" onclick="scrollToCheckout()">
                         Make This Reality - $20
                     </button>
                 </div>
@@ -4517,7 +4509,7 @@
         </div>
         
         <div class="section-cta">
-            <button class="buy-now-button">
+            <button class="buy-now-button" onclick="scrollToCheckout()">
                 Risk-Free Purchase - $20
             </button>
         </div>
@@ -4602,7 +4594,7 @@
         </div>
         
         <div class="section-cta">
-            <button class="buy-now-button">
+            <button class="buy-now-button" onclick="scrollToCheckout()">
                 Choose Eco-Checkout - $20
             </button>
         </div>
@@ -5091,6 +5083,16 @@
 
         // DUPLICATE CAROUSEL INITIALIZATION REMOVED - USING NEW SYSTEM ABOVE
 
+        // Smooth scroll to checkout section
+        function scrollToCheckout() {
+            const checkoutSection = document.getElementById('complete-exchange-section');
+            if (checkoutSection) {
+                checkoutSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+        }
 
         // Size chart toggle - Mobile safe
         function toggleSizeChart() {
