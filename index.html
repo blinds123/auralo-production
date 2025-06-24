@@ -1683,6 +1683,7 @@
                 0 0 30px rgba(33, 150, 243, 0.6),
                 inset 0 0 15px rgba(33, 150, 243, 0.1);
             /* animation: arrowGlow 2s ease-in-out infinite; DISABLED FOR TESTING */
+    animation: none !important; /* FORCE DISABLE ALL ANIMATIONS */
         }
         
         @keyframes arrowGlow {
@@ -1734,6 +1735,11 @@
             bottom: -2%;
             left: 50%;
             transform: translateX(-50%);
+            /* Prevent rendering issues on mobile */
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            perspective: 1000;
+            -webkit-perspective: 1000;
         }
         
         .arrow-exchange-bottom::before {
@@ -3235,6 +3241,19 @@
             /* Hide carousel navigation on mobile */
             .carousel-nav {
                 display: none !important;
+            }
+            
+            /* COMPLETELY REMOVE finger pointers on mobile to prevent auto-scroll */
+            .arrow-pointer,
+            .arrow-pointer::before,
+            .arrow-pointer::after,
+            .arrow-exchange-bottom,
+            .arrow-wallet-bottom,
+            [class*="arrow"] {
+                display: none !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
             }
         }
 
@@ -5432,6 +5451,12 @@
                 threshold: 0.1
             };
 
+            // Skip IntersectionObserver animations on mobile to prevent jitter
+            if (isMobile) {
+                console.log('📱 Mobile detected - skipping scroll animations');
+                return;
+            }
+            
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -5453,10 +5478,12 @@
 
             const animatedElements = document.querySelectorAll('.moment-card, .wardrobe-content, .outfit-combinations');
             animatedElements.forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                el.style.transition = 'all 0.6s var(--common-cubic-bezier)';
-                observer.observe(el);
+                if (!isMobile) {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(30px)';
+                    el.style.transition = 'all 0.6s var(--common-cubic-bezier)';
+                    observer.observe(el);
+                }
             });
 
             const comboItems = document.querySelectorAll('.combo-item');
