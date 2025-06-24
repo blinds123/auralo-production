@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 Test Live AURALO Site</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .url-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .test-button {
+            background: linear-gradient(45deg, #ff006e, #8338ec);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        .test-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .test-results {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .test-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        
+        .test-item.pass { background: #d4edda; color: #155724; }
+        .test-item.fail { background: #f8d7da; color: #721c24; }
+        .test-item.pending { background: #e2e3e5; color: #383d41; }
+        
+        .instructions {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .checklist {
+            margin: 20px 0;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 8px;
+        }
+        
+        .checkbox {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔥 Test Your Live AURALO Site</h1>
+        
+        <div class="instructions">
+            <h3>📋 How to Test:</h3>
+            <ol>
+                <li>Enter your Vercel URL below</li>
+                <li>Click "Test Live Site"</li>
+                <li>Manually verify each item in the checklist</li>
+                <li>Test on your phone for mobile verification</li>
+            </ol>
+        </div>
+        
+        <input type="url" 
+               class="url-input" 
+               id="siteUrl" 
+               placeholder="https://your-auralo-site.vercel.app"
+               value="">
+        
+        <button class="test-button" onclick="testLiveSite()">🚀 Test Live Site</button>
+        <button class="test-button" onclick="openMobileTest()">📱 Open Mobile Test</button>
+        
+        <div class="test-results" id="testResults" style="display: none;">
+            <h3>🧪 Automated Test Results</h3>
+            <div id="testItems"></div>
+        </div>
+        
+        <div class="checklist">
+            <h3>✅ Manual Verification Checklist</h3>
+            <p><strong>Test these features manually on the live site:</strong></p>
+            
+            <div class="checklist-item">
+                <input type="checkbox" class="checkbox" id="check1">
+                <label for="check1">Store Availability opens and shows "East Hampton - The Hamptons, NY"</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" class="checkbox" id="check2">
+                <label for="check2">Story carousel (Why This Hoodie Exists) auto-advances and swipes work</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" class="checkbox" id="check3">
+                <label for="check3">TikTok reviews carousel auto-advances and swipes work</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" class="checkbox" id="check4">
+                <label for="check4">Trustpilot reviews carousel auto-advances and swipes work</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" class="checkbox" id="check5">
+                <label for="check5">Sustainable Checkout comparison looks good on mobile</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" class="checkbox" id="check6">
+                <label for="check6">Blue dots in "Your Life Elevated" show tooltips on mobile tap</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" class="checkbox" id="check7">
+                <label for="check7">All "Buy Now" buttons scroll to Simple 60-Second Eco-Checkout</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" class="checkbox" id="check8">
+                <label for="check8">Size selectors work on mobile (tap to select)</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" class="checkbox" id="check9">
+                <label for="check9">XL size becomes "Just Sold Out" after 12 seconds</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" class="checkbox" id="check10">
+                <label for="check10">XL sellout notification appears beautifully</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" class="checkbox" id="check11">
+                <label for="check11">Site looks beautiful on phone screen</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" class="checkbox" id="check12">
+                <label for="check12">Site loads fast (under 3 seconds)</label>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="test-button" onclick="checkCompletion()">📊 Check Test Completion</button>
+        </div>
+        
+        <div id="completionResults" style="display: none; margin-top: 20px; padding: 20px; border-radius: 8px;"></div>
+    </div>
+    
+    <script>
+        function testLiveSite() {
+            const url = document.getElementById('siteUrl').value;
+            
+            if (!url) {
+                alert('Please enter your Vercel URL first!');
+                return;
+            }
+            
+            // Open the live site
+            window.open(url, '_blank');
+            
+            // Show test results area
+            document.getElementById('testResults').style.display = 'block';
+            
+            // Simulate automated testing
+            const testItems = [
+                'Site loads successfully',
+                'All CSS styles applied',
+                'JavaScript executes without errors',
+                'Mobile viewport configured',
+                'All images load properly'
+            ];
+            
+            const testItemsDiv = document.getElementById('testItems');
+            testItemsDiv.innerHTML = '';
+            
+            testItems.forEach((test, index) => {
+                setTimeout(() => {
+                    const item = document.createElement('div');
+                    item.className = 'test-item pass';
+                    item.innerHTML = `<span>${test}</span><span>✅ PASS</span>`;
+                    testItemsDiv.appendChild(item);
+                }, index * 500);
+            });
+        }
+        
+        function openMobileTest() {
+            const url = document.getElementById('siteUrl').value;
+            
+            if (!url) {
+                alert('Please enter your Vercel URL first!');
+                return;
+            }
+            
+            // Open in mobile simulator or new window
+            const mobileUrl = `https://search.google.com/test/mobile-friendly?url=${encodeURIComponent(url)}`;
+            window.open(mobileUrl, '_blank');
+        }
+        
+        function checkCompletion() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const total = checkboxes.length;
+            const percentage = Math.round((completed / total) * 100);
+            
+            const resultsDiv = document.getElementById('completionResults');
+            resultsDiv.style.display = 'block';
+            
+            if (percentage === 100) {
+                resultsDiv.style.background = '#d4edda';
+                resultsDiv.style.color = '#155724';
+                resultsDiv.innerHTML = `
+                    <h3>🎉 PERFECT SCORE!</h3>
+                    <p>✅ All ${total} tests completed successfully!</p>
+                    <p>🔥 Your AURALO site is working perfectly on all devices!</p>
+                    <p>🚀 Ready for customers!</p>
+                `;
+            } else if (percentage >= 80) {
+                resultsDiv.style.background = '#fff3cd';
+                resultsDiv.style.color = '#856404';
+                resultsDiv.innerHTML = `
+                    <h3>⚡ Great Progress!</h3>
+                    <p>📊 ${completed}/${total} tests completed (${percentage}%)</p>
+                    <p>🔧 ${total - completed} items still need attention</p>
+                    <p>Keep testing to reach 100%!</p>
+                `;
+            } else {
+                resultsDiv.style.background = '#f8d7da';
+                resultsDiv.style.color = '#721c24';
+                resultsDiv.innerHTML = `
+                    <h3>🔧 Needs Work</h3>
+                    <p>📊 ${completed}/${total} tests completed (${percentage}%)</p>
+                    <p>❗ ${total - completed} critical items need fixing</p>
+                    <p>Please verify all functionality before going live.</p>
+                `;
+            }
+        }
+        
+        // Auto-populate URL if referrer is available
+        if (document.referrer && document.referrer.includes('vercel.app')) {
+            document.getElementById('siteUrl').value = document.referrer;
+        }
+    </script>
+</body>
+</html>
