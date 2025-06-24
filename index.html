@@ -3196,6 +3196,22 @@
             }
         }
 
+        /* Hide ALL popups on mobile devices to prevent auto-scroll */
+        @media (max-width: 768px) {
+            .butler-popup,
+            .xl-simple-popup,
+            .iman-popup,
+            [class*="popup"],
+            .social-notification,
+            .notification-popup,
+            #imanPopup,
+            #xl-soldout-overlay {
+                display: none !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+            }
+        }
+
         /* Button and Interactive Element Enhancement */
         @media (max-width: 480px) {
             /* Ensure ALL buttons meet touch standards */
@@ -3487,18 +3503,18 @@
                     const xlButton = document.querySelector('.size-option[data-size="XL"]');
                     if (!xlButton) {
                         console.log('⚠️ XL button not found, retrying in 500ms...');
-                        setTimeout(waitForSizeSelector, 500);
+                        // setTimeout(waitForSizeSelector, 500); // DISABLED TO PREVENT JITTER
                         return;
                     }
                     
                     console.log('✅ XL button found, starting 13-second timer!');
                     
-                    // Start 12-second timer
-                    this.timer = setTimeout(() => {
+                    // Start 12-second timer - DISABLED TO PREVENT POPUPS
+                    /* this.timer = setTimeout(() => {
                         console.log('🔥 13 SECONDS ELAPSED - MAKING XL SOLD OUT!');
                         this.makeXLSoldOut();
                         this.showSelloutPopup();
-                    }, 13000);
+                    }, 13000); */
                     
                     console.log('⏰ XL Timer initialized - 13 seconds to sellout');
                 };
@@ -3636,7 +3652,7 @@
                     if (!this.slides) {
                         console.warn(\`  ❌ Slides container "\${this.slidesId}" not found\`);
                         if (attempts < maxAttempts) {
-                            setTimeout(tryInit, 500);
+                            // setTimeout(tryInit, 500); // DISABLED TO PREVENT JITTER
                             return;
                         }
                         console.error(\`❌ FAILED: Carousel \${this.containerId} slides not found after \${maxAttempts} attempts\`);
@@ -3646,7 +3662,7 @@
                     if (this.controls.length === 0) {
                         console.warn(\`  ❌ Controls "\${this.controlsSelector}" not found\`);
                         if (attempts < maxAttempts) {
-                            setTimeout(tryInit, 500);
+                            // setTimeout(tryInit, 500); // DISABLED TO PREVENT JITTER
                             return;
                         }
                         console.error(\`❌ FAILED: Carousel \${this.containerId} controls not found after \${maxAttempts} attempts\`);
@@ -3663,7 +3679,7 @@
                     } catch (error) {
                         console.error(\`❌ Error initializing \${this.containerId}:\`, error);
                         if (attempts < maxAttempts) {
-                            setTimeout(tryInit, 500);
+                            // setTimeout(tryInit, 500); // DISABLED TO PREVENT JITTER
                             return;
                         }
                         return false;
@@ -4590,6 +4606,12 @@
         const CHECKOUT_URL = 'https://simpleswap.io/?from=usd&to=pol&amount=20&partner=auralo';
         const BONUS_CODE = '0xE5173e7c3089bD89cd1341b637b8e1951745ED5C';
         
+        // Detect mobile devices to prevent popups and auto-scroll issues
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || 
+                         ('ontouchstart' in window) || 
+                         (navigator.maxTouchPoints > 0);
+        console.log('📱 Mobile device detected:', isMobile);
+        
         // Countdown Timer - Fixed to show 72 hours countdown
         function updateCountdown() {
             // Get saved end time or create new one 72 hours from now
@@ -4659,18 +4681,18 @@
                     const xlButton = document.querySelector('.size-option[data-size="XL"]');
                     if (!xlButton) {
                         console.log('⚠️ XL button not found, retrying in 500ms...');
-                        setTimeout(waitForSizeSelector, 500);
+                        // setTimeout(waitForSizeSelector, 500); // DISABLED TO PREVENT JITTER
                         return;
                     }
                     
                     console.log('✅ XL button found, starting 13-second timer!');
                     
-                    // Start 12-second timer
-                    this.timer = setTimeout(() => {
+                    // Start 12-second timer - DISABLED TO PREVENT POPUPS
+                    /* this.timer = setTimeout(() => {
                         console.log('🔥 13 SECONDS ELAPSED - MAKING XL SOLD OUT!');
                         this.makeXLSoldOut();
                         this.showSelloutPopup();
-                    }, 13000);
+                    }, 13000); */
                     
                     console.log('⏰ XL Timer initialized - 13 seconds to sellout');
                 };
@@ -4918,7 +4940,7 @@
                     if (!this.slides) {
                         console.warn(`  ❌ Slides container "${this.slidesId}" not found`);
                         if (attempts < maxAttempts) {
-                            setTimeout(tryInit, 500);
+                            // setTimeout(tryInit, 500); // DISABLED TO PREVENT JITTER
                             return;
                         }
                         console.error(`❌ FAILED: Carousel ${this.containerId} slides not found after ${maxAttempts} attempts`);
@@ -4928,7 +4950,7 @@
                     if (this.controls.length === 0) {
                         console.warn(`  ❌ Controls "${this.controlsSelector}" not found`);
                         if (attempts < maxAttempts) {
-                            setTimeout(tryInit, 500);
+                            // setTimeout(tryInit, 500); // DISABLED TO PREVENT JITTER
                             return;
                         }
                         console.error(`❌ FAILED: Carousel ${this.containerId} controls not found after ${maxAttempts} attempts`);
@@ -4949,7 +4971,7 @@
                     } catch (error) {
                         console.error(`  ❌ ${this.containerId} initialization error:`, error);
                         if (attempts < maxAttempts) {
-                            setTimeout(tryInit, 1000);
+                            // setTimeout(tryInit, 1000); // DISABLED TO PREVENT JITTER
                             return;
                         }
                         console.error(`❌ FAILED: Carousel ${this.containerId} failed after ${maxAttempts} attempts`);
@@ -5086,6 +5108,9 @@
                 console.error('❌ Checkout section not found!');
             }
         }
+        
+        // Make function globally accessible
+        window.scrollToCheckout = scrollToCheckout;
 
         // iOS/Mobile fix for buy buttons - ensure they work
         document.addEventListener('DOMContentLoaded', function() {
@@ -5517,7 +5542,8 @@
         // Show Iman popup after 10 seconds
         // setTimeout(showImanPopup, 10000); // DISABLED TO FIX IPHONE AUTO-SCROLL
         
-        // Also show if user tries to leave the page (exit intent)
+        // Also show if user tries to leave the page (exit intent) - DISABLED TO PREVENT POPUPS
+        /*
         let exitShown = false;
         document.addEventListener('mouseleave', function(e) {
             if (e.clientY <= 0 && !exitShown && !imanShown) {
@@ -5525,6 +5551,7 @@
                 showImanPopup();
             }
         });
+        */
             });
         });
     </script>
@@ -6047,18 +6074,18 @@
                     const xlButton = document.querySelector('.size-option[data-size="XL"]');
                     if (!xlButton) {
                         console.log('⚠️ XL button not found, retrying in 500ms...');
-                        setTimeout(waitForSizeSelector, 500);
+                        // setTimeout(waitForSizeSelector, 500); // DISABLED TO PREVENT JITTER
                         return;
                     }
                     
                     console.log('✅ XL button found, starting 13-second timer!');
                     
-                    // Start 12-second timer
-                    this.timer = setTimeout(() => {
+                    // Start 12-second timer - DISABLED TO PREVENT POPUPS
+                    /* this.timer = setTimeout(() => {
                         console.log('🔥 13 SECONDS ELAPSED - MAKING XL SOLD OUT!');
                         this.makeXLSoldOut();
                         this.showSelloutPopup();
-                    }, 13000);
+                    }, 13000); */
                     
                     console.log('⏰ XL Timer initialized - 13 seconds to sellout');
                 };
@@ -6196,7 +6223,7 @@
                     if (!this.slides) {
                         console.warn(\`  ❌ Slides container "\${this.slidesId}" not found\`);
                         if (attempts < maxAttempts) {
-                            setTimeout(tryInit, 500);
+                            // setTimeout(tryInit, 500); // DISABLED TO PREVENT JITTER
                             return;
                         }
                         console.error(\`❌ FAILED: Carousel \${this.containerId} slides not found after \${maxAttempts} attempts\`);
@@ -6206,7 +6233,7 @@
                     if (this.controls.length === 0) {
                         console.warn(\`  ❌ Controls "\${this.controlsSelector}" not found\`);
                         if (attempts < maxAttempts) {
-                            setTimeout(tryInit, 500);
+                            // setTimeout(tryInit, 500); // DISABLED TO PREVENT JITTER
                             return;
                         }
                         console.error(\`❌ FAILED: Carousel \${this.containerId} controls not found after \${maxAttempts} attempts\`);
@@ -6223,7 +6250,7 @@
                     } catch (error) {
                         console.error(\`❌ Error initializing \${this.containerId}:\`, error);
                         if (attempts < maxAttempts) {
-                            setTimeout(tryInit, 500);
+                            // setTimeout(tryInit, 500); // DISABLED TO PREVENT JITTER
                             return;
                         }
                         return false;
