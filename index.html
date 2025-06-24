@@ -1386,7 +1386,7 @@
 
         .story-slides {
             display: flex;
-            transition: transform 0.4s ease;
+            /* transition: transform 0.4s ease; DISABLED TO PREVENT JITTER */
             width: 100%;
         }
 
@@ -1977,9 +1977,9 @@
 
         .review-slides {
             display: flex;
-            transition: transform 0.4s ease;
+            /* transition: transform 0.4s ease; DISABLED TO PREVENT JITTER */
             width: 100%;
-            will-change: transform;
+            /* will-change: transform; DISABLED TO PREVENT JITTER */
             transform: translateZ(0); /* Hardware acceleration */
         }
 
@@ -3210,6 +3210,32 @@
                 visibility: hidden !important;
                 opacity: 0 !important;
             }
+            
+            /* Disable carousel animations on mobile */
+            .story-slides,
+            .review-slides,
+            [class*="slides"] {
+                transition: none !important;
+                transform: none !important;
+                will-change: auto !important;
+            }
+            
+            /* Show only first slide on mobile */
+            .story-slide,
+            .review-slide {
+                display: none !important;
+            }
+            
+            .story-slide:first-child,
+            .review-slide:first-child {
+                display: block !important;
+                opacity: 1 !important;
+            }
+            
+            /* Hide carousel navigation on mobile */
+            .carousel-nav {
+                display: none !important;
+            }
         }
 
         /* Button and Interactive Element Enhancement */
@@ -3454,7 +3480,7 @@
         /* Force hardware acceleration for smooth scrolling */
         .carousel-container, .step-image-wrapper, .product-display {
             transform: translateZ(0);
-            will-change: transform;
+            /* will-change: transform; DISABLED TO PREVENT JITTER */
         }
 
         /* Improved text rendering */
@@ -3673,7 +3699,7 @@
                         this.slideCount = this.controls.length;
                         this.setupCarousel();
                         this.attachEvents();
-                        this.startAutoAdvance();
+                        // this.startAutoAdvance(); // DISABLED TO PREVENT AUTO-SCROLL
                         console.log(\`  ✅ \${this.containerId} carousel SUCCESSFULLY initialized!\`);
                         return true;
                     } catch (error) {
@@ -3740,7 +3766,7 @@
             resetAutoAdvance() {
                 if (this.autoAdvanceInterval) {
                     clearInterval(this.autoAdvanceInterval);
-                    this.startAutoAdvance();
+                    // this.startAutoAdvance(); // DISABLED TO PREVENT AUTO-SCROLL
                 }
             }
         }
@@ -3758,6 +3784,12 @@
             // Initialize Carousels
             console.log('🎠 INITIALIZING CAROUSELS NOW');
             setTimeout(() => {
+                // Skip carousel initialization on mobile to prevent jitter
+                if (isMobile) {
+                    console.log('📱 Mobile detected - carousels disabled to prevent auto-scroll');
+                    return;
+                }
+                
                 window.storyCarousel = new UniversalCarousel(
                     'storyCarousel', 
                     'storySlides', 
@@ -6244,7 +6276,7 @@
                         this.slideCount = this.controls.length;
                         this.setupCarousel();
                         this.attachEvents();
-                        this.startAutoAdvance();
+                        // this.startAutoAdvance(); // DISABLED TO PREVENT AUTO-SCROLL
                         console.log(\`  ✅ \${this.containerId} carousel SUCCESSFULLY initialized!\`);
                         return true;
                     } catch (error) {
@@ -6311,7 +6343,7 @@
             resetAutoAdvance() {
                 if (this.autoAdvanceInterval) {
                     clearInterval(this.autoAdvanceInterval);
-                    this.startAutoAdvance();
+                    // this.startAutoAdvance(); // DISABLED TO PREVENT AUTO-SCROLL
                 }
             }
         }
@@ -6327,6 +6359,8 @@
         // Initialize Carousels
         console.log('🎠 FERRARI INITIALIZATION: Starting Carousels...');
         setTimeout(() => {
+            // DUPLICATE CAROUSEL INITIALIZATION DISABLED TO PREVENT AUTO-SCROLL
+            /*
             window.storyCarousel = new UniversalCarousel(
                 'storyCarousel', 
                 'storySlides', 
@@ -6347,6 +6381,7 @@
                 '#trustpilotSlides .review-slide', 
                 { autoAdvanceTime: 0 } // DISABLED FOR MOBILE SCROLL FIX
             );
+            */
             
             console.log('🏆 FERRARI-LEVEL INITIALIZATION COMPLETE!');
         }, 2000);
@@ -6448,6 +6483,8 @@
         }
         
         // Initialize working carousels
+        // THIRD CAROUSEL INITIALIZATION DISABLED TO PREVENT AUTO-SCROLL
+        /*
         setTimeout(() => {
             console.log('🎠 Creating working carousels...');
             
