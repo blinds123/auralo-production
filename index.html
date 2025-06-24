@@ -1068,7 +1068,7 @@
             display: inline-block;
             background: var(--simpleswap-blue);
             color: var(--big-day-white);
-            padding: calc(var(--space-md) * 1.2) calc(var(--space-xl) * 1.2);
+            padding: calc(var(--space-md) * 1.2) var(--space-xl); /* Normal horizontal padding */
             border-radius: 30px;
             text-decoration: none;
             font-family: var(--font-headline);
@@ -1076,7 +1076,7 @@
             font-size: 1.32rem; /* 20% larger than 1.1rem */
             transition: all 0.3s ease;
             box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
-            transform: scale(1.32); /* 20% larger than 1.1 scale */
+            /* Removed scale transform - using direct sizing instead */
             min-height: 72px; /* 20% larger than 60px */
             display: flex;
             align-items: center;
@@ -1085,7 +1085,7 @@
         
         .simpleswap-link-button:hover {
             background: var(--simpleswap-dark-blue);
-            transform: scale(1.38) translateY(-3px); /* 20% larger than 1.15 */
+            transform: translateY(-3px); /* Just lift on hover, no scaling */
             box-shadow: 0 8px 25px rgba(33, 150, 243, 0.5);
             animation-play-state: paused;
         }
@@ -3104,7 +3104,7 @@
             
             .simpleswap-link-button {
                 min-height: 53px; /* 20% larger than 44px */
-                padding: 14px 19px; /* 20% larger */
+                padding: 14px 16px; /* Normal width, 20% larger height */
             }
 
             .carousel-nav {
@@ -3243,7 +3243,7 @@
             
             .simpleswap-link-button {
                 min-height: 58px !important; /* 20% larger than 48px */
-                padding: 14px 19px !important; /* 20% larger */
+                padding: 14px 16px !important; /* Normal width, 20% larger height */
                 font-size: 1.2rem !important; /* 20% larger than 1rem */
                 border-radius: 10px !important; /* 20% larger than 8px */
                 font-weight: 700 !important;
@@ -3405,7 +3405,7 @@
             
             .simpleswap-link-button {
                 min-height: 62px !important; /* 20% larger than 52px */
-                padding: 17px 24px !important; /* 20% larger */
+                padding: 17px 20px !important; /* Normal width, 20% larger height */
                 font-size: 1.32rem !important; /* 20% larger than 1.1rem */
             }
             
@@ -3449,7 +3449,7 @@
             
             .simpleswap-link-button {
                 min-height: 67px !important; /* 20% larger than 56px */
-                padding: 19px 29px !important; /* 20% larger */
+                padding: 19px 24px !important; /* Normal width, 20% larger height */
                 font-size: 1.44rem !important; /* 20% larger than 1.2rem */
             }
             
@@ -3745,11 +3745,14 @@
             }
             
             startAutoAdvance() {
+                // AUTO-ADVANCE DISABLED TO STOP WEBSITE MOVEMENT
+                /*
                 if (this.autoAdvanceTime > 0) {
                     this.autoAdvanceInterval = setInterval(() => {
                         this.next();
                     }, this.autoAdvanceTime);
                 }
+                */
             }
             
             resetAutoAdvance() {
@@ -5033,6 +5036,8 @@
             }
             
             setupAutoAdvance() {
+                // AUTO-ADVANCE DISABLED TO STOP WEBSITE MOVEMENT
+                /*
                 if (this.autoAdvanceInterval) {
                     clearInterval(this.autoAdvanceInterval);
                 }
@@ -5042,6 +5047,7 @@
                 }, this.autoAdvanceTime);
                 
                 console.log(`⏰ ${this.containerId} auto-advance: ${this.autoAdvanceTime}ms`);
+                */
             }
             
             setupMobileSwipe() {
@@ -5509,6 +5515,8 @@
             const viewerElement = document.getElementById('viewerCount');
             let count = 73;
             
+            // VIEWER COUNT ANIMATION DISABLED TO STOP WEBSITE MOVEMENT
+            /*
             viewerInterval = setInterval(() => {
                 // Randomly fluctuate between 67-81 viewers (realistic movement)
                 const change = Math.random() > 0.5 ? 1 : -1;
@@ -5520,6 +5528,12 @@
                 
                 viewerElement.textContent = count;
             }, 3000);
+            */
+            
+            // Set static count instead
+            if (viewerElement) {
+                viewerElement.textContent = 73;
+            }
         }
         
         // Show Iman popup after 10 seconds
@@ -6276,11 +6290,14 @@
             }
             
             startAutoAdvance() {
+                // AUTO-ADVANCE DISABLED TO STOP WEBSITE MOVEMENT
+                /*
                 if (this.autoAdvanceTime > 0) {
                     this.autoAdvanceInterval = setInterval(() => {
                         this.next();
                     }, this.autoAdvanceTime);
                 }
+                */
             }
             
             resetAutoAdvance() {
@@ -6378,8 +6395,8 @@
             // Initialize
             updateSlides();
             
-            // Auto-advance
-            setInterval(next, 4000);
+            // Auto-advance - DISABLED TO STOP WEBSITE MOVEMENT
+            // setInterval(next, 4000);
             
             console.log('✅ ' + containerId + ' carousel initialized with ' + slides.length + ' slides');
             
