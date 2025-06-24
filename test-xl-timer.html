@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XL Timer Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .size-option { padding: 10px 20px; margin: 10px; border: 2px solid #ccc; background: white; cursor: pointer; }
+        .size-option.available { border-color: green; }
+        .size-option.sold-out { border-color: red; background: #f0f0f0; }
+        .test-section { background: #f9f9f9; padding: 20px; margin: 20px 0; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h1>🧪 XL Timer Test</h1>
+    
+    <div class="test-section">
+        <h2>Size Selector</h2>
+        <button class="size-option available" data-size="S">
+            S <span class="size-status">Available</span>
+        </button>
+        <button class="size-option available" data-size="M">
+            M <span class="size-status">Available</span>
+        </button>
+        <button class="size-option available" data-size="L">
+            L <span class="size-status">Available</span>
+        </button>
+        <button class="size-option available" data-size="XL">
+            XL <span class="size-status">Available</span>
+        </button>
+    </div>
+    
+    <div class="test-section">
+        <h2>Timer Status</h2>
+        <div id="timer-status">Waiting for timer to start...</div>
+        <div id="countdown">12</div>
+    </div>
+
+    <script>
+        class XLTimerManager {
+            constructor() {
+                this.timerKey = 'xlTimerStarted';
+                this.shownKey = 'xlSoldOutShown';
+                this.startTime = Date.now();
+                this.timer = null;
+                this.init();
+            }
+            
+            init() {
+                console.log('⏰ XL Timer Manager starting...');
+                
+                // Clear any existing timer first
+                if (this.timer) {
+                    clearTimeout(this.timer);
+                    this.timer = null;
+                }
+                
+                // ALWAYS reset on page load
+                this.resetXLState();
+                
+                // Start countdown display
+                this.startCountdown();
+                
+                // Wait for size selector to be available
+                const waitForSizeSelector = () => {
+                    const xlButton = document.querySelector('.size-option[data-size="XL"]');
+                    if (!xlButton) {
+                        console.log('⚠️ XL button not found, retrying in 500ms...');
+                        setTimeout(waitForSizeSelector, 500);
+                        return;
+                    }
+                    
+                    console.log('✅ XL button found, starting 12-second timer!');
+                    document.getElementById('timer-status').textContent = '✅ Timer started - XL will sell out in 12 seconds';
+                    
+                    // Start 12-second timer
+                    this.timer = setTimeout(() => {
+                        console.log('🔥 12 SECONDS ELAPSED - MAKING XL SOLD OUT!');
+                        this.makeXLSoldOut();
+                        this.showSelloutPopup();
+                    }, 12000);
+                    
+                    console.log('⏰ XL Timer initialized - 12 seconds to sellout');
+                };
+                
+                waitForSizeSelector();
+            }
+            
+            startCountdown() {
+                let seconds = 12;
+                const countdownEl = document.getElementById('countdown');
+                
+                const countdown = setInterval(() => {
+                    seconds--;
+                    countdownEl.textContent = seconds;
+                    
+                    if (seconds <= 0) {
+                        clearInterval(countdown);
+                        countdownEl.textContent = 'SOLD OUT!';
+                    }
+                }, 1000);
+            }
+            
+            resetXLState() {
+                // Clear all XL-related storage
+                localStorage.removeItem(this.timerKey);
+                localStorage.removeItem(this.shownKey);
+                
+                // Reset XL button to available
+                const xlButton = document.querySelector('.size-option[data-size="XL"]');
+                if (xlButton) {
+                    xlButton.classList.remove('sold-out');
+                    xlButton.classList.add('available');
+                    xlButton.disabled = false;
+                    
+                    const statusSpan = xlButton.querySelector('.size-status');
+                    if (statusSpan) {
+                        statusSpan.textContent = 'Available';
+                    }
+                    
+                    console.log('🔄 XL button reset to AVAILABLE');
+                }
+                
+                console.log('🔄 XL state completely reset');
+            }
+            
+            makeXLSoldOut() {
+                const xlButton = document.querySelector('.size-option[data-size="XL"]');
+                if (xlButton) {
+                    xlButton.classList.remove('available');
+                    xlButton.classList.add('sold-out');
+                    xlButton.disabled = true;
+                    
+                    const statusSpan = xlButton.querySelector('.size-status');
+                    if (statusSpan) {
+                        statusSpan.textContent = 'Just Sold Out';
+                    }
+                    
+                    localStorage.setItem(this.timerKey, 'true');
+                    console.log('🔥 XL marked as SOLD OUT after exactly 12 seconds');
+                    document.getElementById('timer-status').textContent = '🔥 XL IS NOW SOLD OUT!';
+                }
+            }
+            
+            showSelloutPopup() {
+                // Remove any existing popup
+                const existingPopup = document.querySelector('.xl-simple-popup');
+                if (existingPopup) existingPopup.remove();
+                
+                // Create SIMPLE, BEAUTIFUL, RELIABLE popup
+                const popup = document.createElement('div');
+                popup.className = 'xl-simple-popup';
+                popup.innerHTML = `
+                    <div style="
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background: rgba(0,0,0,0.75);
+                        z-index: 999999;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 20px;
+                    ">
+                        <div style="
+                            background: linear-gradient(135deg, #ff4757, #ff3742);
+                            color: white;
+                            padding: 30px 40px;
+                            border-radius: 15px;
+                            text-align: center;
+                            max-width: 400px;
+                            width: 100%;
+                            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+                        ">
+                            <div style="font-size: 4rem; margin-bottom: 20px;">🔥🚨🔥</div>
+                            <h2 style="font-size: 2.2rem; margin-bottom: 15px; font-weight: 900;">SIZE XL JUST SOLD OUT!</h2>
+                            <p style="margin-bottom: 25px; font-size: 1.1rem;">Don't miss out on the remaining sizes!</p>
+                            <button onclick="this.closest('.xl-simple-popup').remove()" style="
+                                background: white;
+                                color: #ff4757;
+                                border: none;
+                                padding: 15px 30px;
+                                border-radius: 25px;
+                                font-weight: bold;
+                                font-size: 1.1rem;
+                                cursor: pointer;
+                                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                            ">GOT IT!</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(popup);
+                
+                localStorage.setItem(this.shownKey, 'true');
+                console.log('🚨 XL SOLD OUT POPUP DISPLAYED');
+            }
+        }
+        
+        // Initialize timer
+        window.xlTimer = new XLTimerManager();
+    </script>
+</body>
+</html>

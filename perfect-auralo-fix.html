@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>You Are NOT FOR EVERYONE - $20</title>
+    <link rel="preload" href="./images/main-hoodie.jpg" as="image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* PERFECT RESPONSIVE DESIGN SYSTEM */
+        
+        /* Variables */
+        :root {
+            /* Colors */
+            --dark-bg: #0A0A0A;
+            --dark-card: #1A1A1A;
+            --border-subtle: rgba(255, 182, 193, 0.15);
+            --text-primary: #FAFAFA;
+            --text-secondary: rgba(250, 250, 250, 0.7);
+            --accent-pink: #FFB6C1;
+            --accent-purple: #E6E6FA;
+            --accent-blue: #87CEEB;
+            --simpleswap-blue: #2196f3;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Base Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Container System */
+        .container {
+            width: 100%;
+            padding: 0 20px;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+        
+        /* Section Structure */
+        section {
+            position: relative;
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border-subtle);
+            overflow: hidden;
+        }
+        
+        section:last-child {
+            border-bottom: none;
+        }
+        
+        /* XL Sold Out Popup */
+        .xl-sold-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--dark-card);
+            border: 2px solid var(--accent-pink);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            z-index: 10000;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(20px);
+            max-width: 320px;
+            width: 90%;
+            display: none;
+            animation: popupSlideIn 0.3s ease;
+        }
+        
+        .xl-sold-popup.show {
+            display: block;
+        }
+        
+        .xl-sold-popup-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-pink);
+            margin-bottom: 16px;
+        }
+        
+        .xl-sold-popup-text {
+            font-size: 1rem;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        
+        .xl-sold-popup-button {
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .xl-sold-popup-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 182, 193, 0.3);
+        }
+        
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            display: none;
+            backdrop-filter: blur(5px);
+        }
+        
+        .popup-overlay.show {
+            display: block;
+        }
+        
+        @keyframes popupSlideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+        
+        /* MOBILE STYLES (320px - 768px) */
+        @media screen and (max-width: 768px) {
+            
+            /* Typography Scale */
+            h1, .main-headline {
+                font-size: clamp(2rem, 8vw, 2.5rem);
+                line-height: 1.1;
+                font-weight: 800;
+                margin-bottom: 1rem;
+            }
+            
+            h2, .section-title {
+                font-size: clamp(1.5rem, 6vw, 2rem);
+                line-height: 1.2;
+                font-weight: 700;
+                margin-bottom: 1.5rem;
+            }
+            
+            h3 {
+                font-size: clamp(1.25rem, 5vw, 1.5rem);
+                line-height: 1.3;
+                font-weight: 600;
+                margin-bottom: 1rem;
+            }
+            
+            p, .body-text {
+                font-size: 1rem;
+                line-height: 1.6;
+                margin-bottom: 1rem;
+            }
+            
+            .small-text {
+                font-size: 0.875rem;
+                line-height: 1.5;
+            }
+            
+            /* Hero Section */
+            .hero {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                padding: 80px 0 60px;
+                background: linear-gradient(180deg, var(--dark-bg) 0%, #1A1A1A 100%);
+            }
+            
+            .hero-content {
+                width: 100%;
+                text-align: center;
+            }
+            
+            /* Cards & Containers */
+            .card {
+                background: var(--dark-card);
+                border: 1px solid var(--border-subtle);
+                border-radius: 16px;
+                padding: 24px;
+                margin-bottom: 16px;
+                box-shadow: var(--shadow-md);
+                backdrop-filter: blur(10px);
+            }
+            
+            /* Carousel System - FULLY RESPONSIVE */
+            .carousel-container {
+                position: relative;
+                width: 100%;
+                margin: 40px 0;
+                padding: 0;
+            }
+            
+            .carousel-wrapper {
+                width: 100%;
+                overflow: hidden;
+                border-radius: 16px;
+                background: var(--dark-card);
+            }
+            
+            .carousel-track {
+                display: flex;
+                transition: transform 0.3s ease;
+                will-change: transform;
+            }
+            
+            .carousel-slide {
+                min-width: 100%;
+                position: relative;
+                background: var(--dark-card);
+            }
+            
+            .carousel-slide img {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 4/5;
+                object-fit: cover;
+                display: block;
+                border-radius: 16px;
+            }
+            
+            /* Story Carousel Specific */
+            .story-carousel {
+                margin: 40px -20px;
+                padding: 0 20px;
+                position: relative;
+            }
+            
+            .story-slides {
+                display: flex;
+                overflow: hidden;
+                border-radius: 16px;
+                background: var(--dark-bg);
+            }
+            
+            .story-slide {
+                min-width: 100%;
+                flex-shrink: 0;
+                transition: transform 0.5s ease;
+            }
+            
+            .story-slide img {
+                width: 100%;
+                height: auto;
+                max-height: 500px;
+                object-fit: cover;
+                border-radius: 16px;
+            }
+            
+            /* Review Carousel Specific */
+            .review-carousel {
+                margin: 40px 0;
+                position: relative;
+            }
+            
+            .review-slides {
+                display: flex;
+                overflow: hidden;
+                border-radius: 16px;
+            }
+            
+            .review-slide {
+                min-width: 100%;
+                flex-shrink: 0;
+                padding: 20px;
+                min-height: 200px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: transform 0.5s ease;
+            }
+            
+            .review-slide img {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                margin: 0 auto;
+                border-radius: 12px;
+            }
+            
+            /* Carousel Navigation */
+            .carousel-nav {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 44px;
+                height: 44px;
+                background: rgba(26, 26, 26, 0.9);
+                border: 1px solid var(--border-subtle);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                color: var(--text-primary);
+                font-size: 18px;
+                z-index: 10;
+                transition: all 0.2s ease;
+            }
+            
+            .carousel-nav:hover {
+                background: rgba(255, 182, 193, 0.2);
+                transform: translateY(-50%) scale(1.1);
+            }
+            
+            .carousel-nav-left {
+                left: 10px;
+            }
+            
+            .carousel-nav-right {
+                right: 10px;
+            }
+            
+            /* Carousel Controls */
+            .story-controls, .review-controls {
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+                margin-top: 16px;
+            }
+            
+            .story-control, .review-control {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.3);
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+            
+            .story-control.active, .review-control.active {
+                background: var(--accent-pink);
+                width: 24px;
+                border-radius: 4px;
+            }
+            
+            /* Product Section */
+            .product-display {
+                padding: 60px 0;
+                background: var(--dark-card);
+                text-align: center;
+            }
+            
+            .product-image {
+                width: 80%;
+                max-width: 300px;
+                height: auto;
+                margin: 0 auto;
+                display: block;
+                filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+            }
+            
+            /* Size Grid */
+            .size-grid, .Choose\ Your\ Size-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+                max-width: 360px;
+                margin: 0 auto 32px;
+            }
+            
+            .size-option, .Choose\ Your\ Size-option {
+                min-height: 72px;
+                padding: 16px 8px;
+                background: var(--dark-card);
+                border: 2px solid var(--border-subtle);
+                border-radius: 12px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-family: inherit;
+                color: var(--text-primary);
+            }
+            
+            .size-option:hover, .Choose\ Your\ Size-option:hover {
+                border-color: var(--accent-pink);
+                background: rgba(255, 182, 193, 0.1);
+            }
+            
+            .size-option.selected, .Choose\ Your\ Size-option.selected {
+                border-color: var(--accent-pink);
+                background: linear-gradient(135deg, rgba(255, 182, 193, 0.2), rgba(230, 230, 250, 0.1));
+            }
+            
+            .size-option.sold-out, .Choose\ Your\ Size-option.sold-out {
+                opacity: 0.5;
+                cursor: not-allowed;
+                background: rgba(128, 128, 128, 0.1);
+            }
+            
+            /* Buttons */
+            button, .button {
+                min-height: 56px;
+                padding: 16px 32px;
+                font-size: 1rem;
+                font-weight: 600;
+                border: none;
+                border-radius: 28px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                font-family: inherit;
+            }
+            
+            .buy-now-button {
+                background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+                color: white;
+                box-shadow: 0 4px 16px rgba(255, 182, 193, 0.3);
+            }
+            
+            .buy-now-button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(255, 182, 193, 0.4);
+            }
+            
+            /* Images */
+            img {
+                max-width: 100%;
+                height: auto;
+                display: block;
+            }
+            
+            /* Prevent overflow */
+            * {
+                max-width: 100%;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+        }
+        
+        /* TABLET STYLES (769px - 1024px) */
+        @media screen and (min-width: 769px) and (max-width: 1024px) {
+            .container {
+                padding: 0 40px;
+                max-width: 100%;
+            }
+            
+            /* Typography */
+            h1, .main-headline {
+                font-size: 3rem;
+            }
+            
+            h2, .section-title {
+                font-size: 2.25rem;
+            }
+            
+            /* Grid Layouts */
+            .size-grid, .Choose\ Your\ Size-grid {
+                max-width: 500px;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+            }
+            
+            /* Carousel */
+            .story-slide, .review-slide {
+                min-width: 50%;
+            }
+            
+            .story-carousel img,
+            .review-carousel img {
+                max-height: 600px;
+            }
+        }
+        
+        /* DESKTOP STYLES (1025px+) */
+        @media screen and (min-width: 1025px) {
+            .container {
+                max-width: 1200px;
+                padding: 0 40px;
+            }
+            
+            .story-slide, .review-slide {
+                min-width: 33.333%;
+            }
+        }
+        
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            * {
+                background: white !important;
+                color: black !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- XL Sold Out Popup -->
+    <div class="popup-overlay" id="xlPopupOverlay"></div>
+    <div class="xl-sold-popup" id="xlSoldPopup">
+        <div class="xl-sold-popup-title">⚡ XL Just Sold Out!</div>
+        <div class="xl-sold-popup-text">
+            Only L, M, and S remain. Limited stock moving fast!
+        </div>
+        <button class="xl-sold-popup-button" onclick="closeXLPopup()">
+            Got It - Show Me Available Sizes
+        </button>
+    </div>
+    
+    <section class="hero">
+        <div class="container">
+            <h1 class="main-headline">NOT FOR<br>EVERYONE</h1>
+            <p class="sub-headline">The $200 hoodie everyone wanted from our June drop. Most sizes sold out. We found 47 pieces in the warehouse. Your chance to get it for $20 before we donate the rest.</p>
+            
+            <div class="product-display">
+                <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                     alt="You Are NOT FOR EVERYONE Hoodie" 
+                     class="product-image">
+                <div class="price-badge">$20</div>
+            </div>
+
+            <div class="size-selector">
+                <div class="size-title">Choose Your Size</div>
+                <div class="size-grid">
+                    <button class="size-option sold-out" disabled>
+                        <span class="size-label">XS</span>
+                        <span class="size-status">Sold Out</span>
+                    </button>
+                    <button class="size-option available" data-size="S">
+                        <span class="size-label">S</span>
+                        <span class="size-status">Available</span>
+                    </button>
+                    <button class="size-option available selected" data-size="M">
+                        <span class="size-label">M</span>
+                        <span class="size-status">Most Popular</span>
+                    </button>
+                    <button class="size-option available" data-size="L">
+                        <span class="size-label">L</span>
+                        <span class="size-status">Available</span>
+                    </button>
+                    <button class="size-option available" data-size="XL" id="xlSizeOption">
+                        <span class="size-label">XL</span>
+                        <span class="size-status">Available</span>
+                    </button>
+                    <button class="size-option sold-out" disabled>
+                        <span class="size-label">XXL</span>
+                        <span class="size-status">Sold Out</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="hero-cta">
+                <button class="buy-now-button" onclick="scrollToCheckout()">
+                    Secure Your Hoodie - $20
+                </button>
+                <p class="hero-cta-text">60-second eco-checkout • Plants 5 trees • Free shipping</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="story-section">
+        <div class="container">
+            <h2 class="section-title">Our Story</h2>
+            
+            <div class="story-carousel" id="storyCarousel">
+                <button class="carousel-nav carousel-nav-left" onclick="prevStorySlide()" aria-label="Previous slide">‹</button>
+                <button class="carousel-nav carousel-nav-right" onclick="nextStorySlide()" aria-label="Next slide">›</button>
+                <div class="story-slides" id="storySlides">
+                    <div class="story-slide">
+                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Story 1">
+                    </div>
+                    <div class="story-slide">
+                        <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Story 2">
+                    </div>
+                    <div class="story-slide">
+                        <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Story 3">
+                    </div>
+                    <div class="story-slide">
+                        <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Story 4">
+                    </div>
+                </div>
+                <div class="story-controls" id="storyControls">
+                    <div class="story-control active" data-slide="0" onclick="goToStorySlide(0)"></div>
+                    <div class="story-control" data-slide="1" onclick="goToStorySlide(1)"></div>
+                    <div class="story-control" data-slide="2" onclick="goToStorySlide(2)"></div>
+                    <div class="story-control" data-slide="3" onclick="goToStorySlide(3)"></div>
+                </div>
+            </div>
+            
+            <div class="section-cta">
+                <button class="buy-now-button" onclick="scrollToCheckout()">
+                    I Want This Story - $20
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="reviews-section">
+        <div class="container">
+            <h2 class="section-title">What People Are Saying</h2>
+            
+            <div class="review-carousel" id="reviewCarousel">
+                <button class="carousel-nav carousel-nav-left" onclick="prevReviewSlide()" aria-label="Previous slide">‹</button>
+                <button class="carousel-nav carousel-nav-right" onclick="nextReviewSlide()" aria-label="Next slide">›</button>
+                <div class="review-slides" id="reviewSlides">
+                    <div class="review-slide">
+                        <div class="review-card">
+                            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Customer Review" class="review-image">
+                        </div>
+                    </div>
+                    <div class="review-slide">
+                        <div class="review-card">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616c27b75b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Customer Review" class="review-image">
+                        </div>
+                    </div>
+                    <div class="review-slide">
+                        <div class="review-card">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Customer Review" class="review-image">
+                        </div>
+                    </div>
+                    <div class="review-slide">
+                        <div class="review-card">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Customer Review" class="review-image">
+                        </div>
+                    </div>
+                </div>
+                <div class="review-controls" id="reviewControls">
+                    <div class="review-control active" data-slide="0" onclick="goToReviewSlide(0)"></div>
+                    <div class="review-control" data-slide="1" onclick="goToReviewSlide(1)"></div>
+                    <div class="review-control" data-slide="2" onclick="goToReviewSlide(2)"></div>
+                    <div class="review-control" data-slide="3" onclick="goToReviewSlide(3)"></div>
+                </div>
+            </div>
+            
+            <div class="section-cta">
+                <button class="buy-now-button" onclick="scrollToCheckout()">
+                    Join Our Community - $20
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="payment-section" id="complete-exchange-section">
+        <div class="container">
+            <h2 class="section-title">Complete Your Order</h2>
+            <p class="section-subtitle">Secure eco-checkout in 60 seconds</p>
+            
+            <div class="section-cta">
+                <button class="buy-now-button">
+                    Complete Purchase - $20
+                </button>
+                <p style="text-align: center; margin-top: 16px; color: var(--text-secondary);">
+                    🔒 Secure checkout • 🌱 Plants 5 trees • 📦 Free shipping
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // XL Sold Out Popup System
+        let xlPopupShown = false;
+        
+        function showXLSoldPopup() {
+            if (xlPopupShown) return;
+            
+            xlPopupShown = true;
+            sessionStorage.setItem('xlPopupShown', 'true');
+            
+            const overlay = document.getElementById('xlPopupOverlay');
+            const popup = document.getElementById('xlSoldPopup');
+            const xlOption = document.getElementById('xlSizeOption');
+            
+            overlay.classList.add('show');
+            popup.classList.add('show');
+            
+            // Update XL option to sold out
+            if (xlOption) {
+                xlOption.classList.remove('available');
+                xlOption.classList.add('sold-out');
+                xlOption.disabled = true;
+                xlOption.querySelector('.size-status').textContent = 'Sold Out';
+            }
+        }
+        
+        function closeXLPopup() {
+            const overlay = document.getElementById('xlPopupOverlay');
+            const popup = document.getElementById('xlSoldPopup');
+            
+            overlay.classList.remove('show');
+            popup.classList.remove('show');
+        }
+        
+        // Show popup after 13 seconds if not shown in this session
+        setTimeout(() => {
+            if (!sessionStorage.getItem('xlPopupShown')) {
+                showXLSoldPopup();
+            }
+        }, 13000);
+        
+        // Story Carousel System
+        let currentStorySlide = 0;
+        const storySlides = document.querySelectorAll('.story-slide');
+        const storyControls = document.querySelectorAll('.story-control');
+        
+        function updateStoryCarousel() {
+            const slidesContainer = document.getElementById('storySlides');
+            if (slidesContainer) {
+                slidesContainer.style.transform = `translateX(-${currentStorySlide * 100}%)`;
+            }
+            
+            storyControls.forEach((control, index) => {
+                control.classList.toggle('active', index === currentStorySlide);
+            });
+        }
+        
+        function nextStorySlide() {
+            currentStorySlide = (currentStorySlide + 1) % storySlides.length;
+            updateStoryCarousel();
+        }
+        
+        function prevStorySlide() {
+            currentStorySlide = (currentStorySlide - 1 + storySlides.length) % storySlides.length;
+            updateStoryCarousel();
+        }
+        
+        function goToStorySlide(index) {
+            currentStorySlide = index;
+            updateStoryCarousel();
+        }
+        
+        // Review Carousel System
+        let currentReviewSlide = 0;
+        const reviewSlides = document.querySelectorAll('.review-slide');
+        const reviewControls = document.querySelectorAll('.review-control');
+        
+        function updateReviewCarousel() {
+            const slidesContainer = document.getElementById('reviewSlides');
+            if (slidesContainer) {
+                slidesContainer.style.transform = `translateX(-${currentReviewSlide * 100}%)`;
+            }
+            
+            reviewControls.forEach((control, index) => {
+                control.classList.toggle('active', index === currentReviewSlide);
+            });
+        }
+        
+        function nextReviewSlide() {
+            currentReviewSlide = (currentReviewSlide + 1) % reviewSlides.length;
+            updateReviewCarousel();
+        }
+        
+        function prevReviewSlide() {
+            currentReviewSlide = (currentReviewSlide - 1 + reviewSlides.length) % reviewSlides.length;
+            updateReviewCarousel();
+        }
+        
+        function goToReviewSlide(index) {
+            currentReviewSlide = index;
+            updateReviewCarousel();
+        }
+        
+        // Size Selection
+        document.querySelectorAll('.size-option').forEach(option => {
+            option.addEventListener('click', function() {
+                if (!this.disabled) {
+                    document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                }
+            });
+        });
+        
+        // Scroll to checkout function
+        function scrollToCheckout() {
+            document.getElementById('complete-exchange-section').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+        
+        // Touch support for carousels
+        let startX = 0;
+        let endX = 0;
+        
+        function handleTouchStart(e) {
+            startX = e.touches[0].clientX;
+        }
+        
+        function handleTouchEnd(e, type) {
+            endX = e.changedTouches[0].clientX;
+            const diff = startX - endX;
+            
+            if (Math.abs(diff) > 50) {
+                if (type === 'story') {
+                    diff > 0 ? nextStorySlide() : prevStorySlide();
+                } else if (type === 'review') {
+                    diff > 0 ? nextReviewSlide() : prevReviewSlide();
+                }
+            }
+        }
+        
+        // Add touch events
+        document.getElementById('storySlides')?.addEventListener('touchstart', handleTouchStart);
+        document.getElementById('storySlides')?.addEventListener('touchend', (e) => handleTouchEnd(e, 'story'));
+        document.getElementById('reviewSlides')?.addEventListener('touchstart', handleTouchStart);
+        document.getElementById('reviewSlides')?.addEventListener('touchend', (e) => handleTouchEnd(e, 'review'));
+        
+        // Auto-advance carousels
+        setInterval(() => {
+            nextStorySlide();
+        }, 8000);
+        
+        setInterval(() => {
+            nextReviewSlide();
+        }, 10000);
+        
+        console.log('✅ AURALO website optimized and ready');
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ferrari Level Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #0a0a0a; color: white; }
+        .test-section { background: #1a1a1a; padding: 20px; margin: 20px 0; border-radius: 8px; border: 2px solid #2196f3; }
+        .size-option { padding: 10px 20px; margin: 10px; border: 2px solid #ccc; background: white; cursor: pointer; color: black; }
+        .size-option.available { border-color: green; }
+        .size-option.sold-out { border-color: red; background: #f0f0f0; }
+        .carousel { width: 300px; height: 200px; overflow: hidden; border: 2px solid #2196f3; }
+        .slide { width: 100%; height: 100%; background: linear-gradient(45deg, #ff6b6b, #4ecdc4); display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+    </style>
+</head>
+<body>
+    <h1>🏆 FERRARI LEVEL INITIALIZATION TEST</h1>
+    
+    <div class="test-section">
+        <h2>XL Timer Test</h2>
+        <button class="size-option available" data-size="XL">
+            XL <span class="size-status">Available</span>
+        </button>
+        <div id="timer-status">Waiting for timer...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Story Carousel Test</h2>
+        <div class="carousel" id="storyCarousel">
+            <div id="storySlides">
+                <div class="story-slide slide">Slide 1</div>
+                <div class="story-slide slide">Slide 2</div>
+                <div class="story-slide slide">Slide 3</div>
+            </div>
+        </div>
+        <button onclick="window.storyCarousel?.prev()">◀</button>
+        <button onclick="window.storyCarousel?.next()">▶</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>TikTok Carousel Test</h2>
+        <div class="carousel" id="tiktokCarousel">
+            <div id="tiktokSlides">
+                <div class="review-slide slide">Review 1</div>
+                <div class="review-slide slide">Review 2</div>
+                <div class="review-slide slide">Review 3</div>
+            </div>
+        </div>
+        <button onclick="window.tiktokCarousel?.prev()">◀</button>
+        <button onclick="window.tiktokCarousel?.next()">▶</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>System Status</h2>
+        <div id="status">Checking...</div>
+    </div>
+
+    <script>
+        console.log('🚨 FERRARI TEST STARTING...');
+        
+        // XL Timer Manager Class
+        class XLTimerManager {
+            constructor() {
+                this.timerKey = 'xlTimerStarted';
+                this.shownKey = 'xlSoldOutShown';
+                this.startTime = Date.now();
+                this.timer = null;
+                this.init();
+            }
+            
+            init() {
+                console.log('⏰ XL Timer Manager starting...');
+                
+                // Clear any existing timer first
+                if (this.timer) {
+                    clearTimeout(this.timer);
+                    this.timer = null;
+                }
+                
+                // ALWAYS reset on page load
+                this.resetXLState();
+                
+                // Wait for size selector to be available
+                const waitForSizeSelector = () => {
+                    const xlButton = document.querySelector('.size-option[data-size="XL"]');
+                    if (!xlButton) {
+                        console.log('⚠️ XL button not found, retrying in 500ms...');
+                        setTimeout(waitForSizeSelector, 500);
+                        return;
+                    }
+                    
+                    console.log('✅ XL button found, starting 12-second timer!');
+                    document.getElementById('timer-status').textContent = '✅ Timer started - XL will sell out in 12 seconds';
+                    
+                    // Start 12-second timer
+                    this.timer = setTimeout(() => {
+                        console.log('🔥 12 SECONDS ELAPSED - MAKING XL SOLD OUT!');
+                        this.makeXLSoldOut();
+                        this.showSelloutPopup();
+                    }, 12000);
+                    
+                    console.log('⏰ XL Timer initialized - 12 seconds to sellout');
+                };
+                
+                waitForSizeSelector();
+            }
+            
+            resetXLState() {
+                // Clear all XL-related storage
+                localStorage.removeItem(this.timerKey);
+                localStorage.removeItem(this.shownKey);
+                
+                // Reset XL button to available
+                const xlButton = document.querySelector('.size-option[data-size="XL"]');
+                if (xlButton) {
+                    xlButton.classList.remove('sold-out');
+                    xlButton.classList.add('available');
+                    xlButton.disabled = false;
+                    
+                    const statusSpan = xlButton.querySelector('.size-status');
+                    if (statusSpan) {
+                        statusSpan.textContent = 'Available';
+                    }
+                    
+                    console.log('🔄 XL button reset to AVAILABLE');
+                }
+                
+                console.log('🔄 XL state completely reset');
+            }
+            
+            makeXLSoldOut() {
+                const xlButton = document.querySelector('.size-option[data-size="XL"]');
+                if (xlButton) {
+                    xlButton.classList.remove('available');
+                    xlButton.classList.add('sold-out');
+                    xlButton.disabled = true;
+                    
+                    const statusSpan = xlButton.querySelector('.size-status');
+                    if (statusSpan) {
+                        statusSpan.textContent = 'Just Sold Out';
+                    }
+                    
+                    localStorage.setItem(this.timerKey, 'true');
+                    console.log('🔥 XL marked as SOLD OUT after exactly 12 seconds');
+                    document.getElementById('timer-status').textContent = '🔥 XL IS NOW SOLD OUT!';
+                }
+            }
+            
+            showSelloutPopup() {
+                // Remove any existing popup
+                const existingPopup = document.querySelector('.xl-simple-popup');
+                if (existingPopup) existingPopup.remove();
+                
+                // Create SIMPLE, BEAUTIFUL, RELIABLE popup
+                const popup = document.createElement('div');
+                popup.className = 'xl-simple-popup';
+                popup.innerHTML = `
+                    <div style="
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background: rgba(0,0,0,0.75);
+                        z-index: 999999;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 20px;
+                    ">
+                        <div style="
+                            background: linear-gradient(135deg, #ff4757, #ff3742);
+                            color: white;
+                            padding: 30px 40px;
+                            border-radius: 15px;
+                            text-align: center;
+                            max-width: 400px;
+                            width: 100%;
+                            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+                        ">
+                            <div style="font-size: 4rem; margin-bottom: 20px;">🔥🚨🔥</div>
+                            <h2 style="font-size: 2.2rem; margin-bottom: 15px; font-weight: 900;">SIZE XL JUST SOLD OUT!</h2>
+                            <p style="margin-bottom: 25px; font-size: 1.1rem;">Don't miss out on the remaining sizes!</p>
+                            <button onclick="this.closest('.xl-simple-popup').remove()" style="
+                                background: white;
+                                color: #ff4757;
+                                border: none;
+                                padding: 15px 30px;
+                                border-radius: 25px;
+                                font-weight: bold;
+                                font-size: 1.1rem;
+                                cursor: pointer;
+                                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                            ">GOT IT!</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(popup);
+                
+                localStorage.setItem(this.shownKey, 'true');
+                console.log('🚨 XL SOLD OUT POPUP DISPLAYED');
+            }
+        }
+
+        // Universal Carousel Class
+        class UniversalCarousel {
+            constructor(containerId, slidesId, controlsSelector, options = {}) {
+                this.containerId = containerId;
+                this.slidesId = slidesId;
+                this.controlsSelector = controlsSelector;
+                this.currentIndex = 0;
+                this.autoAdvanceTime = options.autoAdvanceTime || 4000;
+                this.slideCount = 0;
+                this.autoAdvanceInterval = null;
+                this.init();
+            }
+            
+            init() {
+                const maxAttempts = 5;
+                let attempts = 0;
+                
+                const tryInit = () => {
+                    attempts++;
+                    console.log(`🔄 Attempt ${attempts}/${maxAttempts} for ${this.containerId}`);
+                    
+                    this.slides = document.getElementById(this.slidesId);
+                    this.controls = document.querySelectorAll(this.controlsSelector);
+                    
+                    console.log(`  - Slides (${this.slidesId}): ${this.slides ? '✅ Found' : '❌ Missing'}`);
+                    console.log(`  - Controls (${this.controlsSelector}): ${this.controls.length} found`);
+                    
+                    if (!this.slides || this.controls.length === 0) {
+                        if (attempts < maxAttempts) {
+                            setTimeout(tryInit, 500);
+                            return;
+                        }
+                        console.error(`❌ FAILED: Carousel ${this.containerId}`);
+                        return false;
+                    }
+                    
+                    try {
+                        this.slideCount = this.controls.length;
+                        this.setupCarousel();
+                        this.attachEvents();
+                        this.startAutoAdvance();
+                        console.log(`  ✅ ${this.containerId} carousel SUCCESSFULLY initialized!`);
+                        return true;
+                    } catch (error) {
+                        console.error(`❌ Error initializing ${this.containerId}:`, error);
+                        return false;
+                    }
+                };
+                
+                tryInit();
+            }
+            
+            setupCarousel() {
+                this.controls.forEach((slide, index) => {
+                    slide.style.opacity = index === 0 ? '1' : '0';
+                    slide.style.transform = `translateX(${index * 100}%)`;
+                    slide.style.transition = 'all 0.5s ease';
+                });
+            }
+            
+            attachEvents() {
+                // Events handled by external buttons
+            }
+            
+            updateSlides() {
+                this.controls.forEach((slide, index) => {
+                    slide.style.opacity = index === this.currentIndex ? '1' : '0';
+                    slide.style.transform = `translateX(${(index - this.currentIndex) * 100}%)`;
+                });
+            }
+            
+            next() {
+                this.currentIndex = (this.currentIndex + 1) % this.slideCount;
+                this.updateSlides();
+                this.resetAutoAdvance();
+            }
+            
+            prev() {
+                this.currentIndex = (this.currentIndex - 1 + this.slideCount) % this.slideCount;
+                this.updateSlides();
+                this.resetAutoAdvance();
+            }
+            
+            startAutoAdvance() {
+                if (this.autoAdvanceTime > 0) {
+                    this.autoAdvanceInterval = setInterval(() => {
+                        this.next();
+                    }, this.autoAdvanceTime);
+                }
+            }
+            
+            resetAutoAdvance() {
+                if (this.autoAdvanceInterval) {
+                    clearInterval(this.autoAdvanceInterval);
+                    this.startAutoAdvance();
+                }
+            }
+        }
+        
+        // MAKE CLASSES GLOBALLY AVAILABLE
+        window.XLTimerManager = XLTimerManager;
+        window.UniversalCarousel = UniversalCarousel;
+        
+        // IMMEDIATE INITIALIZATION
+        console.log('🚀 FERRARI INITIALIZATION: Starting XL Timer...');
+        window.xlTimer = new XLTimerManager();
+        
+        // Initialize Carousels
+        console.log('🎠 FERRARI INITIALIZATION: Starting Carousels...');
+        setTimeout(() => {
+            window.storyCarousel = new UniversalCarousel(
+                'storyCarousel', 
+                'storySlides', 
+                '#storySlides .story-slide',
+                { autoAdvanceTime: 4000 }
+            );
+            
+            window.tiktokCarousel = new UniversalCarousel(
+                'tiktokCarousel',
+                'tiktokSlides', 
+                '#tiktokSlides .review-slide',
+                { autoAdvanceTime: 5000 }
+            );
+            
+            console.log('🏆 FERRARI-LEVEL CAROUSELS INITIALIZED!');
+            
+            // Update status
+            setTimeout(() => {
+                const status = {
+                    xlTimerClass: typeof window.XLTimerManager !== 'undefined',
+                    universalCarouselClass: typeof window.UniversalCarousel !== 'undefined',
+                    xlTimerInstance: typeof window.xlTimer !== 'undefined',
+                    storyCarousel: typeof window.storyCarousel !== 'undefined',
+                    tiktokCarousel: typeof window.tiktokCarousel !== 'undefined'
+                };
+                
+                document.getElementById('status').innerHTML = `
+                    <strong>🏆 FERRARI STATUS:</strong><br>
+                    XL Timer Class: ${status.xlTimerClass ? '✅' : '❌'}<br>
+                    Universal Carousel Class: ${status.universalCarouselClass ? '✅' : '❌'}<br>
+                    XL Timer Instance: ${status.xlTimerInstance ? '✅' : '❌'}<br>
+                    Story Carousel: ${status.storyCarousel ? '✅' : '❌'}<br>
+                    TikTok Carousel: ${status.tiktokCarousel ? '✅' : '❌'}<br>
+                    <br>
+                    <strong>Overall: ${Object.values(status).every(v => v) ? '🏆 FERRARI LEVEL!' : '⚠️ Issues detected'}</strong>
+                `;
+            }, 1000);
+        }, 1000);
+    </script>
+</body>
+</html>

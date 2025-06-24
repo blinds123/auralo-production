@@ -1,0 +1,22 @@
+{
+  "timestamp": "2025-06-24T03:38:27.384Z",
+  "url": "http://localhost:8000/index.html",
+  "checks": {
+    "blueSectionExists": false,
+    "completeExchangeExists": true,
+    "xlTimerExists": false,
+    "carouselsExist": {
+      "story": true,
+      "tiktok": true,
+      "trustpilot": true
+    },
+    "sections": [
+      {
+        "id": "complete-exchange-section",
+        "classes": "process-section complete-exchange-section",
+        "title": "Complete Your Exchange",
+        "visible": true
+      }
+    ]
+  }
+}

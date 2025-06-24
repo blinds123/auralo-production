@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🖼️ IMAGE LOADING TEST</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .test-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .image-test {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+        }
+        
+        .image-test h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .image-item {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        
+        .image-item img {
+            max-width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        
+        .image-status {
+            margin-top: 10px;
+            padding: 5px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .status-loading { background: #fff3cd; color: #856404; }
+        .status-loaded { background: #d4edda; color: #155724; }
+        .status-error { background: #f8d7da; color: #721c24; }
+        
+        .console-output {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            height: 200px;
+            overflow-y: auto;
+            font-size: 0.9rem;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🖼️ IMAGE LOADING TEST</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">
+            Testing image loading for carousel functionality
+        </p>
+        
+        <div style="text-align: center; margin: 20px 0;">
+            <button onclick="testAllImages()">🧪 Test All Images</button>
+            <button onclick="checkLazyLoading()">🔍 Check Lazy Loading</button>
+            <button onclick="clearConsole()">🧹 Clear Console</button>
+        </div>
+        
+        <div class="image-test">
+            <h3>📖 Story Carousel Images</h3>
+            <div class="image-grid" id="storyImages">
+                <!-- Story images will be loaded here -->
+            </div>
+        </div>
+        
+        <div class="image-test">
+            <h3>🎥 TikTok Review Images</h3>
+            <div class="image-grid" id="tiktokImages">
+                <!-- TikTok images will be loaded here -->
+            </div>
+        </div>
+        
+        <div class="image-test">
+            <h3>⭐ Trustpilot Review Images</h3>
+            <div class="image-grid" id="trustpilotImages">
+                <!-- Trustpilot images will be loaded here -->
+            </div>
+        </div>
+        
+        <div class="console-output" id="consoleOutput">
+            Console output will appear here...
+        </div>
+    </div>
+    
+    <script>
+        const storyImages = [
+            './images/slide-1_final_crushed_under_20kb.jpg',
+            './images/slide-2_final_crushed_under_20kb.jpg',
+            './images/slide-3_captioned_final_under_20kb.jpg',
+            './images/slide-4_final_crushed_under_20kb.jpg',
+            './images/slide-5_final_crushed_under_20kb.jpg',
+            './images/slide-6_final_crushed_under_20kb.jpg',
+            './images/slide-7_final_crushed_under_20kb.jpg'
+        ];
+        
+        const tiktokImages = [
+            './images/compressed_hoodie_review_Ava_30kb.jpg',
+            './images/compressed_hoodie_review_Emma_black_30kb.jpg',
+            './images/compressed_hoodie_review_Madison_30kb.jpg',
+            './images/compressed_hoodie_review_Sophia_30kb.jpg',
+            './images/compressed_hoodie_review_Isabella_30kb.jpg',
+            './images/compressed_hoodie_review_Kristen_v2_30kb.jpg',
+            './images/compressed_hoodie_review_Mia_30kb.jpg'
+        ];
+        
+        const trustpilotImages = [
+            './images/compressed_trustpilot_review_Addison_30kb.jpg',
+            './images/compressed_trustpilot_review_Danielle_30kb.jpg',
+            './images/compressed_trustpilot_review_Emily_30kb.jpg',
+            './images/compressed_trustpilot_review_Lauren_white_30kb.jpg',
+            './images/compressed_trustpilot_review_Morgan_30kb.jpg'
+        ];
+        
+        function log(message) {
+            const output = document.getElementById('consoleOutput');
+            const timestamp = new Date().toLocaleTimeString();
+            output.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+            output.scrollTop = output.scrollHeight;
+        }
+        
+        function clearConsole() {
+            document.getElementById('consoleOutput').innerHTML = 'Console cleared...\\n';
+        }
+        
+        function createImageItem(src, name, containerId) {
+            const container = document.getElementById(containerId);
+            const item = document.createElement('div');
+            item.className = 'image-item';
+            
+            const img = document.createElement('img');
+            const status = document.createElement('div');
+            status.className = 'image-status status-loading';
+            status.textContent = 'Loading...';
+            
+            item.innerHTML = `
+                <div>${name}</div>
+                <img src="${src}" alt="${name}">
+                <div class="image-status status-loading">Loading...</div>
+            `;
+            
+            const imgElement = item.querySelector('img');
+            const statusElement = item.querySelector('.image-status');
+            
+            imgElement.onload = () => {\n                statusElement.textContent = 'Loaded ✅';\n                statusElement.className = 'image-status status-loaded';\n                log(`✅ ${name} loaded successfully`);\n            };\n            \n            imgElement.onerror = () => {\n                statusElement.textContent = 'Error ❌';\n                statusElement.className = 'image-status status-error';\n                log(`❌ ${name} failed to load: ${src}`);\n            };\n            \n            container.appendChild(item);\n        }\n        \n        function testAllImages() {\n            log('🧪 Starting comprehensive image loading test...');\n            \n            // Clear existing content\n            document.getElementById('storyImages').innerHTML = '';\n            document.getElementById('tiktokImages').innerHTML = '';\n            document.getElementById('trustpilotImages').innerHTML = '';\n            \n            // Test story images\n            log('📖 Testing story carousel images...');\n            storyImages.forEach((src, index) => {\n                createImageItem(src, `Story ${index + 1}`, 'storyImages');\n            });\n            \n            // Test TikTok images\n            log('🎥 Testing TikTok review images...');\n            tiktokImages.forEach((src, index) => {\n                const name = src.split('/').pop().split('_')[2] || `TikTok ${index + 1}`;\n                createImageItem(src, name, 'tiktokImages');\n            });\n            \n            // Test Trustpilot images\n            log('⭐ Testing Trustpilot review images...');\n            trustpilotImages.forEach((src, index) => {\n                const name = src.split('/').pop().split('_')[2] || `Trustpilot ${index + 1}`;\n                createImageItem(src, name, 'trustpilotImages');\n            });\n            \n            log('🚀 Image loading test initiated - check results above');\n        }\n        \n        function checkLazyLoading() {\n            log('🔍 Checking lazy loading implementation...');\n            \n            // Check if site uses lazy loading\n            const testUrls = [\n                './index.html'\n            ];\n            \n            fetch('./index.html')\n                .then(response => response.text())\n                .then(html => {\n                    const hasLazyLoading = html.includes('loading=\"lazy\"');\n                    const hasDataSrc = html.includes('data-src=');\n                    \n                    log(`📄 Site analysis:`);\n                    log(`  - Uses loading=\"lazy\": ${hasLazyLoading ? '✅ Yes' : '❌ No'}`);\n                    log(`  - Uses data-src: ${hasDataSrc ? '✅ Yes' : '❌ No'}`);\n                    \n                    if (hasLazyLoading && hasDataSrc) {\n                        log('⚠️ Site uses lazy loading - this might affect carousel initialization');\n                        log('💡 Carousel should wait for images to load before calculating dimensions');\n                    } else {\n                        log('✅ No lazy loading detected - images should load immediately');\n                    }\n                })\n                .catch(error => {\n                    log(`❌ Error checking site: ${error.message}`);\n                });\n        }\n        \n        function checkImageDimensions() {\n            log('📏 Checking image dimensions...');\n            \n            const allImages = document.querySelectorAll('img');\n            allImages.forEach((img, index) => {\n                if (img.complete) {\n                    log(`  Image ${index + 1}: ${img.naturalWidth}x${img.naturalHeight}`);\n                } else {\n                    log(`  Image ${index + 1}: Still loading...`);\n                }\n            });\n        }\n        \n        // Initialize\n        log('🚀 Image loading test interface loaded');\n        log('🎯 Click \"Test All Images\" to check image loading status');\n        \n        // Auto-run tests\n        setTimeout(testAllImages, 1000);\n        setTimeout(checkLazyLoading, 2000);\n    </script>\n</body>\n</html>

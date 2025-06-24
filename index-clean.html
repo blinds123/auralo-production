@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You Are Not For Everyone - $20</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        .test-section { background: #f0f0f0; padding: 20px; margin: 20px 0; border-radius: 8px; }
+        h1 { color: #333; }
+        h2 { color: #666; }
+    </style>
+</head>
+<body>
+    <h1>🚨 CLEAN TEST VERSION</h1>
+    
+    <div class="test-section">
+        <h2>✅ Blue Section Removed</h2>
+        <p>The "60-Second Eco-Checkout" section has been completely removed.</p>
+    </div>
+    
+    <div class="test-section">
+        <h2>🎯 Complete Your Exchange</h2>
+        <p>This is the correct section that should be showing.</p>
+        <div style="background: #fff3cd; padding: 15px; border-radius: 5px; border: 2px solid #ffc107;">
+            <h3>Step 1: Click "Exchange"</h3>
+            <p>👆 Click the exchange button</p>
+        </div>
+        <div style="background: #d4edda; padding: 15px; border-radius: 5px; border: 2px solid #28a745; margin-top: 10px;">
+            <h3>Step 2: Paste Your Code</h3>
+            <p>👈 Paste your secret code</p>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>⏰ XL Timer Test</h2>
+        <p>XL should sell out in 12 seconds with obvious popup.</p>
+        <div id="xl-status">XL Timer: Ready</div>
+    </div>
+    
+    <script>
+        console.log('🧪 Clean test version loaded');
+        
+        // Simple XL timer test
+        setTimeout(() => {
+            document.getElementById('xl-status').textContent = 'XL Timer: SOLD OUT!';
+            
+            // Show test popup
+            const popup = document.createElement('div');
+            popup.innerHTML = `
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 9999; display: flex; align-items: center; justify-content: center;">
+                    <div style="background: linear-gradient(135deg, #ff4757, #ff3742); color: white; padding: 30px; border-radius: 15px; text-align: center; max-width: 400px;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🔥🚨🔥</div>
+                        <h2 style="font-size: 2rem; margin-bottom: 15px;">SIZE XL JUST SOLD OUT!</h2>
+                        <p style="margin-bottom: 20px;">Don't miss out on remaining sizes!</p>
+                        <button onclick="this.closest('div').parentElement.remove()" style="background: white; color: #ff4757; border: none; padding: 15px 25px; border-radius: 25px; font-weight: bold; cursor: pointer;">GOT IT!</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(popup);
+            
+        }, 12000);
+    </script>
+</body>
+</html>
