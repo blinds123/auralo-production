@@ -3771,6 +3771,69 @@
                 console.log('Copy not available');
             }
         }
+        
+        // EMERGENCY BUTTON FIX - WORKING VERSION
+        window.addEventListener('load', function() {
+            console.log('🚨 Emergency button fix loading...');
+            
+            setTimeout(() => {
+                // Fix size selectors
+                const sizeButtons = document.querySelectorAll('.size-option');
+                console.log('Found size buttons:', sizeButtons.length);
+                
+                sizeButtons.forEach((button, index) => {
+                    // Remove existing listeners by cloning
+                    const newButton = button.cloneNode(true);
+                    button.parentNode.replaceChild(newButton, button);
+                    
+                    newButton.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        if (this.disabled || this.classList.contains('sold-out')) {
+                            console.log('Sold out clicked');
+                            return false;
+                        }
+                        
+                        // Remove selected from all
+                        document.querySelectorAll('.size-option').forEach(btn => {
+                            btn.classList.remove('selected');
+                        });
+                        
+                        // Add selected to this one
+                        this.classList.add('selected');
+                        
+                        // Set selected size
+                        const sizeText = this.querySelector('.size-label').textContent;
+                        window.selectedSize = sizeText;
+                        console.log('✅ Size selected:', sizeText);
+                        
+                        return false;
+                    });
+                });
+                
+                // Fix buy buttons
+                const buyButtons = document.querySelectorAll('.buy-now-button');
+                console.log('Found buy buttons:', buyButtons.length);
+                
+                buyButtons.forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        console.log('Buy button clicked');
+                        
+                        const cta = document.querySelector('.cta-section');
+                        if (cta) {
+                            cta.scrollIntoView({behavior: 'smooth', block: 'center'});
+                        }
+                        
+                        return false;
+                    });
+                });
+                
+                console.log('✅ Emergency button fix complete');
+            }, 1000);
+        });
+        }
 
         
         // FIXED BUY BUTTON FUNCTIONALITY
