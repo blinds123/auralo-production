@@ -5087,30 +5087,15 @@
             }
         }
 
-        // iOS/Mobile fix for buy buttons - add touch event listeners
+        // iOS/Mobile fix for buy buttons - ensure they work
         document.addEventListener('DOMContentLoaded', function() {
             const buyButtons = document.querySelectorAll('.buy-now-button');
-            console.log('📱 Found', buyButtons.length, 'buy buttons - adding mobile touch support');
+            console.log('📱 Found', buyButtons.length, 'buy buttons - ensuring functionality');
             
-            buyButtons.forEach((button, index) => {
-                console.log(`📱 Setting up button ${index + 1}:`, button);
-                
-                // Remove any existing onclick attributes to avoid conflicts
-                button.removeAttribute('onclick');
-                
-                // Add both click and touch events for iOS compatibility
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    console.log('🖱️ Click event on buy button', index + 1);
-                    scrollToCheckout();
-                });
-                
-                button.addEventListener('touchend', function(e) {
-                    e.preventDefault();
-                    console.log('📱 Touch event on buy button', index + 1);
-                    scrollToCheckout();
-                });
-            });
+            // Double-check scrollToCheckout function exists
+            if (typeof scrollToCheckout !== 'function') {
+                console.error('❌ scrollToCheckout function not found!');
+            }
         });
 
         // Size chart toggle - Mobile safe
@@ -6582,7 +6567,7 @@
     </script>
     
     <!-- GUARANTEED WORKING SYSTEMS -->
-    <script src="./working-systems.js"></script>
+    <!-- <script src="./working-systems.js"></script> DISABLED - causing notifications -->
 
 </body>
 </html>
