@@ -3952,7 +3952,7 @@
             </div>
             
             <div class="hero-cta">
-                <button class="buy-now-button" onclick="scrollToCheckout()">
+                <button class="buy-now-button">
                     Secure Your Hoodie - $20
                 </button>
                 <p class="hero-cta-text">60-second eco-checkout • Plants 5 trees • Free shipping</p>
@@ -4005,7 +4005,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="scrollToCheckout()">
+                <button class="buy-now-button">
                     Claim This Value - $20
                 </button>
             </div>
@@ -4055,7 +4055,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="scrollToCheckout()">
+                <button class="buy-now-button">
                     I Want This Story - $20
                 </button>
             </div>
@@ -4125,7 +4125,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="scrollToCheckout()">
+                <button class="buy-now-button">
                     Join TikTok Community - $20
                 </button>
             </div>
@@ -4177,7 +4177,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="scrollToCheckout()">
+                <button class="buy-now-button">
                     Verified Reviews - Buy Now $20
                 </button>
             </div>
@@ -4223,7 +4223,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="scrollToCheckout()">
+                <button class="buy-now-button">
                     All Questions Answered - Get Mine $20
                 </button>
             </div>
@@ -4307,7 +4307,7 @@
         </div>
         
         <div class="section-cta">
-            <button class="buy-now-button" onclick="scrollToCheckout()">
+            <button class="buy-now-button">
                 Start My Eco-Checkout - $20
             </button>
         </div>
@@ -4421,7 +4421,7 @@
         
         
         <div class="container" style="padding: var(--space-sm) 0; text-align: center;">
-            <button class="buy-now-button" onclick="scrollToCheckout()">
+            <button class="buy-now-button">
                 Buy Now - $20
             </button>
         </div>
@@ -4454,7 +4454,7 @@
         </div>
         
         <div class="section-cta">
-            <button class="buy-now-button" onclick="scrollToCheckout()">
+            <button class="buy-now-button">
                 Add To My Wardrobe - $20
             </button>
         </div>
@@ -4478,7 +4478,7 @@
                 <p class="future-text">While everyone else paid $200, you got it for $20. <strong>That's the power of being early.</strong></p>
                 
                 <div class="future-cta">
-                    <button class="buy-now-button" onclick="scrollToCheckout()">
+                    <button class="buy-now-button">
                         Make This Reality - $20
                     </button>
                 </div>
@@ -4517,7 +4517,7 @@
         </div>
         
         <div class="section-cta">
-            <button class="buy-now-button" onclick="scrollToCheckout()">
+            <button class="buy-now-button">
                 Risk-Free Purchase - $20
             </button>
         </div>
@@ -4602,7 +4602,7 @@
         </div>
         
         <div class="section-cta">
-            <button class="buy-now-button" onclick="scrollToCheckout()">
+            <button class="buy-now-button">
                 Choose Eco-Checkout - $20
             </button>
         </div>
@@ -5091,40 +5091,6 @@
 
         // DUPLICATE CAROUSEL INITIALIZATION REMOVED - USING NEW SYSTEM ABOVE
 
-        // Smooth scroll to checkout section
-        function scrollToCheckout() {
-            const checkoutSection = document.getElementById('complete-exchange-section');
-            if (!checkoutSection) {
-                console.warn('⚠️ checkout-section not found, trying complete-exchange-section');
-                return;
-            }
-            
-            // ENHANCED MOBILE SCROLL with fallback
-            try {
-                // Try modern smooth scroll
-                if ('scrollBehavior' in document.documentElement.style) {
-                    checkoutSection.scrollIntoView({ 
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
-                } else {
-                    // Fallback for older mobile browsers
-                    checkoutSection.scrollIntoView();
-                }
-                
-                // Add a subtle highlight effect
-                checkoutSection.style.boxShadow = '0 0 20px rgba(33, 150, 243, 0.5)';
-                setTimeout(() => {
-                    checkoutSection.style.boxShadow = '';
-                }, 2000);
-                
-                console.log('✅ Scrolled to animated finger section (mobile-optimized)');
-            } catch (error) {
-                // Ultimate fallback
-                window.scrollTo(0, checkoutSection.offsetTop - 100);
-                console.log('📱 Used fallback scroll for mobile compatibility');
-            }
-        }
 
         // Size chart toggle - Mobile safe
         function toggleSizeChart() {
@@ -5290,10 +5256,6 @@
                         e.preventDefault();
                         console.log('Buy button clicked');
                         
-                        const checkoutSection = document.getElementById('complete-exchange-section');
-                        if (checkoutSection) {
-                            checkoutSection.scrollIntoView({behavior: 'smooth', block: 'center'});
-                        }
                         
                         return false;
                     });
@@ -5306,7 +5268,6 @@
 
         
         // FIXED BUY BUTTON FUNCTIONALITY
-        // Removed duplicate scrollToCheckout function - using the one that targets animated finger section
         
         // Purchase flow - ENHANCED
         function startPurchase() {
@@ -5607,14 +5568,6 @@
                         button.onclick = function() {
                             console.log('🎯 Buy button clicked');
                             
-                            const checkoutSection = document.getElementById('complete-exchange-section');
-                            if (checkoutSection) {
-                                checkoutSection.scrollIntoView({
-                                    behavior: 'smooth',
-                                    block: 'center'
-                                });
-                                console.log('✅ Scrolling to complete exchange section');
-                            }
                         };
                     });
                 }
