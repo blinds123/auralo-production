@@ -4663,6 +4663,37 @@
                          (navigator.maxTouchPoints > 0);
         console.log('📱 Mobile device detected:', isMobile);
         
+        // AGGRESSIVE MOBILE FIX - Disable ALL animations and intervals on mobile
+        if (isMobile) {
+            // Override setInterval to prevent any new intervals
+            const originalSetInterval = window.setInterval;
+            window.setInterval = function(callback, delay) {
+                console.log('❌ setInterval blocked on mobile');
+                return null;
+            };
+            
+            // Override setTimeout for delays over 1 second
+            const originalSetTimeout = window.setTimeout;
+            window.setTimeout = function(callback, delay) {
+                if (delay > 1000) {
+                    console.log('❌ setTimeout blocked on mobile for delay:', delay);
+                    return null;
+                }
+                return originalSetTimeout(callback, delay);
+            };
+            
+            // Disable all CSS animations
+            const style = document.createElement('style');
+            style.innerHTML = `
+                * {
+                    animation: none !important;
+                    transition: none !important;
+                    transform: none !important;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
         // Countdown Timer - Fixed to show 72 hours countdown
         function updateCountdown() {
             // Get saved end time or create new one 72 hours from now
@@ -5249,7 +5280,10 @@
                 textArea.style.position = 'fixed';
                 textArea.style.opacity = '0';
                 document.body.appendChild(textArea);
-                textArea.focus();
+                // Skip focus on mobile to prevent auto-scroll
+                if (!isMobile) {
+                    textArea.focus();
+                }
                 textArea.select();
                 const successful = document.execCommand('copy');
                 document.body.removeChild(textArea);
