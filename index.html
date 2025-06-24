@@ -1762,7 +1762,7 @@
         /* Arrow pointing at wallet address field - BOTTOM SECTION */
         .arrow-wallet-bottom {
             top: 27%;
-            right: -98px;
+            right: -23px; /* Moved 2cm to the left (75px) from -98px */
         }
         
         .arrow-wallet-bottom::before {
@@ -1793,7 +1793,7 @@
             
             .arrow-wallet, .arrow-wallet-bottom {
                 top: 22% !important;
-                right: -88px !important;
+                right: -13px !important; /* Moved 2cm to the left for mobile too */
             }
             
             .arrow-wallet::before, .arrow-wallet-bottom::before {
@@ -1802,9 +1802,9 @@
         }
         
         /* SPACING ADJUSTMENTS FOR STEP 2 */
-        /* Move Step 2 higher to reduce white space between steps */
+        /* Move Step 2 much higher to reduce white space between steps */
         .process-step:nth-child(3) {
-            margin-top: -20px !important; /* Move entire Step 2 higher */
+            margin-top: -40px !important; /* Move entire Step 2 much higher for phone appeal */
         }
         
         .process-step:nth-child(3) .step-number {
@@ -1857,8 +1857,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 16px 0 8px 0; /* Reduced spacing to bring steps closer */
-            padding: 8px 0;
+            margin: 8px 0 4px 0; /* Much tighter spacing for phone appeal */
+            padding: 4px 0;
         }
         
         .connector-arrow svg {
