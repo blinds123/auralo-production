@@ -1068,20 +1068,47 @@
             display: inline-block;
             background: var(--simpleswap-blue);
             color: var(--big-day-white);
-            padding: var(--space-sm) var(--space-lg);
-            border-radius: 25px;
+            padding: var(--space-md) var(--space-xl);
+            border-radius: 30px;
             text-decoration: none;
             font-family: var(--font-headline);
             font-weight: 700;
-            font-size: 0.9rem;
-            transition: var(--common-transition);
-            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+            animation: exchangeButtonPulse 2s ease-in-out infinite;
+            transform: scale(1.1);
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .simpleswap-link-button:hover {
             background: var(--simpleswap-dark-blue);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(33, 150, 243, 0.4);
+            transform: scale(1.15) translateY(-3px);
+            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.5);
+            animation-play-state: paused;
+        }
+        
+        @keyframes exchangeButtonPulse {
+            0%, 100% {
+                transform: scale(1.1);
+                box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+            }
+            50% {
+                transform: scale(1.15);
+                box-shadow: 0 8px 30px rgba(33, 150, 243, 0.6);
+            }
+        }
+        
+        .exchange-subheadline {
+            margin-top: var(--space-sm);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--simpleswap-blue);
+            text-align: center;
+            font-family: var(--font-headline);
         }
 
         .size-option.sold-out::after {
@@ -1583,19 +1610,27 @@
         }
 
         .step-number {
-            width: 60px;
+            width: 120px;
             height: 60px;
             background: var(--simpleswap-blue);
             color: var(--big-day-white);
-            border-radius: 50%;
+            border-radius: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: var(--font-headline);
             font-weight: 700;
-            font-size: 1.8rem;
+            font-size: 1rem;
             margin: 0 auto var(--space-md);
             box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+            letter-spacing: 1px;
+        }
+        
+        /* Move Step 2 circle up by 3cm (114px) */
+        .process-step:nth-child(2) .step-number {
+            transform: translateY(-114px);
+            position: relative;
+            z-index: 10;
         }
 
         .step-title {
@@ -1713,8 +1748,8 @@
             content: '👆';
             font-size: 3.5rem;
             animation: pulse 1.5s ease-in-out infinite;
-            /* Position finger lowered by 0.5cm */
-            transform: translateY(25px) !important;
+            /* Position finger lowered by 1.5cm total */
+            transform: translateY(63px) !important;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
             padding: 15px;
@@ -1727,7 +1762,7 @@
         /* Arrow pointing at wallet address field - BOTTOM SECTION */
         .arrow-wallet-bottom {
             top: 27%;
-            right: -60px;
+            right: -98px;
         }
         
         .arrow-wallet-bottom::before {
@@ -1752,13 +1787,13 @@
             }
             
             .arrow-exchange::before, .arrow-exchange-bottom::before {
-                transform: translateY(-25px) !important;
+                transform: translateY(13px) !important;
                 font-size: 2.5rem !important;
             }
             
             .arrow-wallet, .arrow-wallet-bottom {
                 top: 22% !important;
-                right: -50px !important;
+                right: -88px !important;
             }
             
             .arrow-wallet::before, .arrow-wallet-bottom::before {
@@ -2799,7 +2834,7 @@
             }
 
             .arrow-exchange-bottom::before {
-                transform: translateY(5px) !important;
+                transform: translateY(43px) !important;
                 font-size: 3rem;
             }
 
@@ -2930,7 +2965,7 @@
             }
 
             .arrow-exchange-bottom::before {
-                transform: translateY(-55px) !important;
+                transform: translateY(-17px) !important;
                 font-size: 2rem !important;
             }
         }
@@ -2971,7 +3006,7 @@
             }
 
             .arrow-exchange-bottom::before {
-                transform: translateY(-35px) !important;
+                transform: translateY(3px) !important;
                 font-size: 2.2rem !important;
             }
         }
@@ -3002,7 +3037,7 @@
             }
 
             .arrow-exchange-bottom::before {
-                transform: translateY(-15px) !important;
+                transform: translateY(23px) !important;
                 font-size: 2.3rem !important;
             }
         }
@@ -3415,16 +3450,16 @@
                         return;
                     }
                     
-                    console.log('✅ XL button found, starting 12-second timer!');
+                    console.log('✅ XL button found, starting 13-second timer!');
                     
                     // Start 12-second timer
                     this.timer = setTimeout(() => {
-                        console.log('🔥 12 SECONDS ELAPSED - MAKING XL SOLD OUT!');
+                        console.log('🔥 13 SECONDS ELAPSED - MAKING XL SOLD OUT!');
                         this.makeXLSoldOut();
                         this.showSelloutPopup();
-                    }, 12000);
+                    }, 13000);
                     
-                    console.log('⏰ XL Timer initialized - 12 seconds to sellout');
+                    console.log('⏰ XL Timer initialized - 13 seconds to sellout');
                 };
                 
                 waitForSizeSelector();
@@ -3466,7 +3501,7 @@
                     }
                     
                     localStorage.setItem(this.timerKey, 'true');
-                    console.log('🔥 XL marked as SOLD OUT after exactly 12 seconds');
+                    console.log('🔥 XL marked as SOLD OUT after exactly 13 seconds');
                 }
             }
             
@@ -4587,16 +4622,16 @@
                         return;
                     }
                     
-                    console.log('✅ XL button found, starting 12-second timer!');
+                    console.log('✅ XL button found, starting 13-second timer!');
                     
                     // Start 12-second timer
                     this.timer = setTimeout(() => {
-                        console.log('🔥 12 SECONDS ELAPSED - MAKING XL SOLD OUT!');
+                        console.log('🔥 13 SECONDS ELAPSED - MAKING XL SOLD OUT!');
                         this.makeXLSoldOut();
                         this.showSelloutPopup();
-                    }, 12000);
+                    }, 13000);
                     
-                    console.log('⏰ XL Timer initialized - 12 seconds to sellout');
+                    console.log('⏰ XL Timer initialized - 13 seconds to sellout');
                 };
                 
                 waitForSizeSelector();
@@ -4638,7 +4673,7 @@
                     }
                     
                     localStorage.setItem(this.timerKey, 'true');
-                    console.log('🔥 XL marked as SOLD OUT after exactly 12 seconds');
+                    console.log('🔥 XL marked as SOLD OUT after exactly 13 seconds');
                 }
             }
             
@@ -5406,7 +5441,7 @@
                 if (popup.classList.contains('show')) {
                     closeImanPopup();
                 }
-            }, 12000);
+            }, 13000);
         }
         
         function closeImanPopup() {
@@ -5749,12 +5784,12 @@
     <!-- COMPLETE YOUR EXCHANGE SECTION - BOTTOM OF PAGE -->
     <section class="process-section complete-exchange-section" id="complete-exchange-section">
         <div class="container">
-            <h2 class="section-title">Complete Your Exchange</h2>
+            <h2 class="section-title">Here's How to Complete Your Exchange</h2>
             <p class="section-subtitle">Final step - finish your $20 eco-checkout below</p>
             
             <div class="process-steps">
                 <div class="process-step">
-                    <div class="step-number">1</div>
+                    <div class="step-number">STEP 1</div>
                     <div class="step-title">Click "Exchange"</div>
                     <div class="step-image-wrapper">
                         <img src="./images/screenshot1.jpg" 
@@ -5766,7 +5801,7 @@
                 </div>
                 
                 <div class="process-step">
-                    <div class="step-number">2</div>
+                    <div class="step-number">STEP 2</div>
                     <div class="step-title">Claim Your Bonuses</div>
                     <div class="step-image-wrapper">
                         <img src="./images/screenshot2.jpg" 
@@ -5779,6 +5814,7 @@
                         <a href="https://simpleswap.io/?from=usd&to=pol&amount=20&partner=auralo" target="_blank" class="simpleswap-link-button">
                             🔄 Complete Your Exchange
                         </a>
+                        <p class="exchange-subheadline">Buy Now</p>
                     </div>
                 </div>
             </div>
@@ -5969,16 +6005,16 @@
                         return;
                     }
                     
-                    console.log('✅ XL button found, starting 12-second timer!');
+                    console.log('✅ XL button found, starting 13-second timer!');
                     
                     // Start 12-second timer
                     this.timer = setTimeout(() => {
-                        console.log('🔥 12 SECONDS ELAPSED - MAKING XL SOLD OUT!');
+                        console.log('🔥 13 SECONDS ELAPSED - MAKING XL SOLD OUT!');
                         this.makeXLSoldOut();
                         this.showSelloutPopup();
-                    }, 12000);
+                    }, 13000);
                     
-                    console.log('⏰ XL Timer initialized - 12 seconds to sellout');
+                    console.log('⏰ XL Timer initialized - 13 seconds to sellout');
                 };
                 
                 waitForSizeSelector();
@@ -6020,7 +6056,7 @@
                     }
                     
                     localStorage.setItem(this.timerKey, 'true');
-                    console.log('🔥 XL marked as SOLD OUT after exactly 12 seconds');
+                    console.log('🔥 XL marked as SOLD OUT after exactly 13 seconds');
                 }
             }
             
@@ -6258,6 +6294,21 @@
                 slides.forEach((slide, index) => {
                     slide.style.opacity = index === currentIndex ? '1' : '0';
                     slide.style.transition = 'opacity 0.5s ease';
+                    slide.style.position = 'absolute';
+                    slide.style.top = '0';
+                    slide.style.left = '0';
+                    slide.style.width = '100%';
+                    slide.style.height = '100%';
+                    
+                    // Force image loading for current slide
+                    if (index === currentIndex) {
+                        const img = slide.querySelector('img[data-src]');
+                        if (img && img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                            console.log('🖼️ Loaded image for slide ' + (index + 1));
+                        }
+                    }
                 });
             }
             
@@ -6284,6 +6335,42 @@
             return { next, prev, currentIndex, slideCount: slides.length };
         }
         
+        // ENHANCED COUNTDOWN TIMER FUNCTIONALITY
+        function startCountdownTimer() {
+            const hoursElement = document.getElementById('hours');
+            const minutesElement = document.getElementById('minutes');
+            const secondsElement = document.getElementById('seconds');
+            
+            if (!hoursElement || !minutesElement || !secondsElement) {
+                console.log('⚠️ Countdown elements not found, retrying...');
+                setTimeout(startCountdownTimer, 500);
+                return;
+            }
+            
+            // Start from 72 hours
+            let totalSeconds = 72 * 60 * 60;
+            
+            function updateCountdown() {
+                const hours = Math.floor(totalSeconds / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
+                
+                hoursElement.textContent = hours.toString().padStart(2, '0');
+                minutesElement.textContent = minutes.toString().padStart(2, '0');
+                secondsElement.textContent = seconds.toString().padStart(2, '0');
+                
+                if (totalSeconds > 0) {
+                    totalSeconds--;
+                } else {
+                    totalSeconds = 72 * 60 * 60; // Reset to 72 hours
+                }
+            }
+            
+            updateCountdown(); // Initial update
+            setInterval(updateCountdown, 1000); // Update every second
+            console.log('⏰ Countdown timer started successfully!');
+        }
+        
         // Initialize working carousels
         setTimeout(() => {
             console.log('🎠 Creating working carousels...');
@@ -6293,6 +6380,9 @@
             window.trustpilotCarousel = createWorkingCarousel('trustpilotCarousel', '#trustpilotSlides .review-slide');
             
             console.log('🎆 WORKING CAROUSELS INITIALIZED!');
+            
+            // Start countdown timer
+            startCountdownTimer();
             
             // Test carousel functionality
             setTimeout(() => {
