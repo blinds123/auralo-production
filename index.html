@@ -3042,10 +3042,7 @@
                 max-width: 280px;
             }
 
-            .arrow-exchange-bottom::before {
-                transform: translateY(-17px) !important;
-                font-size: 2rem !important;
-            }
+            /* Finger positioning now handled by mobile JavaScript */
         }
 
         /* Medium Mobile: 376px - 414px */
@@ -3083,10 +3080,7 @@
                 max-width: 300px;
             }
 
-            .arrow-exchange-bottom::before {
-                transform: translateY(3px) !important;
-                font-size: 2.2rem !important;
-            }
+            /* Finger positioning now handled by mobile JavaScript */
         }
 
         /* Large Mobile: 415px - 480px */
@@ -3114,10 +3108,7 @@
                 max-width: 320px;
             }
 
-            .arrow-exchange-bottom::before {
-                transform: translateY(23px) !important;
-                font-size: 2.3rem !important;
-            }
+            /* Finger positioning now handled by mobile JavaScript */
         }
 
         /* ============================= */
@@ -3311,38 +3302,8 @@
                 pointer-events: none !important;
             }
             
-            /* Mobile-optimized finger positions - absolute positioning */
+            /* Finger positioning handled by mobile JavaScript - removed conflicting CSS */
             .step-image-wrapper {
-                position: relative !important;
-            }
-            
-            .arrow-exchange-bottom {
-                position: absolute !important;
-                bottom: 15% !important;
-                left: 50% !important;
-                transform: translateX(-50%) !important;
-                z-index: 10 !important;
-            }
-            
-            .arrow-exchange-bottom::before {
-                font-size: 1.8rem !important;
-                transform: translateY(0px) !important;
-                padding: 4px !important;
-                position: relative !important;
-            }
-            
-            .arrow-wallet-bottom {
-                position: absolute !important;
-                top: 45% !important;
-                right: 15% !important;
-                transform: none !important;
-                z-index: 10 !important;
-            }
-            
-            .arrow-wallet-bottom::before {
-                font-size: 1.8rem !important;
-                transform: translateY(0px) !important;
-                padding: 4px !important;
                 position: relative !important;
             }
             
@@ -3375,25 +3336,7 @@
             }
         }
 
-        /* Extra small phones - more precise finger positioning */
-        @media (max-width: 480px) {
-            .arrow-exchange-bottom {
-                bottom: 12% !important;
-                left: 50% !important;
-            }
-            
-            .arrow-exchange-bottom::before {
-                font-size: 1.6rem !important;
-            }
-            
-            .arrow-wallet-bottom {
-                top: 40% !important;
-                right: 10% !important;
-            }
-            
-            .arrow-wallet-bottom::before {
-                font-size: 1.6rem !important;
-            }
+        /* Removed conflicting finger positioning rules - now handled by mobile JavaScript */
             
             /* Tighter spacing for small phones */
             .bonus-code-section {
@@ -5024,23 +4967,37 @@
             // Disable problematic features on mobile
             const style = document.createElement('style');
             style.innerHTML = `
-                /* Disable animations and transitions */
+                /* Disable auto-scroll animations and transitions */
                 * {
                     animation: none !important;
                     transition: none !important;
                 }
                 
-                /* Disable transforms on problem elements */
-                .arrow-pointer,
-                [class*="carousel"] {
-                    transform: none !important;
-                }
-                
-                /* Hide finger pointers - they were causing issues */
-                .arrow-pointer,
+                /* Keep finger pointers visible with accurate positioning on mobile */
                 .arrow-exchange-bottom,
                 .arrow-wallet-bottom {
-                    display: none !important;
+                    display: block !important;
+                    visibility: visible !important;
+                    opacity: 1 !important;
+                    pointer-events: none !important;
+                    z-index: 50 !important;
+                }
+                
+                /* Accurate mobile finger positioning - consolidated rules */
+                .arrow-exchange-bottom {
+                    position: absolute !important;
+                    bottom: 15% !important;
+                    left: 50% !important;
+                    transform: translateX(-50%) !important;
+                    font-size: 1.8rem !important;
+                }
+                
+                .arrow-wallet-bottom {
+                    position: absolute !important;
+                    top: 45% !important;
+                    right: 15% !important;
+                    transform: none !important;
+                    font-size: 1.8rem !important;
                 }
                 
                 /* Ensure checkout section is visible */
@@ -5050,7 +5007,7 @@
             `;
             document.head.appendChild(style);
             
-            console.log('📱 Mobile optimizations applied');
+            console.log('📱 Mobile optimizations applied with accurate finger positioning');
         }
         
         // Countdown Timer - Fixed to show 72 hours countdown
