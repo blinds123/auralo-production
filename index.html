@@ -3329,6 +3329,25 @@
                 transform: translateY(-10px) !important;
                 padding: 10px !important;
             }
+            
+            /* Mobile-optimized final button styling */
+            .simpleswap-link-button {
+                padding: 15px 20px !important;
+                font-size: 1rem !important;
+                line-height: 1.2 !important;
+                text-align: center !important;
+                min-height: 70px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+            
+            .button-text-mobile {
+                display: block !important;
+                line-height: 1.3 !important;
+                font-size: 0.95rem !important;
+                font-weight: 600 !important;
+            }
         }
 
         /* Button and Interactive Element Enhancement */
@@ -6089,7 +6108,11 @@
                     </div>
                     <div class="simpleswap-direct-link">
                         <a href="https://simpleswap.io/?from=usd&to=pol&amount=20&partner=auralo" target="_blank" class="simpleswap-link-button">
-                            🔄 Complete Your Exchange
+                            <span class="button-text-mobile">
+                                Copy Your Custom<br>
+                                Coupon Code &<br>
+                                Complete Your Exchange
+                            </span>
                         </a>
                         <p class="exchange-subheadline">Buy Now</p>
                     </div>
