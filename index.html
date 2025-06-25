@@ -3249,12 +3249,10 @@
             }
         }
 
-        /* Hide ALL popups on mobile devices to prevent auto-scroll */
+        /* Hide problematic popups on mobile devices to prevent auto-scroll */
         @media (max-width: 768px) {
             .butler-popup,
-            .xl-simple-popup,
             .iman-popup,
-            [class*="popup"],
             .social-notification,
             .notification-popup,
             #imanPopup,
@@ -3262,6 +3260,14 @@
                 display: none !important;
                 visibility: hidden !important;
                 opacity: 0 !important;
+            }
+            
+            /* Allow XL sold out popup to show on mobile */
+            .xl-simple-popup {
+                display: flex !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                z-index: 999999 !important;
             }
             
             /* Enable carousel functionality on mobile */
@@ -4339,8 +4345,8 @@
             <h2 class="section-title">Why This Hoodie Exists</h2>
             
             <div class="story-carousel" id="storyCarousel">
-                <button class="carousel-nav carousel-nav-left" aria-label="Previous slide">‹</button>
-                <button class="carousel-nav carousel-nav-right" aria-label="Next slide">›</button>
+                <button class="carousel-nav carousel-nav-left" onclick="prevStorySlide()" aria-label="Previous slide">‹</button>
+                <button class="carousel-nav carousel-nav-right" onclick="nextStorySlide()" aria-label="Next slide">›</button>
                 <div class="story-slides" id="storySlides">
                     <div class="story-slide">
                         <img src="./images/slide-1_final_crushed_under_20kb.jpg" alt="Story 1">
@@ -4389,8 +4395,8 @@
             <h2 class="section-title">What People Are Saying on TikTok</h2>
             
             <div class="review-carousel" id="tiktokCarousel">
-                <button class="carousel-nav carousel-nav-left" aria-label="Previous slide">‹</button>
-                <button class="carousel-nav carousel-nav-right" aria-label="Next slide">›</button>
+                <button class="carousel-nav carousel-nav-left" onclick="prevReviewSlide()" aria-label="Previous slide">‹</button>
+                <button class="carousel-nav carousel-nav-right" onclick="nextReviewSlide()" aria-label="Next slide">›</button>
                 <div class="review-slides" id="tiktokSlides">
                     <div class="review-slide">
                         <div class="review-card">
@@ -4459,8 +4465,8 @@
             <h2 class="section-title">What People Are Saying on Trustpilot</h2>
             
             <div class="review-carousel" id="trustpilotCarousel">
-                <button class="carousel-nav carousel-nav-left" aria-label="Previous slide">‹</button>
-                <button class="carousel-nav carousel-nav-right" aria-label="Next slide">›</button>
+                <button class="carousel-nav carousel-nav-left" onclick="prevReviewSlide()" aria-label="Previous slide">‹</button>
+                <button class="carousel-nav carousel-nav-right" onclick="nextReviewSlide()" aria-label="Next slide">›</button>
                 <div class="review-slides" id="trustpilotSlides">
                     <div class="review-slide">
                         <div class="review-card">
@@ -5440,7 +5446,7 @@
                     if (!this.slides) {
                         console.warn(`  ❌ Slides container "${this.slidesId}" not found`);
                         if (attempts < maxAttempts) {
-                            // setTimeout(tryInit, 500); // DISABLED TO PREVENT JITTER
+                            setTimeout(tryInit, 300); // RE-ENABLED WITH SHORTER DELAY
                             return;
                         }
                         console.error(`❌ FAILED: Carousel ${this.containerId} slides not found after ${maxAttempts} attempts`);
@@ -5450,7 +5456,7 @@
                     if (this.controls.length === 0) {
                         console.warn(`  ❌ Controls "${this.controlsSelector}" not found`);
                         if (attempts < maxAttempts) {
-                            // setTimeout(tryInit, 500); // DISABLED TO PREVENT JITTER
+                            setTimeout(tryInit, 300); // RE-ENABLED WITH SHORTER DELAY
                             return;
                         }
                         console.error(`❌ FAILED: Carousel ${this.containerId} controls not found after ${maxAttempts} attempts`);
@@ -5471,7 +5477,7 @@
                     } catch (error) {
                         console.error(`  ❌ ${this.containerId} initialization error:`, error);
                         if (attempts < maxAttempts) {
-                            // setTimeout(tryInit, 1000); // DISABLED TO PREVENT JITTER
+                            setTimeout(tryInit, 500); // RE-ENABLED WITH SHORTER DELAY
                             return;
                         }
                         console.error(`❌ FAILED: Carousel ${this.containerId} failed after ${maxAttempts} attempts`);
