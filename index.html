@@ -64,23 +64,25 @@
         }
         
         html {
-            overflow-x: hidden;
-            max-width: 100vw;
+            /* overflow-x: hidden; TESTING FOR STUTTER FIX */
+            /* max-width: 100vw; */
             scroll-behavior: auto; /* Disable smooth scrolling for iPhone */
         }
         
-        /* Subtle grain texture */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.02;
-            z-index: 1;
-            pointer-events: none;
-            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" /%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" /%3E%3C/svg%3E');
+        /* Subtle grain texture - DISABLED ON MOBILE TO PREVENT STUTTER */
+        @media (min-width: 769px) {
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0.02;
+                z-index: 1;
+                pointer-events: none;
+                background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" /%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" /%3E%3C/svg%3E');
+            }
         }
 
         .container {
@@ -875,7 +877,7 @@
             z-index: 1000;
             animation: tooltipAppear 0.2s var(--common-cubic-bezier);
             box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(15px) saturate(1.2);
+            /* backdrop-filter: blur(15px) saturate(1.2); DISABLED FOR MOBILE PERFORMANCE */
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
         
@@ -2382,6 +2384,7 @@
             .comparison-table {
                 overflow-x: auto;
                 /* -webkit-overflow-scrolling: touch; DISABLED FOR IPHONE SCROLL FIX */
+                overflow-scrolling: auto; /* Force standard scrolling */
             }
             
             .comparison-cell {
@@ -4663,35 +4666,33 @@
                          (navigator.maxTouchPoints > 0);
         console.log('📱 Mobile device detected:', isMobile);
         
-        // AGGRESSIVE MOBILE FIX - Disable ALL animations and intervals on mobile
+        // MOBILE OPTIMIZATIONS - Keep animations disabled
         if (isMobile) {
-            // Override setInterval to prevent any new intervals
-            const originalSetInterval = window.setInterval;
-            window.setInterval = function(callback, delay) {
-                console.log('❌ setInterval blocked on mobile');
-                return null;
-            };
-            
-            // Override setTimeout for delays over 1 second
-            const originalSetTimeout = window.setTimeout;
-            window.setTimeout = function(callback, delay) {
-                if (delay > 1000) {
-                    console.log('❌ setTimeout blocked on mobile for delay:', delay);
-                    return null;
-                }
-                return originalSetTimeout(callback, delay);
-            };
-            
-            // Disable all CSS animations
+            // Disable problematic features on mobile
             const style = document.createElement('style');
             style.innerHTML = `
+                /* Disable animations and transitions */
                 * {
                     animation: none !important;
                     transition: none !important;
+                }
+                
+                /* Disable transforms on problem elements */
+                .arrow-pointer,
+                [class*="carousel"] {
                     transform: none !important;
+                }
+                
+                /* Hide finger pointers - they were causing issues */
+                .arrow-pointer,
+                .arrow-exchange-bottom,
+                .arrow-wallet-bottom {
+                    display: none !important;
                 }
             `;
             document.head.appendChild(style);
+            
+            console.log('📱 Mobile optimizations applied');
         }
         
         // Countdown Timer - Fixed to show 72 hours countdown
@@ -5739,7 +5740,7 @@
                                 z-index: 10000;
                                 max-width: calc(100vw - 40px);
                                 box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-                                backdrop-filter: blur(15px) saturate(1.2);
+                                /* backdrop-filter: blur(15px) saturate(1.2); DISABLED FOR MOBILE PERFORMANCE */
                                 border: 1px solid rgba(255, 255, 255, 0.15);
                                 animation: tooltipAppear 0.3s ease;
                             `;
@@ -5937,10 +5938,11 @@
     </script>
 
     <!-- COMPLETE YOUR EXCHANGE SECTION - BOTTOM OF PAGE -->
-    <section class="process-section complete-exchange-section" id="complete-exchange-section">
-        <div class="container">
-            <h2 class="section-title">Here's How to Complete Your Exchange</h2>
-            <p class="section-subtitle">Final step - finish your $20 eco-checkout below</p>
+    <!-- TEMPORARILY SIMPLIFIED FOR MOBILE DEBUG -->
+    <section class="process-section complete-exchange-section" id="complete-exchange-section" style="display: block !important; background: #ffeaa7 !important; padding: 20px !important;">
+        <div class="container" style="transform: none !important;">
+            <h2>Complete Your Exchange</h2>
+            <p>Final step below</p>
             
             <div class="process-steps">
                 <div class="process-step">
