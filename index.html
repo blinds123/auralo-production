@@ -4689,10 +4689,26 @@
                 .arrow-wallet-bottom {
                     display: none !important;
                 }
+                
+                /* Ensure checkout section is visible */
+                #complete-exchange-section {
+                    display: block !important;
+                }
             `;
             document.head.appendChild(style);
             
             console.log('📱 Mobile optimizations applied');
+            
+            // Fix scrollToCheckout for mobile - use instant scroll
+            window.scrollToCheckout = function() {
+                const checkoutSection = document.getElementById('complete-exchange-section');
+                if (checkoutSection) {
+                    // Use instant scrolling on mobile
+                    const y = checkoutSection.offsetTop - 50;
+                    window.scrollTo(0, y);
+                    console.log('📱 Scrolled to checkout (mobile)');
+                }
+            };
         }
         
         // Countdown Timer - Fixed to show 72 hours countdown
@@ -5938,11 +5954,10 @@
     </script>
 
     <!-- COMPLETE YOUR EXCHANGE SECTION - BOTTOM OF PAGE -->
-    <!-- TEMPORARILY SIMPLIFIED FOR MOBILE DEBUG -->
-    <section class="process-section complete-exchange-section" id="complete-exchange-section" style="display: block !important; background: #ffeaa7 !important; padding: 20px !important;">
-        <div class="container" style="transform: none !important;">
-            <h2>Complete Your Exchange</h2>
-            <p>Final step below</p>
+    <section class="process-section complete-exchange-section" id="complete-exchange-section">
+        <div class="container">
+            <h2 class="section-title">Here's How to Complete Your Exchange</h2>
+            <p class="section-subtitle">Final step - finish your $20 eco-checkout below</p>
             
             <div class="process-steps">
                 <div class="process-step">
