@@ -3358,6 +3358,15 @@
                 font-size: 0.95rem !important;
                 font-weight: 600 !important;
             }
+            
+            /* Mobile step spacing adjustments */
+            .process-steps {
+                gap: 20px !important;
+            }
+            
+            .step-title {
+                margin-bottom: 18px !important;
+            }
         }
 
         /* Extra small phones - more precise finger positioning */
@@ -3395,6 +3404,11 @@
             .bonus-code-section code {
                 font-size: 9px !important;
                 padding: 6px !important;
+            }
+            
+            /* Adjust step spacing for mobile */
+            .process-step .step-title {
+                margin-bottom: 15px !important;
             }
         }
 
@@ -6128,11 +6142,12 @@
                     </div>
                 </div>
                 
-                <!-- Reduced spacing for Step 2 -->
+                <!-- Proper spacing between steps -->
+                <div style="margin: 40px 0;"></div>
                 
                 <div class="process-step">
                     <div class="step-number">STEP 2</div>
-                    <div class="step-title">Claim Your Bonuses</div>
+                    <div class="step-title" style="margin-bottom: 20px;">Claim Your Bonuses</div>
                     <div class="step-image-wrapper">
                         <img src="./images/screenshot2.jpg" 
                              alt="Paste the code"
