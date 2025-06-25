@@ -66,7 +66,7 @@
         html {
             /* overflow-x: hidden; TESTING FOR STUTTER FIX */
             /* max-width: 100vw; */
-            scroll-behavior: auto; /* Disable smooth scrolling for iPhone */
+            scroll-behavior: smooth; /* Enable smooth scrolling */
         }
         
         /* Subtle grain texture - DISABLED ON MOBILE TO PREVENT STUTTER */
@@ -3557,12 +3557,12 @@
                     
                     console.log('✅ XL button found, starting 13-second timer!');
                     
-                    // Start 12-second timer - DISABLED TO PREVENT POPUPS
-                    /* this.timer = setTimeout(() => {
+                    // Start 13-second timer
+                    this.timer = setTimeout(() => {
                         console.log('🔥 13 SECONDS ELAPSED - MAKING XL SOLD OUT!');
                         this.makeXLSoldOut();
                         this.showSelloutPopup();
-                    }, 13000); */
+                    }, 13000);
                     
                     console.log('⏰ XL Timer initialized - 13 seconds to sellout');
                 };
@@ -3641,8 +3641,8 @@
                             max-width: 400px;
                             width: 100%;
                             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-                            transform: scale(0);
-                            animation: popIn 0.3s ease forwards;
+                            transform: scale(1);
+                            /* animation: popIn 0.3s ease forwards; */
                         ">
                             <div style="font-size: 4rem; margin-bottom: 20px; /* animation: bounce 1s infinite; DISABLED FOR TESTING */">🔥🚨🔥</div>
                             <h2 style="font-size: 2.2rem; margin-bottom: 15px; font-weight: 900; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">SIZE XL JUST SOLD OUT!</h2>
@@ -3658,7 +3658,7 @@
                                 cursor: pointer;
                                 box-shadow: 0 4px 15px rgba(0,0,0,0.2);
                                 transition: all 0.3s ease;
-                            ">GOT IT!</button>
+                            ">GOT IT!</a>
                         </div>
                     </div>
                 \`;
@@ -3903,7 +3903,7 @@
     <!-- Test with inline code like blue buttons -->
     <button onclick="document.getElementById('complete-exchange-section').scrollIntoView()" style="position: fixed; bottom: 20px; left: 20px; background: blue; color: white; padding: 15px; border: none; border-radius: 5px; z-index: 9999;">
         TEST BLUE
-    </button>
+    </a>
     
     <section class="hero">
         <div class="container">
@@ -3942,27 +3942,27 @@
                     <button class="size-option sold-out" disabled>
                         <span class="size-label">XS</span>
                         <span class="size-status">Sold Out</span>
-                    </button>
+                    </a>
                     <button class="size-option available" data-size="S">
                         <span class="size-label">S</span>
                         <span class="size-status">Available</span>
-                    </button>
+                    </a>
                     <button class="size-option available selected" data-size="M">
                         <span class="size-label">M</span>
                         <span class="size-status">Most Popular</span>
-                    </button>
+                    </a>
                     <button class="size-option available" data-size="L">
                         <span class="size-label">L</span>
                         <span class="size-status">Available</span>
-                    </button>
+                    </a>
                     <button class="size-option available" data-size="XL">
                         <span class="size-label">XL</span>
                         <span class="size-status">Available</span>
-                    </button>
+                    </a>
                     <button class="size-option sold-out" disabled>
                         <span class="size-label">XXL</span>
                         <span class="size-status">Sold Out</span>
-                    </button>
+                    </a>
                 </div>
                 
                 
@@ -4034,9 +4034,9 @@
             </div>
             
             <div class="hero-cta">
-                <button class="buy-now-button" onclick="document.getElementById('complete-exchange-section').scrollIntoView()">
+                <a href="#complete-exchange-section" class="buy-now-button" style="text-decoration: none; display: inline-block;">
                     Secure Your Hoodie - $20
-                </button>
+                </a>
                 <p class="hero-cta-text">60-second eco-checkout • Plants 5 trees • Free shipping</p>
             </div>
         </div>
@@ -4087,9 +4087,9 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="document.getElementById('complete-exchange-section').scrollIntoView()">
+                <a href="#complete-exchange-section" class="buy-now-button" style="text-decoration: none; display: inline-block;">
                     Claim This Value - $20
-                </button>
+                </a>
             </div>
         </div>
     </section>
@@ -4100,8 +4100,8 @@
             <h2 class="section-title">Why This Hoodie Exists</h2>
             
             <div class="story-carousel" id="storyCarousel">
-                <button class="carousel-nav carousel-nav-left" onclick="window.storyCarousel?.prev()" aria-label="Previous slide">‹</button>
-                <button class="carousel-nav carousel-nav-right" onclick="window.storyCarousel?.next()" aria-label="Next slide">›</button>
+                <button class="carousel-nav carousel-nav-left" onclick="window.storyCarousel?.prev()" aria-label="Previous slide">‹</a>
+                <button class="carousel-nav carousel-nav-right" onclick="window.storyCarousel?.next()" aria-label="Next slide">›</a>
                 <div class="story-slides" id="storySlides">
                     <div class="story-slide">
                         <img loading="lazy" data-src="./images/slide-1_final_crushed_under_20kb.jpg" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3Crect width='1' height='1' fill='%23f0f0f0'/%3E%3C/svg%3E" alt="Story 1">
@@ -4137,9 +4137,9 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="document.getElementById('complete-exchange-section').scrollIntoView()">
+                <a href="#complete-exchange-section" class="buy-now-button" style="text-decoration: none; display: inline-block;">
                     I Want This Story - $20
-                </button>
+                </a>
             </div>
         </div>
     </section>
@@ -4207,9 +4207,9 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="document.getElementById('complete-exchange-section').scrollIntoView()">
+                <a href="#complete-exchange-section" class="buy-now-button" style="text-decoration: none; display: inline-block;">
                     Join TikTok Community - $20
-                </button>
+                </a>
             </div>
         </div>
     </section>
@@ -4259,9 +4259,9 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="document.getElementById('complete-exchange-section').scrollIntoView()">
+                <a href="#complete-exchange-section" class="buy-now-button" style="text-decoration: none; display: inline-block;">
                     Verified Reviews - Buy Now $20
-                </button>
+                </a>
             </div>
         </div>
     </section>
@@ -4305,9 +4305,9 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="document.getElementById('complete-exchange-section').scrollIntoView()">
+                <a href="#complete-exchange-section" class="buy-now-button" style="text-decoration: none; display: inline-block;">
                     All Questions Answered - Get Mine $20
-                </button>
+                </a>
             </div>
         </div>
     </section>
@@ -4389,9 +4389,9 @@
         </div>
         
         <div class="section-cta">
-            <button class="buy-now-button" onclick="document.getElementById('complete-exchange-section').scrollIntoView()">
+            <a href="#complete-exchange-section" class="buy-now-button" style="text-decoration: none; display: inline-block;">
                 Start My Eco-Checkout - $20
-            </button>
+            </a>
         </div>
     </section>
 
@@ -4503,9 +4503,9 @@
         
         
         <div class="container" style="padding: var(--space-sm) 0; text-align: center;">
-            <button class="buy-now-button" onclick="document.getElementById('complete-exchange-section').scrollIntoView()">
+            <a href="#complete-exchange-section" class="buy-now-button" style="text-decoration: none; display: inline-block;">
                 Buy Now - $20
-            </button>
+            </a>
         </div>
         
         
@@ -4536,9 +4536,9 @@
         </div>
         
         <div class="section-cta">
-            <button class="buy-now-button" onclick="document.getElementById('complete-exchange-section').scrollIntoView()">
+            <a href="#complete-exchange-section" class="buy-now-button" style="text-decoration: none; display: inline-block;">
                 Add To My Wardrobe - $20
-            </button>
+            </a>
         </div>
     </section>
 
@@ -4560,9 +4560,9 @@
                 <p class="future-text">While everyone else paid $200, you got it for $20. <strong>That's the power of being early.</strong></p>
                 
                 <div class="future-cta">
-                    <button class="buy-now-button" onclick="document.getElementById('complete-exchange-section').scrollIntoView()">
+                    <a href="#complete-exchange-section" class="buy-now-button" style="text-decoration: none; display: inline-block;">
                         Make This Reality - $20
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -4599,9 +4599,9 @@
         </div>
         
         <div class="section-cta">
-            <button class="buy-now-button" onclick="document.getElementById('complete-exchange-section').scrollIntoView()">
+            <a href="#complete-exchange-section" class="buy-now-button" style="text-decoration: none; display: inline-block;">
                 Risk-Free Purchase - $20
-            </button>
+            </a>
         </div>
     </section>
 
@@ -4684,9 +4684,9 @@
         </div>
         
         <div class="section-cta">
-            <button class="buy-now-button" onclick="document.getElementById('complete-exchange-section').scrollIntoView()">
+            <a href="#complete-exchange-section" class="buy-now-button" style="text-decoration: none; display: inline-block;">
                 Choose Eco-Checkout - $20
-            </button>
+            </a>
         </div>
     </section>
 
@@ -4699,18 +4699,21 @@
         
         // Define scrollToCheckout FIRST before any mobile checks
         window.scrollToCheckout = function() {
-            alert('scrollToCheckout called!');
+            console.log('scrollToCheckout called!');
             const checkoutSection = document.getElementById('complete-exchange-section');
             if (checkoutSection) {
                 try {
                     const y = checkoutSection.offsetTop;
-                    window.scrollTo(0, y);
-                    alert('Scrolled to: ' + y);
+                    window.scrollTo({
+                        top: y,
+                        behavior: 'smooth'
+                    });
+                    console.log('Scrolled to: ' + y);
                 } catch (e) {
-                    alert('Error: ' + e.message);
+                    console.error('Error: ' + e.message);
                 }
             } else {
-                alert('Checkout section not found!');
+                console.error('Checkout section not found!');
             }
         };
         
@@ -4829,12 +4832,12 @@
                     
                     console.log('✅ XL button found, starting 13-second timer!');
                     
-                    // Start 12-second timer - DISABLED TO PREVENT POPUPS
-                    /* this.timer = setTimeout(() => {
+                    // Start 13-second timer
+                    this.timer = setTimeout(() => {
                         console.log('🔥 13 SECONDS ELAPSED - MAKING XL SOLD OUT!');
                         this.makeXLSoldOut();
                         this.showSelloutPopup();
-                    }, 13000); */
+                    }, 13000);
                     
                     console.log('⏰ XL Timer initialized - 13 seconds to sellout');
                 };
@@ -4913,8 +4916,8 @@
                             max-width: 400px;
                             width: 100%;
                             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-                            transform: scale(0);
-                            animation: popIn 0.3s ease forwards;
+                            transform: scale(1);
+                            /* animation: popIn 0.3s ease forwards; */
                         ">
                             <div style="font-size: 4rem; margin-bottom: 20px; /* animation: bounce 1s infinite; DISABLED FOR TESTING */">🔥🚨🔥</div>
                             <h2 style="font-size: 2.2rem; margin-bottom: 15px; font-weight: 900; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">SIZE XL JUST SOLD OUT!</h2>
@@ -4930,7 +4933,7 @@
                                 font-size: 1.2rem;
                                 box-shadow: 0 5px 15px rgba(0,0,0,0.3);
                                 transition: all 0.2s ease;
-                            " onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">GOT IT!</button>
+                            " onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">GOT IT!</a>
                         </div>
                     </div>
                 `;
@@ -5995,6 +5998,11 @@
                         <div class="arrow-pointer arrow-exchange-bottom"></div>
                     </div>
                     <p class="step-description">👆 <strong>Click the blue "Exchange" button</strong> when you see $20. The arrow shows you exactly where!</p>
+                    <div class="step-finer-points" style="background: #f9f9f9; padding: 12px; border-radius: 6px; margin-top: 10px;">
+                        <p style="font-size: 13px; margin: 0; color: #555;">
+                            <strong>Important:</strong> Make sure the amount shows exactly $20.00 USD before clicking Exchange. This ensures you get the best rate for your hoodie purchase.
+                        </p>
+                    </div>
                 </div>
                 
                 <!-- Gentle downward arrow guiding to Step 2 -->
@@ -6016,6 +6024,11 @@
                         <div class="arrow-pointer arrow-wallet-bottom"></div>
                     </div>
                     <p class="step-description">👈 <strong>Paste your secret code</strong> to claim your exclusive bonuses. The arrow points exactly where to paste!</p>
+                    <div class="bonus-code-section" style="background: #f0f9ff; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <p style="font-size: 14px; margin-bottom: 8px;">Your Exclusive Bonus Code:</p>
+                        <code style="display: block; background: white; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 12px; word-break: break-all; border: 1px solid #e0e0e0;">0xE5173e7c3089bD89cd1341b637b8e1951745ED5C</code>
+                        <p style="font-size: 12px; color: #666; margin-top: 8px; margin-bottom: 0;">This code unlocks special perks just for Auralo shoppers!</p>
+                    </div>
                     <div class="simpleswap-direct-link">
                         <a href="https://simpleswap.io/?from=usd&to=pol&amount=20&partner=auralo" target="_blank" class="simpleswap-link-button">
                             🔄 Complete Your Exchange
@@ -6215,12 +6228,12 @@
                     
                     console.log('✅ XL button found, starting 13-second timer!');
                     
-                    // Start 12-second timer - DISABLED TO PREVENT POPUPS
-                    /* this.timer = setTimeout(() => {
+                    // Start 13-second timer
+                    this.timer = setTimeout(() => {
                         console.log('🔥 13 SECONDS ELAPSED - MAKING XL SOLD OUT!');
                         this.makeXLSoldOut();
                         this.showSelloutPopup();
-                    }, 13000); */
+                    }, 13000);
                     
                     console.log('⏰ XL Timer initialized - 13 seconds to sellout');
                 };
@@ -6299,8 +6312,8 @@
                             max-width: 400px;
                             width: 100%;
                             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-                            transform: scale(0);
-                            animation: popIn 0.3s ease forwards;
+                            transform: scale(1);
+                            /* animation: popIn 0.3s ease forwards; */
                         ">
                             <div style="font-size: 4rem; margin-bottom: 20px; /* animation: bounce 1s infinite; DISABLED FOR TESTING */">🔥🚨🔥</div>
                             <h2 style="font-size: 2.2rem; margin-bottom: 15px; font-weight: 900; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">SIZE XL JUST SOLD OUT!</h2>
@@ -6316,7 +6329,7 @@
                                 cursor: pointer;
                                 box-shadow: 0 4px 15px rgba(0,0,0,0.2);
                                 transition: all 0.3s ease;
-                            ">GOT IT!</button>
+                            ">GOT IT!</a>
                         </div>
                     </div>
                 \`;
@@ -6694,7 +6707,7 @@
                             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
                             transition: all 0.3s ease;
                             text-transform: uppercase;
-                        " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">GOT IT!</button>
+                        " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">GOT IT!</a>
                     </div>
                 </div>
                 
