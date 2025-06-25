@@ -3872,6 +3872,9 @@
         <button onclick="scrollToCheckout()" style="background: red; color: white; padding: 10px; border: none; border-radius: 5px; font-size: 16px;">
             TEST SCROLL
         </button>
+        <button onclick="alert('JavaScript works!')" style="background: blue; color: white; padding: 10px; border: none; border-radius: 5px; font-size: 16px; margin-top: 10px; display: block;">
+            TEST JS
+        </button>
     </div>
     
     <section class="hero">
@@ -4666,6 +4669,23 @@
         const CHECKOUT_URL = 'https://simpleswap.io/?from=usd&to=pol&amount=20&partner=auralo';
         const BONUS_CODE = '0xE5173e7c3089bD89cd1341b637b8e1951745ED5C';
         
+        // Define scrollToCheckout FIRST before any mobile checks
+        window.scrollToCheckout = function() {
+            alert('scrollToCheckout called!');
+            const checkoutSection = document.getElementById('complete-exchange-section');
+            if (checkoutSection) {
+                try {
+                    const y = checkoutSection.offsetTop;
+                    window.scrollTo(0, y);
+                    alert('Scrolled to: ' + y);
+                } catch (e) {
+                    alert('Error: ' + e.message);
+                }
+            } else {
+                alert('Checkout section not found!');
+            }
+        };
+        
         // Detect mobile devices to prevent popups and auto-scroll issues
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || 
                          ('ontouchstart' in window) || 
@@ -5186,38 +5206,7 @@
         }
 
         // DUPLICATE CAROUSEL INITIALIZATION REMOVED - USING NEW SYSTEM ABOVE
-
-        // Smooth scroll to checkout section
-        function scrollToCheckout() {
-            // Alert to test if function is called
-            alert('scrollToCheckout called!');
-            
-            console.log('🎯 scrollToCheckout called');
-            const checkoutSection = document.getElementById('complete-exchange-section');
-            
-            if (checkoutSection) {
-                // Try multiple methods
-                try {
-                    // Method 1: Simple scroll
-                    const y = checkoutSection.offsetTop;
-                    window.scrollTo(0, y);
-                    
-                    // Method 2: Force scroll after delay
-                    setTimeout(() => {
-                        checkoutSection.scrollIntoView(true);
-                    }, 100);
-                    
-                    alert('Scroll attempted to position: ' + y);
-                } catch (e) {
-                    alert('Error scrolling: ' + e.message);
-                }
-            } else {
-                alert('Checkout section not found!');
-            }
-        }
-        
-        // Make function globally accessible
-        window.scrollToCheckout = scrollToCheckout;
+        // scrollToCheckout is defined at the top of the script
 
         // iOS/Mobile fix for buy buttons - ensure they work
         document.addEventListener('DOMContentLoaded', function() {
