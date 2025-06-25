@@ -3868,16 +3868,28 @@
 </head>
 <body>
     <script>
-        // Simple scroll function that works
-        function goToCheckout() {
+        // Simple scroll function that works - make it global
+        window.goToCheckout = function() {
             var el = document.getElementById('complete-exchange-section');
             if (el) {
                 el.scrollIntoView();
+                // Also try alternate method
+                window.location.hash = '#complete-exchange-section';
             }
         }
+        
+        // Also attach to window onload to ensure it's available
+        window.addEventListener('load', function() {
+            window.goToCheckout = function() {
+                var el = document.getElementById('complete-exchange-section');
+                if (el) {
+                    el.scrollIntoView();
+                }
+            }
+        });
     </script>
     
-    <!-- One test button to verify it works -->
+    <!-- Test button -->
     <button onclick="goToCheckout()" style="position: fixed; bottom: 20px; right: 20px; background: orange; color: white; padding: 15px; border: none; border-radius: 5px; z-index: 9999;">
         CHECKOUT →
     </button>
@@ -4011,7 +4023,7 @@
             </div>
             
             <div class="hero-cta">
-                <button class="buy-now-button" onclick="goToCheckout()">
+                <button class="buy-now-button" onclick="window.location.href='#complete-exchange-section'">
                     Secure Your Hoodie - $20
                 </button>
                 <p class="hero-cta-text">60-second eco-checkout • Plants 5 trees • Free shipping</p>
@@ -4064,7 +4076,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="goToCheckout()">
+                <button class="buy-now-button" onclick="window.location.href='#complete-exchange-section'">
                     Claim This Value - $20
                 </button>
             </div>
@@ -4114,7 +4126,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="goToCheckout()">
+                <button class="buy-now-button" onclick="window.location.href='#complete-exchange-section'">
                     I Want This Story - $20
                 </button>
             </div>
@@ -4184,7 +4196,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="goToCheckout()">
+                <button class="buy-now-button" onclick="window.location.href='#complete-exchange-section'">
                     Join TikTok Community - $20
                 </button>
             </div>
@@ -4236,7 +4248,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="goToCheckout()">
+                <button class="buy-now-button" onclick="window.location.href='#complete-exchange-section'">
                     Verified Reviews - Buy Now $20
                 </button>
             </div>
@@ -4282,7 +4294,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="goToCheckout()">
+                <button class="buy-now-button" onclick="window.location.href='#complete-exchange-section'">
                     All Questions Answered - Get Mine $20
                 </button>
             </div>
@@ -4537,7 +4549,7 @@
                 <p class="future-text">While everyone else paid $200, you got it for $20. <strong>That's the power of being early.</strong></p>
                 
                 <div class="future-cta">
-                    <button class="buy-now-button" onclick="goToCheckout()">
+                    <button class="buy-now-button" onclick="window.location.href='#complete-exchange-section'">
                         Make This Reality - $20
                     </button>
                 </div>
