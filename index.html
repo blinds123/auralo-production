@@ -43,8 +43,20 @@
             .container,
             .size-option,
             .buy-now-button,
-            img {
+            img,
+            .carousel-nav,
+            .carousel-nav-left,
+            .carousel-nav-right,
+            .story-carousel,
+            .review-carousel {
                 position: relative !important;
+            }
+            
+            /* Ensure carousel navigation buttons are properly positioned */
+            .carousel-nav-left,
+            .carousel-nav-right {
+                position: absolute !important;
+                z-index: 10 !important;
             }
         }
         
@@ -4131,8 +4143,8 @@
             <h2 class="section-title">Why This Hoodie Exists</h2>
             
             <div class="story-carousel" id="storyCarousel">
-                <button class="carousel-nav carousel-nav-left" onclick="window.storyCarousel?.prev()" aria-label="Previous slide">‹</a>
-                <button class="carousel-nav carousel-nav-right" onclick="window.storyCarousel?.next()" aria-label="Next slide">›</a>
+                <button class="carousel-nav carousel-nav-left" onclick="window.storyCarousel?.prev()" aria-label="Previous slide">‹</button>
+                <button class="carousel-nav carousel-nav-right" onclick="window.storyCarousel?.next()" aria-label="Next slide">›</button>
                 <div class="story-slides" id="storySlides">
                     <div class="story-slide">
                         <img loading="lazy" data-src="./images/slide-1_final_crushed_under_20kb.jpg" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3Crect width='1' height='1' fill='%23f0f0f0'/%3E%3C/svg%3E" alt="Story 1">
