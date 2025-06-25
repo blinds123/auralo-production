@@ -1,12 +1,13 @@
 {
   "name": "auralo-hoodie-landing",
   "version": "1.0.0",
-  "description": "AURALO hoodie landing page - Production ready with sub-2 second load times",
+  "description": "AURALO hoodie nuclear implementation - All 6 features working",
   "main": "index.html",
   "scripts": {
     "deploy": "vercel --prod",
     "dev": "vercel dev",
-    "preview": "vercel"
+    "preview": "vercel",
+    "verify": "node verify-nuclear-deployment.js"
   },
   "keywords": [
     "auralo",
