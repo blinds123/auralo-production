@@ -3307,27 +3307,27 @@
             
             /* Mobile-optimized finger positions */
             .arrow-exchange-bottom {
-                bottom: 8% !important;
-                left: 52% !important;
+                bottom: 15% !important;
+                left: 48% !important;
                 transform: translateX(-50%) !important;
             }
             
             .arrow-exchange-bottom::before {
-                font-size: 2.5rem !important;
-                transform: translateY(30px) !important;
-                padding: 10px !important;
+                font-size: 2.2rem !important;
+                transform: translateY(20px) !important;
+                padding: 8px !important;
             }
             
             .arrow-wallet-bottom {
-                top: 35% !important;
-                left: 70% !important;
+                top: 42% !important;
+                left: 75% !important;
                 transform: translateX(-50%) !important;
             }
             
             .arrow-wallet-bottom::before {
-                font-size: 2.5rem !important;
-                transform: translateY(-10px) !important;
-                padding: 10px !important;
+                font-size: 2.2rem !important;
+                transform: translateY(-5px) !important;
+                padding: 8px !important;
             }
             
             /* Mobile-optimized final button styling */
@@ -3896,10 +3896,9 @@
             // Initialize Carousels
             console.log('🎠 INITIALIZING CAROUSELS NOW');
             setTimeout(() => {
-                // Skip carousel initialization on mobile to prevent jitter
+                // Enable carousels on mobile with manual navigation only
                 if (isMobile) {
-                    console.log('📱 Mobile detected - carousels disabled to prevent auto-scroll');
-                    return;
+                    console.log('📱 Mobile detected - enabling manual carousel navigation');
                 }
                 
                 window.storyCarousel = new UniversalCarousel(
@@ -6079,17 +6078,9 @@
                              class="step-image">
                         <div class="arrow-pointer arrow-exchange-bottom"></div>
                     </div>
-                    <p class="step-description">👆 <strong>Click the blue "Exchange" button</strong> when you see $20. The arrow shows you exactly where!</p>
                 </div>
                 
-                <!-- Gentle downward arrow guiding to Step 2 -->
-                <div class="step-connector">
-                    <div class="connector-arrow">
-                        <svg width="24" height="40" viewBox="0 0 24 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 4V32M12 32L6 26M12 32L18 26" stroke="#2196f3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
-                        </svg>
-                    </div>
-                </div>
+                <!-- Reduced spacing for Step 2 -->
                 
                 <div class="process-step">
                     <div class="step-number">STEP 2</div>
