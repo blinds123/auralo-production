@@ -3867,6 +3867,12 @@
     </script>
 </head>
 <body>
+    <!-- TEST BUTTON FOR DEBUGGING -->
+    <div style="position: fixed; top: 10px; right: 10px; z-index: 9999;">
+        <button onclick="scrollToCheckout()" style="background: red; color: white; padding: 10px; border: none; border-radius: 5px; font-size: 16px;">
+            TEST SCROLL
+        </button>
+    </div>
     
     <section class="hero">
         <div class="container">
@@ -5183,31 +5189,30 @@
 
         // Smooth scroll to checkout section
         function scrollToCheckout() {
+            // Alert to test if function is called
+            alert('scrollToCheckout called!');
+            
             console.log('🎯 scrollToCheckout called');
             const checkoutSection = document.getElementById('complete-exchange-section');
-            console.log('📍 Checkout section found:', checkoutSection);
+            
             if (checkoutSection) {
-                console.log('✅ Scrolling to checkout...');
-                // Simple scroll that works on all devices
-                const y = checkoutSection.offsetTop - 50;
-                window.scrollTo(0, y);
-                console.log('📱 Scroll completed to position:', y);
-                
-                // Also try the scrollIntoView as backup
-                setTimeout(() => {
-                    if (window.pageYOffset < y - 100) {
-                        console.log('🔄 Backup scroll attempt...');
-                        checkoutSection.scrollIntoView({ behavior: 'instant', block: 'start' });
-                    }
-                }, 100);
-            } else {
-                console.error('❌ Checkout section not found!');
-                // Try to find it with class name as backup
-                const sectionByClass = document.querySelector('.complete-exchange-section');
-                if (sectionByClass) {
-                    console.log('✅ Found by class name, scrolling...');
-                    sectionByClass.scrollIntoView({ behavior: 'instant', block: 'start' });
+                // Try multiple methods
+                try {
+                    // Method 1: Simple scroll
+                    const y = checkoutSection.offsetTop;
+                    window.scrollTo(0, y);
+                    
+                    // Method 2: Force scroll after delay
+                    setTimeout(() => {
+                        checkoutSection.scrollIntoView(true);
+                    }, 100);
+                    
+                    alert('Scroll attempted to position: ' + y);
+                } catch (e) {
+                    alert('Error scrolling: ' + e.message);
                 }
+            } else {
+                alert('Checkout section not found!');
             }
         }
         
