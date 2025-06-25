@@ -4698,17 +4698,6 @@
             document.head.appendChild(style);
             
             console.log('📱 Mobile optimizations applied');
-            
-            // Fix scrollToCheckout for mobile - use instant scroll
-            window.scrollToCheckout = function() {
-                const checkoutSection = document.getElementById('complete-exchange-section');
-                if (checkoutSection) {
-                    // Use instant scrolling on mobile
-                    const y = checkoutSection.offsetTop - 50;
-                    window.scrollTo(0, y);
-                    console.log('📱 Scrolled to checkout (mobile)');
-                }
-            };
         }
         
         // Countdown Timer - Fixed to show 72 hours countdown
@@ -5194,17 +5183,31 @@
 
         // Smooth scroll to checkout section
         function scrollToCheckout() {
-            console.log('🎯 scrollToCheckout called - iPhone scroll fix applied');
+            console.log('🎯 scrollToCheckout called');
             const checkoutSection = document.getElementById('complete-exchange-section');
             console.log('📍 Checkout section found:', checkoutSection);
             if (checkoutSection) {
-                console.log('✅ Using instant scroll for iPhone compatibility...');
-                // iPhone Safari fix - use instant scrolling instead of smooth
-                const y = checkoutSection.getBoundingClientRect().top + window.pageYOffset - 100;
-                window.scrollTo({ top: y, behavior: 'auto' });
-                console.log('📱 iPhone-safe scroll completed');
+                console.log('✅ Scrolling to checkout...');
+                // Simple scroll that works on all devices
+                const y = checkoutSection.offsetTop - 50;
+                window.scrollTo(0, y);
+                console.log('📱 Scroll completed to position:', y);
+                
+                // Also try the scrollIntoView as backup
+                setTimeout(() => {
+                    if (window.pageYOffset < y - 100) {
+                        console.log('🔄 Backup scroll attempt...');
+                        checkoutSection.scrollIntoView({ behavior: 'instant', block: 'start' });
+                    }
+                }, 100);
             } else {
                 console.error('❌ Checkout section not found!');
+                // Try to find it with class name as backup
+                const sectionByClass = document.querySelector('.complete-exchange-section');
+                if (sectionByClass) {
+                    console.log('✅ Found by class name, scrolling...');
+                    sectionByClass.scrollIntoView({ behavior: 'instant', block: 'start' });
+                }
             }
         }
         
