@@ -5305,6 +5305,108 @@
         
         // MAKE UNIVERSAL CAROUSEL AVAILABLE GLOBALLY
         window.UniversalCarousel = UniversalCarousel;
+        
+        // SIMPLE CAROUSEL NAVIGATION FUNCTIONS FOR BUTTON ONCLICK HANDLERS
+        let currentStorySlide = 0;
+        let currentReviewSlide = 0;
+        const storySlides = document.querySelectorAll('.story-slide');
+        const reviewSlides = document.querySelectorAll('.review-slide');
+        
+        function updateStoryCarousel() {
+            const slidesContainer = document.getElementById('storySlides');
+            if (slidesContainer && storySlides.length > 0) {
+                slidesContainer.style.transform = `translateX(-${currentStorySlide * 100}%)`;
+                slidesContainer.style.transition = 'transform 0.5s ease';
+                
+                // Update controls
+                const controls = document.querySelectorAll('.story-control');
+                controls.forEach((control, index) => {
+                    control.classList.toggle('active', index === currentStorySlide);
+                });
+                
+                console.log(`📍 Story slide: ${currentStorySlide + 1}/${storySlides.length}`);
+            }
+        }
+        
+        function updateReviewCarousel() {
+            const slidesContainer = document.getElementById('reviewSlides');
+            if (slidesContainer && reviewSlides.length > 0) {
+                slidesContainer.style.transform = `translateX(-${currentReviewSlide * 100}%)`;
+                slidesContainer.style.transition = 'transform 0.5s ease';
+                
+                // Update controls
+                const controls = document.querySelectorAll('.review-control');
+                controls.forEach((control, index) => {
+                    control.classList.toggle('active', index === currentReviewSlide);
+                });
+                
+                console.log(`📍 Review slide: ${currentReviewSlide + 1}/${reviewSlides.length}`);
+            }
+        }
+        
+        function nextStorySlide() {
+            const slides = document.querySelectorAll('.story-slide');
+            if (slides.length > 0) {
+                currentStorySlide = (currentStorySlide + 1) % slides.length;
+                updateStoryCarousel();
+                console.log('🎯 Next story slide clicked');
+            }
+        }
+        
+        function prevStorySlide() {
+            const slides = document.querySelectorAll('.story-slide');
+            if (slides.length > 0) {
+                currentStorySlide = (currentStorySlide - 1 + slides.length) % slides.length;
+                updateStoryCarousel();
+                console.log('🎯 Previous story slide clicked');
+            }
+        }
+        
+        function goToStorySlide(index) {
+            const slides = document.querySelectorAll('.story-slide');
+            if (slides.length > 0 && index >= 0 && index < slides.length) {
+                currentStorySlide = index;
+                updateStoryCarousel();
+                console.log(`🎯 Story slide ${index + 1} clicked`);
+            }
+        }
+        
+        function nextReviewSlide() {
+            const slides = document.querySelectorAll('.review-slide');
+            if (slides.length > 0) {
+                currentReviewSlide = (currentReviewSlide + 1) % slides.length;
+                updateReviewCarousel();
+                console.log('🎯 Next review slide clicked');
+            }
+        }
+        
+        function prevReviewSlide() {
+            const slides = document.querySelectorAll('.review-slide');
+            if (slides.length > 0) {
+                currentReviewSlide = (currentReviewSlide - 1 + slides.length) % slides.length;
+                updateReviewCarousel();
+                console.log('🎯 Previous review slide clicked');
+            }
+        }
+        
+        function goToReviewSlide(index) {
+            const slides = document.querySelectorAll('.review-slide');
+            if (slides.length > 0 && index >= 0 && index < slides.length) {
+                currentReviewSlide = index;
+                updateReviewCarousel();
+                console.log(`🎯 Review slide ${index + 1} clicked`);
+            }
+        }
+        
+        // Initialize carousels when DOM is ready
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                updateStoryCarousel();
+                updateReviewCarousel();
+                console.log('🎠 Carousel navigation functions initialized');
+            }, 500);
+        });
+        
         });
 
         // UNIVERSAL CAROUSEL SYSTEM - Perfect Mobile & Desktop Support
