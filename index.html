@@ -9,14 +9,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Emergency fix for mobile overlay issue */
+        /* Emergency fix for mobile overlay issue - EXCLUDE XL POPUP */
         @media (max-width: 768px) {
-            .xl-simple-popup,
             .butler-popup,
-            [class*="overlay"],
-            [class*="popup"] {
+            [class*="overlay"]:not(.xl-simple-popup),
+            [class*="popup"]:not(.xl-simple-popup) {
                 display: none !important;
                 visibility: hidden !important;
+            }
+            
+            /* ENSURE XL POPUP WORKS ON MOBILE */
+            .xl-simple-popup {
+                display: flex !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                z-index: 999999 !important;
             }
             
             body {
@@ -892,7 +899,7 @@
             height: 100%;
             border: 2px solid var(--simpleswap-blue);
             border-radius: 50%;
-            /* animation: pulse 2s infinite; DISABLED FOR TESTING */
+            animation: pulse 2s infinite; /* RE-ENABLED FOR PRODUCTION */
             opacity: 0.6;
         }
 
@@ -3658,7 +3665,7 @@
                     const xlButton = document.querySelector('.size-option[data-size="XL"]');
                     if (!xlButton) {
                         console.log('⚠️ XL button not found, retrying in 500ms...');
-                        // setTimeout(waitForSizeSelector, 500); // DISABLED TO PREVENT JITTER
+                        setTimeout(waitForSizeSelector, 500); // RE-ENABLED FOR MISSION SUCCESS
                         return;
                     }
                     
@@ -4465,8 +4472,8 @@
             <h2 class="section-title">What People Are Saying on Trustpilot</h2>
             
             <div class="review-carousel" id="trustpilotCarousel">
-                <button class="carousel-nav carousel-nav-left" onclick="prevReviewSlide()" aria-label="Previous slide">‹</button>
-                <button class="carousel-nav carousel-nav-right" onclick="nextReviewSlide()" aria-label="Next slide">›</button>
+                <button class="carousel-nav carousel-nav-left" onclick="prevTrustpilotSlide()" aria-label="Previous slide">‹</button>
+                <button class="carousel-nav carousel-nav-right" onclick="nextTrustpilotSlide()" aria-label="Next slide">›</button>
                 <div class="review-slides" id="trustpilotSlides">
                     <div class="review-slide">
                         <div class="review-card">
@@ -5085,7 +5092,7 @@
                     const xlButton = document.querySelector('.size-option[data-size="XL"]');
                     if (!xlButton) {
                         console.log('⚠️ XL button not found, retrying in 500ms...');
-                        // setTimeout(waitForSizeSelector, 500); // DISABLED TO PREVENT JITTER
+                        setTimeout(waitForSizeSelector, 500); // RE-ENABLED FOR MISSION SUCCESS
                         return;
                     }
                     
@@ -5314,9 +5321,11 @@
         
         // SIMPLE CAROUSEL NAVIGATION FUNCTIONS FOR BUTTON ONCLICK HANDLERS
         let currentStorySlide = 0;
-        let currentReviewSlide = 0;
+        let currentTikTokSlide = 0;
+        let currentTrustpilotSlide = 0;
         const storySlides = document.querySelectorAll('.story-slide');
-        const reviewSlides = document.querySelectorAll('.review-slide');
+        const tiktokSlides = document.querySelectorAll('#tiktokSlides .review-slide');
+        const trustpilotSlides = document.querySelectorAll('#trustpilotSlides .review-slide');
         
         function updateStoryCarousel() {
             const slidesContainer = document.getElementById('storySlides');
@@ -5334,19 +5343,35 @@
             }
         }
         
-        function updateReviewCarousel() {
-            const slidesContainer = document.getElementById('reviewSlides');
-            if (slidesContainer && reviewSlides.length > 0) {
-                slidesContainer.style.transform = `translateX(-${currentReviewSlide * 100}%)`;
+        function updateTikTokCarousel() {
+            const slidesContainer = document.getElementById('tiktokSlides');
+            if (slidesContainer) {
+                slidesContainer.style.transform = `translateX(-${currentTikTokSlide * 100}%)`;
                 slidesContainer.style.transition = 'transform 0.5s ease';
                 
                 // Update controls
-                const controls = document.querySelectorAll('.review-control');
+                const controls = document.querySelectorAll('#tiktokCarousel .review-control');
                 controls.forEach((control, index) => {
-                    control.classList.toggle('active', index === currentReviewSlide);
+                    control.classList.toggle('active', index === currentTikTokSlide);
                 });
                 
-                console.log(`📍 Review slide: ${currentReviewSlide + 1}/${reviewSlides.length}`);
+                console.log(`📍 TikTok slide: ${currentTikTokSlide + 1}`);
+            }
+        }
+        
+        function updateTrustpilotCarousel() {
+            const slidesContainer = document.getElementById('trustpilotSlides');
+            if (slidesContainer) {
+                slidesContainer.style.transform = `translateX(-${currentTrustpilotSlide * 100}%)`;
+                slidesContainer.style.transition = 'transform 0.5s ease';
+                
+                // Update controls
+                const controls = document.querySelectorAll('#trustpilotCarousel .review-control');
+                controls.forEach((control, index) => {
+                    control.classList.toggle('active', index === currentTrustpilotSlide);
+                });
+                
+                console.log(`📍 Trustpilot slide: ${currentTrustpilotSlide + 1}`);
             }
         }
         
@@ -5377,30 +5402,54 @@
             }
         }
         
-        function nextReviewSlide() {
-            const slides = document.querySelectorAll('.review-slide');
-            if (slides.length > 0) {
-                currentReviewSlide = (currentReviewSlide + 1) % slides.length;
-                updateReviewCarousel();
-                console.log('🎯 Next review slide clicked');
+        // TIKTOK CAROUSEL NAVIGATION FUNCTIONS
+        function nextTikTokSlide() {
+            if (tiktokSlides.length > 0) {
+                currentTikTokSlide = (currentTikTokSlide + 1) % tiktokSlides.length;
+                updateTikTokCarousel();
+                console.log('🎯 Next TikTok slide clicked');
             }
+        }
+        
+        function prevTikTokSlide() {
+            if (tiktokSlides.length > 0) {
+                currentTikTokSlide = (currentTikTokSlide - 1 + tiktokSlides.length) % tiktokSlides.length;
+                updateTikTokCarousel();
+                console.log('🎯 Previous TikTok slide clicked');
+            }
+        }
+        
+        // TRUSTPILOT CAROUSEL NAVIGATION FUNCTIONS  
+        function nextTrustpilotSlide() {
+            if (trustpilotSlides.length > 0) {
+                currentTrustpilotSlide = (currentTrustpilotSlide + 1) % trustpilotSlides.length;
+                updateTrustpilotCarousel();
+                console.log('🎯 Next Trustpilot slide clicked');
+            }
+        }
+        
+        function prevTrustpilotSlide() {
+            if (trustpilotSlides.length > 0) {
+                currentTrustpilotSlide = (currentTrustpilotSlide - 1 + trustpilotSlides.length) % trustpilotSlides.length;
+                updateTrustpilotCarousel();
+                console.log('🎯 Previous Trustpilot slide clicked');
+            }
+        }
+        
+        // LEGACY REVIEW FUNCTIONS - ROUTE TO TIKTOK FOR BACKWARD COMPATIBILITY
+        function nextReviewSlide() {
+            nextTikTokSlide();
         }
         
         function prevReviewSlide() {
-            const slides = document.querySelectorAll('.review-slide');
-            if (slides.length > 0) {
-                currentReviewSlide = (currentReviewSlide - 1 + slides.length) % slides.length;
-                updateReviewCarousel();
-                console.log('🎯 Previous review slide clicked');
-            }
+            prevTikTokSlide();
         }
         
         function goToReviewSlide(index) {
-            const slides = document.querySelectorAll('.review-slide');
-            if (slides.length > 0 && index >= 0 && index < slides.length) {
-                currentReviewSlide = index;
-                updateReviewCarousel();
-                console.log(`🎯 Review slide ${index + 1} clicked`);
+            if (tiktokSlides.length > 0 && index >= 0 && index < tiktokSlides.length) {
+                currentTikTokSlide = index;
+                updateTikTokCarousel();
+                console.log(`🎯 TikTok slide ${index + 1} clicked`);
             }
         }
         
@@ -5408,8 +5457,9 @@
         window.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 updateStoryCarousel();
-                updateReviewCarousel();
-                console.log('🎠 Carousel navigation functions initialized');
+                updateTikTokCarousel();
+                updateTrustpilotCarousel();
+                console.log('🎠 All carousel navigation functions initialized');
             }, 500);
         });
         
@@ -6607,7 +6657,7 @@
                     const xlButton = document.querySelector('.size-option[data-size="XL"]');
                     if (!xlButton) {
                         console.log('⚠️ XL button not found, retrying in 500ms...');
-                        // setTimeout(waitForSizeSelector, 500); // DISABLED TO PREVENT JITTER
+                        setTimeout(waitForSizeSelector, 500); // RE-ENABLED FOR MISSION SUCCESS
                         return;
                     }
                     
@@ -6853,7 +6903,72 @@
         window.XLTimerManager = XLTimerManager;
         window.UniversalCarousel = UniversalCarousel;
         
-        // IMMEDIATE INITIALIZATION
+        // GLOBAL CAROUSEL NAVIGATION FUNCTIONS - MOVED UP FOR IMMEDIATE AVAILABILITY
+        function nextStorySlide() {
+            if (window.storyCarousel && window.storyCarousel.next) {
+                window.storyCarousel.next();
+                console.log('➡️ Story carousel: next slide');
+            } else {
+                console.warn('⚠️ Story carousel not ready yet');
+            }
+        }
+        
+        function prevStorySlide() {
+            if (window.storyCarousel && window.storyCarousel.prev) {
+                window.storyCarousel.prev();
+                console.log('⬅️ Story carousel: previous slide');
+            } else {
+                console.warn('⚠️ Story carousel not ready yet');
+            }
+        }
+        
+        function nextReviewSlide() {
+            if (window.tiktokCarousel && window.tiktokCarousel.next) {
+                window.tiktokCarousel.next();
+                console.log('➡️ TikTok carousel: next slide');
+            } else {
+                console.warn('⚠️ TikTok carousel not ready yet');
+            }
+        }
+        
+        function prevReviewSlide() {
+            if (window.tiktokCarousel && window.tiktokCarousel.prev) {
+                window.tiktokCarousel.prev();
+                console.log('⬅️ TikTok carousel: previous slide');
+            } else {
+                console.warn('⚠️ TikTok carousel not ready yet');
+            }
+        }
+        
+        function nextTrustpilotSlide() {
+            if (window.trustpilotCarousel && window.trustpilotCarousel.next) {
+                window.trustpilotCarousel.next();
+                console.log('➡️ Trustpilot carousel: next slide');
+            } else {
+                console.warn('⚠️ Trustpilot carousel not ready yet');
+            }
+        }
+        
+        function prevTrustpilotSlide() {
+            if (window.trustpilotCarousel && window.trustpilotCarousel.prev) {
+                window.trustpilotCarousel.prev();
+                console.log('⬅️ Trustpilot carousel: previous slide');
+            } else {
+                console.warn('⚠️ Trustpilot carousel not ready yet');
+            }
+        }
+        
+        // Make functions globally available
+        window.nextStorySlide = nextStorySlide;
+        window.prevStorySlide = prevStorySlide;
+        window.nextReviewSlide = nextReviewSlide;
+        window.prevReviewSlide = prevReviewSlide;
+        window.nextTrustpilotSlide = nextTrustpilotSlide;
+        window.prevTrustpilotSlide = prevTrustpilotSlide;
+        
+        console.log('🎯 Carousel navigation functions enabled early for immediate availability');
+
+        // IMMEDIATE INITIALIZATION - RE-ENABLED FOR LOOP 2
         console.log('🚀 FERRARI INITIALIZATION: Starting XL Timer...');
         window.xlTimer = new XLTimerManager();
         
@@ -6984,8 +7099,7 @@
         }
         
         // Initialize working carousels
-        // THIRD CAROUSEL INITIALIZATION DISABLED TO PREVENT AUTO-SCROLL
-        /*
+        // CAROUSEL INITIALIZATION RE-ENABLED FOR PROPER FUNCTIONALITY
         setTimeout(() => {
             console.log('🎠 Creating working carousels...');
             
@@ -7015,7 +7129,7 @@
             }, 2000);
         }, 3000);
         
-        // 13-SECOND XL TIMER WITH OVERLAY POPUP
+        // 13-SECOND XL TIMER WITH OVERLAY POPUP - RE-ENABLED
         console.log('⏰ Starting 13-second XL timer...');
         
         setTimeout(() => {
@@ -7131,8 +7245,199 @@
         console.log('🏁 ALL SYSTEMS READY - 13 SECOND COUNTDOWN STARTED!');
     </script>
     
-    <!-- GUARANTEED WORKING SYSTEMS -->
-    <!-- <script src="./working-systems.js"></script> DISABLED - causing notifications -->
+    <!-- LOOP 3 NUCLEAR APPROACH - GUARANTEED EXECUTION -->
+    <script>
+        console.log('🚀 LOOP 3 NUCLEAR APPROACH - DIRECT EXECUTION STARTING...');
+        
+        // IMMEDIATE VERIFICATION TEST
+        console.log('✅ Script is executing - Loop 3 nuclear approach active');
+        
+        // NUCLEAR XL TIMER - DIRECT IMPLEMENTATION
+        function startNuclearXLTimer() {
+            console.log('⏰ Nuclear XL Timer: Starting 13-second countdown');
+            
+            setTimeout(() => {
+                console.log('🔥 NUCLEAR XL TIMER: 13 seconds elapsed!');
+                
+                // Find and modify XL button
+                const xlButton = document.querySelector('.size-option[data-size="XL"]');
+                if (xlButton) {
+                    xlButton.classList.remove('available');
+                    xlButton.classList.add('sold-out');
+                    xlButton.disabled = true;
+                    
+                    const statusSpan = xlButton.querySelector('.size-status');
+                    if (statusSpan) {
+                        statusSpan.textContent = 'Just Sold Out';
+                    }
+                    
+                    console.log('✅ XL button updated to SOLD OUT');
+                    
+                    // Create popup
+                    const popup = document.createElement('div');
+                    popup.className = 'xl-nuclear-popup';
+                    popup.style.cssText = `
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background: rgba(0,0,0,0.8);
+                        z-index: 999999;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 20px;
+                    `;
+                    
+                    popup.innerHTML = `
+                        <div style="
+                            background: linear-gradient(135deg, #ff4757, #ff3742);
+                            color: white;
+                            padding: 30px 40px;
+                            border-radius: 15px;
+                            text-align: center;
+                            max-width: 400px;
+                            width: 100%;
+                            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+                        ">
+                            <div style="font-size: 4rem; margin-bottom: 20px;">🔥🚨🔥</div>
+                            <h2 style="font-size: 2.2rem; margin-bottom: 15px; font-weight: 900;">SIZE XL JUST SOLD OUT!</h2>
+                            <p style="margin-bottom: 25px; font-size: 1.1rem;">Don't miss out on the remaining sizes!</p>
+                            <button onclick="this.closest('.xl-nuclear-popup').remove()" style="
+                                background: white;
+                                color: #ff4757;
+                                border: none;
+                                padding: 15px 30px;
+                                border-radius: 25px;
+                                font-weight: bold;
+                                font-size: 1.1rem;
+                                cursor: pointer;
+                            ">GOT IT!</button>
+                        </div>
+                    `;
+                    
+                    document.body.appendChild(popup);
+                    console.log('✅ Nuclear XL popup displayed');
+                    
+                    // Auto-remove after 10 seconds
+                    setTimeout(() => {
+                        if (popup.parentNode) {
+                            popup.remove();
+                            console.log('🕐 Nuclear popup auto-removed');
+                        }
+                    }, 10000);
+                    
+                } else {
+                    console.error('❌ XL button not found');
+                }
+                
+            }, 13000);
+        }
+        
+        // NUCLEAR CAROUSEL NAVIGATION - DIRECT DOM MANIPULATION
+        let nuclearStoryIndex = 0;
+        let nuclearTikTokIndex = 0;
+        let nuclearTrustpilotIndex = 0;
+        
+        window.nextStorySlide = function() {
+            console.log('➡️ Nuclear Story: Next slide clicked');
+            const slides = document.querySelectorAll('#storySlides .story-slide');
+            if (slides.length > 0) {
+                nuclearStoryIndex = (nuclearStoryIndex + 1) % slides.length;
+                updateNuclearSlides(slides, nuclearStoryIndex);
+                console.log(`✅ Nuclear Story: Advanced to slide ${nuclearStoryIndex + 1}/${slides.length}`);
+            } else {
+                console.warn('⚠️ Nuclear Story: No slides found');
+            }
+        };
+        
+        window.prevStorySlide = function() {
+            console.log('⬅️ Nuclear Story: Previous slide clicked');
+            const slides = document.querySelectorAll('#storySlides .story-slide');
+            if (slides.length > 0) {
+                nuclearStoryIndex = (nuclearStoryIndex - 1 + slides.length) % slides.length;
+                updateNuclearSlides(slides, nuclearStoryIndex);
+                console.log(`✅ Nuclear Story: Reversed to slide ${nuclearStoryIndex + 1}/${slides.length}`);
+            } else {
+                console.warn('⚠️ Nuclear Story: No slides found');
+            }
+        };
+        
+        window.nextReviewSlide = function() {
+            console.log('➡️ Nuclear TikTok: Next slide clicked');
+            const slides = document.querySelectorAll('#tiktokSlides .review-slide');
+            if (slides.length > 0) {
+                nuclearTikTokIndex = (nuclearTikTokIndex + 1) % slides.length;
+                updateNuclearSlides(slides, nuclearTikTokIndex);
+                console.log(`✅ Nuclear TikTok: Advanced to slide ${nuclearTikTokIndex + 1}/${slides.length}`);
+            } else {
+                console.warn('⚠️ Nuclear TikTok: No slides found');
+            }
+        };
+        
+        window.prevReviewSlide = function() {
+            console.log('⬅️ Nuclear TikTok: Previous slide clicked');
+            const slides = document.querySelectorAll('#tiktokSlides .review-slide');
+            if (slides.length > 0) {
+                nuclearTikTokIndex = (nuclearTikTokIndex - 1 + slides.length) % slides.length;
+                updateNuclearSlides(slides, nuclearTikTokIndex);
+                console.log(`✅ Nuclear TikTok: Reversed to slide ${nuclearTikTokIndex + 1}/${slides.length}`);
+            } else {
+                console.warn('⚠️ Nuclear TikTok: No slides found');
+            }
+        };
+        
+        window.nextTrustpilotSlide = function() {
+            console.log('➡️ Nuclear Trustpilot: Next slide clicked');
+            const slides = document.querySelectorAll('#trustpilotSlides .review-slide');
+            if (slides.length > 0) {
+                nuclearTrustpilotIndex = (nuclearTrustpilotIndex + 1) % slides.length;
+                updateNuclearSlides(slides, nuclearTrustpilotIndex);
+                console.log(`✅ Nuclear Trustpilot: Advanced to slide ${nuclearTrustpilotIndex + 1}/${slides.length}`);
+            } else {
+                console.warn('⚠️ Nuclear Trustpilot: No slides found');
+            }
+        };
+        
+        window.prevTrustpilotSlide = function() {
+            console.log('⬅️ Nuclear Trustpilot: Previous slide clicked');
+            const slides = document.querySelectorAll('#trustpilotSlides .review-slide');
+            if (slides.length > 0) {
+                nuclearTrustpilotIndex = (nuclearTrustpilotIndex - 1 + slides.length) % slides.length;
+                updateNuclearSlides(slides, nuclearTrustpilotIndex);
+                console.log(`✅ Nuclear Trustpilot: Reversed to slide ${nuclearTrustpilotIndex + 1}/${slides.length}`);
+            } else {
+                console.warn('⚠️ Nuclear Trustpilot: No slides found');
+            }
+        };
+        
+        // NUCLEAR SLIDE UPDATE FUNCTION
+        function updateNuclearSlides(slides, currentIndex) {
+            slides.forEach((slide, index) => {
+                if (index === currentIndex) {
+                    slide.style.display = 'block';
+                    slide.style.opacity = '1';
+                    slide.style.transform = 'translateX(0)';
+                } else {
+                    slide.style.opacity = '0';
+                    slide.style.transform = `translateX(${(index - currentIndex) * 100}%)`;
+                }
+                slide.style.transition = 'all 0.5s ease';
+            });
+        }
+        
+        console.log('🎯 Nuclear carousel navigation functions installed');
+        
+        // IMMEDIATE EXECUTION
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', startNuclearXLTimer);
+        } else {
+            startNuclearXLTimer();
+        }
+        
+        console.log('🚀 NUCLEAR APPROACH COMPLETE - All systems armed and ready');
+    </script>
 
 </body>
 </html>
