@@ -1,0 +1,16 @@
+
+VERCEL REPOSITORY LIMIT FIX:
+===========================
+
+Option 1: File Replacement in Existing Project
+1. Go to your Vercel dashboard
+2. Open "auralo-production-lmbx" project
+3. Go to "Functions" tab or "Source" view
+4. Replace the index.html content with the nuclear version
+
+Option 2: Manual File Upload
+1. Download the files from this directory
+2. Use Vercel's file upload feature
+3. Drag and drop index.html + images folder
+
+The nuclear implementation is ready in index.html with all 6 features!

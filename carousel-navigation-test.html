@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel Navigation Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin-bottom: 30px; padding: 20px; border: 2px solid #ddd; }
+        .test-button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; cursor: pointer; }
+        .test-button:hover { background: #0056b3; }
+        .results { margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 5px; }
+        .error { color: red; }
+        .success { color: green; }
+        .warning { color: orange; }
+    </style>
+</head>
+<body>
+    <h1>Carousel Navigation Diagnostic Test</h1>
+    <p>This test checks the carousel navigation functionality in your index.html file.</p>
+    
+    <div class="test-section">
+        <h2>Test 1: Check Navigation Functions Exist</h2>
+        <button class="test-button" onclick="testFunctionsExist()">Test Functions</button>
+        <div id="functionsResult" class="results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 2: Check HTML Elements Exist</h2>
+        <button class="test-button" onclick="testElementsExist()">Test Elements</button>
+        <div id="elementsResult" class="results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 3: Manual Navigation Test</h2>
+        <button class="test-button" onclick="testStoryNavigation()">Test Story Navigation</button>
+        <button class="test-button" onclick="testReviewNavigation()">Test Review Navigation</button>
+        <div id="navigationResult" class="results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 4: Check Container IDs Mismatch</h2>
+        <button class="test-button" onclick="testContainerMismatch()">Test Container Issues</button>
+        <div id="containerResult" class="results"></div>
+    </div>
+
+    <script>
+        // Load the main index.html in iframe to access its functions
+        let mainWindow = null;
+        
+        window.onload = function() {
+            const iframe = document.createElement('iframe');
+            iframe.src = 'index.html';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            
+            iframe.onload = function() {
+                mainWindow = iframe.contentWindow;
+                console.log('Main window loaded');
+            };
+        };
+
+        function testFunctionsExist() {
+            const result = document.getElementById('functionsResult');
+            const functions = [
+                'nextStorySlide', 'prevStorySlide', 'goToStorySlide',
+                'nextReviewSlide', 'prevReviewSlide', 'goToReviewSlide',
+                'updateStoryCarousel', 'updateReviewCarousel'
+            ];
+            
+            let output = '<strong>Function Availability:</strong><br>';
+            let allExist = true;
+            
+            functions.forEach(func => {
+                const exists = mainWindow && typeof mainWindow[func] === 'function';
+                output += `• ${func}: ${exists ? '<span class="success">✓ EXISTS</span>' : '<span class="error">✗ MISSING</span>'}<br>`;
+                if (!exists) allExist = false;
+            });
+            
+            output += `<br><strong>Overall: ${allExist ? '<span class="success">ALL FUNCTIONS AVAILABLE</span>' : '<span class="error">SOME FUNCTIONS MISSING</span>'}</strong>`;
+            result.innerHTML = output;
+        }
+
+        function testElementsExist() {
+            const result = document.getElementById('elementsResult');
+            if (!mainWindow) {
+                result.innerHTML = '<span class="error">Main window not loaded yet. Try again.</span>';
+                return;
+            }
+            
+            const doc = mainWindow.document;
+            const elements = [
+                { id: 'storyCarousel', desc: 'Story carousel container' },
+                { id: 'storySlides', desc: 'Story slides container' },
+                { id: 'tiktokCarousel', desc: 'TikTok carousel container' },
+                { id: 'tiktokSlides', desc: 'TikTok slides container' },
+                { id: 'trustpilotCarousel', desc: 'Trustpilot carousel container' },
+                { id: 'trustpilotSlides', desc: 'Trustpilot slides container' }
+            ];
+            
+            let output = '<strong>HTML Elements:</strong><br>';
+            let allExist = true;
+            
+            elements.forEach(elem => {
+                const exists = doc.getElementById(elem.id) !== null;
+                output += `• ${elem.desc} (${elem.id}): ${exists ? '<span class="success">✓ FOUND</span>' : '<span class="error">✗ MISSING</span>'}<br>`;
+                if (!exists) allExist = false;
+            });
+            
+            // Check buttons
+            const storyButtons = doc.querySelectorAll('#storyCarousel .carousel-nav');
+            const tiktokButtons = doc.querySelectorAll('#tiktokCarousel .carousel-nav');
+            const trustpilotButtons = doc.querySelectorAll('#trustpilotCarousel .carousel-nav');
+            
+            output += `<br><strong>Navigation Buttons:</strong><br>`;
+            output += `• Story carousel buttons: ${storyButtons.length === 2 ? '<span class="success">✓ 2 FOUND</span>' : '<span class="error">✗ ' + storyButtons.length + ' FOUND</span>'}<br>`;
+            output += `• TikTok carousel buttons: ${tiktokButtons.length === 2 ? '<span class="success">✓ 2 FOUND</span>' : '<span class="error">✗ ' + tiktokButtons.length + ' FOUND</span>'}<br>`;
+            output += `• Trustpilot carousel buttons: ${trustpilotButtons.length === 2 ? '<span class="success">✓ 2 FOUND</span>' : '<span class="error">✗ ' + trustpilotButtons.length + ' FOUND</span>'}<br>`;
+            
+            result.innerHTML = output;
+        }
+
+        function testStoryNavigation() {
+            const result = document.getElementById('navigationResult');
+            if (!mainWindow) {
+                result.innerHTML = '<span class="error">Main window not loaded yet. Try again.</span>';
+                return;
+            }
+            
+            try {
+                const initialSlide = mainWindow.currentStorySlide || 0;
+                mainWindow.nextStorySlide();
+                const afterNext = mainWindow.currentStorySlide || 0;
+                mainWindow.prevStorySlide();
+                const afterPrev = mainWindow.currentStorySlide || 0;
+                
+                let output = '<strong>Story Navigation Test:</strong><br>';
+                output += `• Initial slide: ${initialSlide}<br>`;
+                output += `• After next: ${afterNext}<br>`;
+                output += `• After prev: ${afterPrev}<br>`;
+                output += `• Navigation working: ${(afterNext !== initialSlide || afterPrev !== afterNext) ? '<span class="success">✓ YES</span>' : '<span class="error">✗ NO</span>'}`;
+                
+                result.innerHTML = output;
+            } catch (error) {
+                result.innerHTML = `<span class="error">Error testing story navigation: ${error.message}</span>`;
+            }
+        }
+
+        function testReviewNavigation() {
+            const result = document.getElementById('navigationResult');
+            if (!mainWindow) {
+                result.innerHTML = '<span class="error">Main window not loaded yet. Try again.</span>';
+                return;
+            }
+            
+            try {
+                const initialSlide = mainWindow.currentReviewSlide || 0;
+                mainWindow.nextReviewSlide();
+                const afterNext = mainWindow.currentReviewSlide || 0;
+                mainWindow.prevReviewSlide();
+                const afterPrev = mainWindow.currentReviewSlide || 0;
+                
+                let output = '<strong>Review Navigation Test:</strong><br>';
+                output += `• Initial slide: ${initialSlide}<br>`;
+                output += `• After next: ${afterNext}<br>`;
+                output += `• After prev: ${afterPrev}<br>`;
+                output += `• Navigation working: ${(afterNext !== initialSlide || afterPrev !== afterNext) ? '<span class="success">✓ YES</span>' : '<span class="error">✗ NO</span>'}`;
+                
+                result.innerHTML = output;
+            } catch (error) {
+                result.innerHTML = `<span class="error">Error testing review navigation: ${error.message}</span>`;
+            }
+        }
+
+        function testContainerMismatch() {
+            const result = document.getElementById('containerResult');
+            if (!mainWindow) {
+                result.innerHTML = '<span class="error">Main window not loaded yet. Try again.</span>';
+                return;
+            }
+            
+            const doc = mainWindow.document;
+            let output = '<strong>Container ID Analysis:</strong><br>';
+            
+            // Check if updateReviewCarousel targets the wrong container
+            const reviewSlidesElement = doc.getElementById('reviewSlides');
+            const tiktokSlidesElement = doc.getElementById('tiktokSlides');
+            const trustpilotSlidesElement = doc.getElementById('trustpilotSlides');
+            
+            output += `• reviewSlides container: ${reviewSlidesElement ? '<span class="error">✗ FOUND (PROBLEM!)</span>' : '<span class="success">✓ NOT FOUND (GOOD)</span>'}<br>`;
+            output += `• tiktokSlides container: ${tiktokSlidesElement ? '<span class="success">✓ FOUND</span>' : '<span class="error">✗ NOT FOUND</span>'}<br>`;
+            output += `• trustpilotSlides container: ${trustpilotSlidesElement ? '<span class="success">✓ FOUND</span>' : '<span class="error">✗ NOT FOUND</span>'}<br>`;
+            
+            // Count slides
+            const allReviewSlides = doc.querySelectorAll('.review-slide');
+            const tiktokSlides = doc.querySelectorAll('#tiktokSlides .review-slide');
+            const trustpilotSlides = doc.querySelectorAll('#trustpilotSlides .review-slide');
+            
+            output += `<br><strong>Slide Counts:</strong><br>`;
+            output += `• Total review slides: ${allReviewSlides.length}<br>`;
+            output += `• TikTok slides: ${tiktokSlides.length}<br>`;
+            output += `• Trustpilot slides: ${trustpilotSlides.length}<br>`;
+            
+            const problem = allReviewSlides.length !== (tiktokSlides.length + trustpilotSlides.length);
+            output += `<br><strong>Issue detected: ${problem ? '<span class="error">✗ REVIEW FUNCTION AFFECTS BOTH CAROUSELS</span>' : '<span class="success">✓ NO ISSUES</span>'}</strong>`;
+            
+            result.innerHTML = output;
+        }
+    </script>
+</body>
+</html>
