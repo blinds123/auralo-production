@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auralo Functionality Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .pass { background: #d4edda; color: #155724; }
+        .fail { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>🚀 Auralo Functionality Validation</h1>
+    <p>This page validates that all Auralo website fixes are working correctly.</p>
+    
+    <div id="results"></div>
+    
+    <h2>Manual Tests</h2>
+    <button onclick="testCarouselNavigation()">Test Carousel Navigation</button>
+    <button onclick="testSizeChart()">Test Size Chart</button>
+    <button onclick="testStoreAvailability()">Test Store Availability</button>
+    <button onclick="openMainSite()">Open Main Site</button>
+    
+    <script>
+        const results = document.getElementById('results');
+        
+        function addResult(test, status, details = '') {
+            const div = document.createElement('div');
+            div.className = `test-result ${status}`;
+            div.innerHTML = `${status === 'pass' ? '✅' : status === 'fail' ? '❌' : 'ℹ️'} ${test}: ${status.toUpperCase()}${details ? ' - ' + details : ''}`;
+            results.appendChild(div);
+        }
+        
+        // Validate fixes on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            addResult('Page Load', 'info', 'Starting validation...');
+            
+            // Test 1: Check if main site functions exist
+            if (typeof nextStorySlide === 'undefined') {
+                // Load main site functions in iframe for testing
+                const iframe = document.createElement('iframe');
+                iframe.src = './index.html';
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+                
+                iframe.onload = function() {
+                    validateFunctions(iframe.contentWindow);
+                };
+            } else {
+                validateFunctions(window);
+            }
+        });
+        
+        function validateFunctions(win) {
+            // Test carousel functions
+            const carouselFunctions = [
+                'nextStorySlide', 'prevStorySlide', 'goToStorySlide',
+                'nextReviewSlide', 'prevReviewSlide', 'goToReviewSlide'
+            ];
+            
+            carouselFunctions.forEach(func => {
+                if (typeof win[func] === 'function') {
+                    addResult(`Function: ${func}`, 'pass');
+                } else {
+                    addResult(`Function: ${func}`, 'fail', 'Function not found');
+                }
+            });
+            
+            // Test other functions
+            const otherFunctions = ['toggleSizeChart', 'toggleAvailability', 'scrollToCheckout'];
+            
+            otherFunctions.forEach(func => {
+                if (typeof win[func] === 'function') {
+                    addResult(`Function: ${func}`, 'pass');
+                } else {
+                    addResult(`Function: ${func}`, 'fail', 'Function not found');
+                }
+            });
+            
+            // Test DOM elements in main site
+            if (win.document !== document) {
+                validateDOMElements(win.document);
+            }
+        }
+        
+        function validateDOMElements(doc) {
+            const elements = [
+                { id: 'storyCarousel', name: 'Story Carousel' },
+                { id: 'tiktokCarousel', name: 'TikTok Carousel' },
+                { id: 'trustpilotCarousel', name: 'Trustpilot Carousel' },
+                { id: 'sizeChart', name: 'Size Chart' },
+                { id: 'storeAvailability', name: 'Store Availability' }
+            ];
+            
+            elements.forEach(el => {
+                if (doc.getElementById(el.id)) {
+                    addResult(`Element: ${el.name}`, 'pass');
+                } else {
+                    addResult(`Element: ${el.name}`, 'fail', 'Element not found');
+                }
+            });
+            
+            // Test carousel navigation buttons
+            const carouselNavButtons = doc.querySelectorAll('.carousel-nav');
+            addResult('Carousel Navigation Buttons', carouselNavButtons.length >= 6 ? 'pass' : 'fail', 
+                      `Found ${carouselNavButtons.length} buttons`);
+            
+            // Test onclick handlers
+            let onclickCount = 0;
+            carouselNavButtons.forEach(btn => {
+                if (btn.getAttribute('onclick')) onclickCount++;
+            });
+            addResult('Onclick Handlers', onclickCount >= 6 ? 'pass' : 'fail',
+                      `${onclickCount}/${carouselNavButtons.length} buttons have onclick`);
+                      
+            // Test buy buttons
+            const buyButtons = doc.querySelectorAll('.buy-now-button');
+            addResult('Buy Buttons', buyButtons.length >= 10 ? 'pass' : 'fail',
+                      `Found ${buyButtons.length} buttons`);
+                      
+            // Test hotspots
+            const hotspots = doc.querySelectorAll('.hotspot');
+            addResult('Blue Hotspots', hotspots.length >= 8 ? 'pass' : 'fail',
+                      `Found ${hotspots.length} hotspots`);
+                      
+            // Test size options
+            const sizeOptions = doc.querySelectorAll('.size-option');
+            const xlOption = doc.querySelector('.size-option[data-size="XL"]');
+            addResult('Size Options', sizeOptions.length >= 6 ? 'pass' : 'fail',
+                      `Found ${sizeOptions.length} size options`);
+            addResult('XL Size Option', xlOption ? 'pass' : 'fail',
+                      xlOption ? 'XL button found' : 'XL button missing');
+        }
+        
+        function testCarouselNavigation() {
+            addResult('Carousel Test', 'info', 'Opening main site to test carousel...');
+            openMainSite();
+            setTimeout(() => {
+                addResult('Carousel Test', 'info', 'Try clicking the arrow buttons on carousels');
+            }, 1000);
+        }
+        
+        function testSizeChart() {
+            addResult('Size Chart Test', 'info', 'Opening main site to test size chart...');
+            openMainSite();
+            setTimeout(() => {
+                addResult('Size Chart Test', 'info', 'Try clicking "📏 Size Chart" button');
+            }, 1000);
+        }
+        
+        function testStoreAvailability() {
+            addResult('Store Availability Test', 'info', 'Opening main site to test store availability...');
+            openMainSite();
+            setTimeout(() => {
+                addResult('Store Availability Test', 'info', 'Try clicking store availability section');
+            }, 1000);
+        }
+        
+        function openMainSite() {
+            window.open('./index.html', '_blank');
+        }
+    </script>
+</body>
+</html>
