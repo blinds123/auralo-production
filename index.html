@@ -3273,20 +3273,24 @@
                 opacity: 0 !important;
             }
             
-            /* Disable carousel animations on mobile */
+            /* Enable carousel functionality on mobile */
             .story-slides,
             .review-slides,
             [class*="slides"] {
-                transition: none !important;
-                transform: none !important;
-                will-change: auto !important;
+                position: relative !important;
+                overflow: hidden !important;
+                will-change: transform !important;
             }
             
-            /* Enable all carousel slides on mobile with manual navigation */
+            /* Allow carousel slides to be positioned and transformed */
             .story-slide,
             .review-slide {
-                display: block !important;
-                opacity: 1 !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                transition: all 0.3s ease !important;
             }
             
             /* Show carousel navigation on mobile */
@@ -4010,6 +4014,53 @@
                     });
                     
                     console.log('🔧 Backup carousel handlers attached');
+                    
+                    // Simple carousel implementation as final backup
+                    function simpleCarousel(containerClass, slideClass) {
+                        const containers = document.querySelectorAll(containerClass);
+                        
+                        containers.forEach((container, containerIndex) => {
+                            const slides = container.querySelectorAll(slideClass);
+                            let currentIndex = 0;
+                            
+                            // Show first slide, hide others
+                            slides.forEach((slide, index) => {
+                                slide.style.display = index === 0 ? 'block' : 'none';
+                                slide.style.opacity = index === 0 ? '1' : '0';
+                            });
+                            
+                            // Find navigation buttons for this container
+                            const navContainer = container.closest('.story-carousel, .review-carousel');
+                            if (navContainer) {
+                                const leftBtn = navContainer.querySelector('.carousel-nav-left');
+                                const rightBtn = navContainer.querySelector('.carousel-nav-right');
+                                
+                                if (leftBtn && rightBtn) {
+                                    leftBtn.onclick = () => {
+                                        slides[currentIndex].style.display = 'none';
+                                        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                                        slides[currentIndex].style.display = 'block';
+                                        slides[currentIndex].style.opacity = '1';
+                                        console.log(`📱 Previous: showing slide ${currentIndex + 1} of ${slides.length}`);
+                                    };
+                                    
+                                    rightBtn.onclick = () => {
+                                        slides[currentIndex].style.display = 'none';
+                                        currentIndex = (currentIndex + 1) % slides.length;
+                                        slides[currentIndex].style.display = 'block';
+                                        slides[currentIndex].style.opacity = '1';
+                                        console.log(`📱 Next: showing slide ${currentIndex + 1} of ${slides.length}`);
+                                    };
+                                }
+                            }
+                        });
+                    }
+                    
+                    // Apply simple carousel to all carousels
+                    simpleCarousel('.story-slides', '.story-slide');
+                    simpleCarousel('.review-slides', '.review-slide');
+                    
+                    console.log('🔧 Simple carousel backup implemented');
                 }, 500);
             }, 1000);
         });
