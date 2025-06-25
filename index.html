@@ -4061,6 +4061,82 @@
                     simpleCarousel('.review-slides', '.review-slide');
                     
                     console.log('🔧 Simple carousel backup implemented');
+                    
+                    // Diagnostic test for carousel functionality
+                    setTimeout(() => {
+                        console.log('🔍 CAROUSEL DIAGNOSTIC TEST STARTING...');
+                        
+                        // Test story carousel
+                        const storySlides = document.querySelectorAll('.story-slide');
+                        const storyLeftBtn = document.querySelector('#storyCarousel .carousel-nav-left');
+                        const storyRightBtn = document.querySelector('#storyCarousel .carousel-nav-right');
+                        
+                        console.log(`📊 Story carousel: ${storySlides.length} slides found`);
+                        console.log(`📊 Story left button:`, storyLeftBtn ? 'FOUND' : 'MISSING');
+                        console.log(`📊 Story right button:`, storyRightBtn ? 'FOUND' : 'MISSING');
+                        
+                        if (storyLeftBtn) {
+                            storyLeftBtn.addEventListener('click', () => {
+                                console.log('🟢 STORY LEFT BUTTON CLICKED - SUCCESS!');
+                            });
+                        }
+                        
+                        if (storyRightBtn) {
+                            storyRightBtn.addEventListener('click', () => {
+                                console.log('🟢 STORY RIGHT BUTTON CLICKED - SUCCESS!');
+                            });
+                        }
+                        
+                        // Test TikTok carousel
+                        const tiktokSlides = document.querySelectorAll('#tiktokSlides .review-slide');
+                        const tiktokLeftBtn = document.querySelector('#tiktokCarousel .carousel-nav-left');
+                        const tiktokRightBtn = document.querySelector('#tiktokCarousel .carousel-nav-right');
+                        
+                        console.log(`📊 TikTok carousel: ${tiktokSlides.length} slides found`);
+                        console.log(`📊 TikTok left button:`, tiktokLeftBtn ? 'FOUND' : 'MISSING');
+                        console.log(`📊 TikTok right button:`, tiktokRightBtn ? 'FOUND' : 'MISSING');
+                        
+                        console.log('🔍 CAROUSEL DIAGNOSTIC TEST COMPLETE - Check console for results');
+                        
+                        // Test hotspots functionality
+                        console.log('🔍 HOTSPOT DIAGNOSTIC TEST STARTING...');
+                        const hotspots = document.querySelectorAll('.hotspot');
+                        console.log(`📊 Found ${hotspots.length} hotspots on page`);
+                        
+                        hotspots.forEach((hotspot, index) => {
+                            const tip = hotspot.getAttribute('data-tip');
+                            console.log(`📊 Hotspot ${index + 1}: "${tip}"`);
+                            
+                            // Add test click handler
+                            hotspot.addEventListener('click', () => {
+                                console.log(`🟢 HOTSPOT ${index + 1} CLICKED: "${tip}" - SUCCESS!`);
+                            });
+                        });
+                        
+                        console.log('🔍 HOTSPOT DIAGNOSTIC TEST COMPLETE');
+                        
+                        // Test XL popup timer
+                        console.log('🔍 XL POPUP TIMER TEST STARTING...');
+                        const xlButton = document.querySelector('.size-option[data-size="XL"]');
+                        console.log(`📊 XL button found:`, xlButton ? 'YES' : 'NO');
+                        if (xlButton) {
+                            console.log(`📊 XL button current text: "${xlButton.textContent}"`);
+                            console.log('📊 XL timer should trigger in 13 seconds...');
+                        }
+                        
+                        // Test size chart and store availability
+                        const sizeChart = document.getElementById('sizeChart');
+                        const storeAvailability = document.getElementById('storeAvailability');
+                        const sizeChartToggle = document.querySelector('.chart-toggle');
+                        const storeToggle = document.querySelector('.availability-header');
+                        
+                        console.log(`📊 Size chart found:`, sizeChart ? 'YES' : 'NO');
+                        console.log(`📊 Store availability found:`, storeAvailability ? 'YES' : 'NO');
+                        console.log(`📊 Size chart toggle found:`, sizeChartToggle ? 'YES' : 'NO');
+                        console.log(`📊 Store toggle found:`, storeToggle ? 'YES' : 'NO');
+                        
+                        console.log('🔍 ALL DIAGNOSTIC TESTS COMPLETE - Check browser console!');
+                    }, 2000);
                 }, 500);
             }, 1000);
         });
