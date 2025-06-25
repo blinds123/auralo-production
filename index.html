@@ -3867,32 +3867,6 @@
     </script>
 </head>
 <body>
-    <!-- Define scrollToCheckout immediately in body -->
-    <script>
-        window.scrollToCheckout = function() {
-            alert('scrollToCheckout called from body!');
-            const el = document.getElementById('complete-exchange-section');
-            if (el) {
-                el.scrollIntoView();
-                alert('Scrolled to checkout!');
-            } else {
-                alert('Checkout section not found!');
-            }
-        };
-    </script>
-    
-    <!-- TEST BUTTON FOR DEBUGGING -->
-    <div style="position: fixed; top: 10px; right: 10px; z-index: 9999;">
-        <button onclick="scrollToCheckout()" style="background: red; color: white; padding: 10px; border: none; border-radius: 5px; font-size: 16px;">
-            TEST SCROLL
-        </button>
-        <button onclick="alert('JavaScript works!')" style="background: blue; color: white; padding: 10px; border: none; border-radius: 5px; font-size: 16px; margin-top: 10px; display: block;">
-            TEST JS
-        </button>
-        <button onclick="var el = document.getElementById('complete-exchange-section'); if(el) { el.scrollIntoView(); alert('Scrolled!'); } else { alert('Section not found!'); }" style="background: green; color: white; padding: 10px; border: none; border-radius: 5px; font-size: 16px; margin-top: 10px; display: block;">
-            DIRECT SCROLL
-        </button>
-    </div>
     
     <section class="hero">
         <div class="container">
@@ -4023,7 +3997,7 @@
             </div>
             
             <div class="hero-cta">
-                <button class="buy-now-button" onclick="scrollToCheckout()">
+                <button class="buy-now-button" onclick="var el = document.getElementById('complete-exchange-section'); if(el) { el.scrollIntoView(); }">
                     Secure Your Hoodie - $20
                 </button>
                 <p class="hero-cta-text">60-second eco-checkout • Plants 5 trees • Free shipping</p>
@@ -4076,7 +4050,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="scrollToCheckout()">
+                <button class="buy-now-button" onclick="var el = document.getElementById('complete-exchange-section'); if(el) { el.scrollIntoView(); }">
                     Claim This Value - $20
                 </button>
             </div>
@@ -4126,7 +4100,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="scrollToCheckout()">
+                <button class="buy-now-button" onclick="var el = document.getElementById('complete-exchange-section'); if(el) { el.scrollIntoView(); }">
                     I Want This Story - $20
                 </button>
             </div>
@@ -4196,7 +4170,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="scrollToCheckout()">
+                <button class="buy-now-button" onclick="var el = document.getElementById('complete-exchange-section'); if(el) { el.scrollIntoView(); }">
                     Join TikTok Community - $20
                 </button>
             </div>
@@ -4248,7 +4222,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="scrollToCheckout()">
+                <button class="buy-now-button" onclick="var el = document.getElementById('complete-exchange-section'); if(el) { el.scrollIntoView(); }">
                     Verified Reviews - Buy Now $20
                 </button>
             </div>
@@ -4294,7 +4268,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="scrollToCheckout()">
+                <button class="buy-now-button" onclick="var el = document.getElementById('complete-exchange-section'); if(el) { el.scrollIntoView(); }">
                     All Questions Answered - Get Mine $20
                 </button>
             </div>
@@ -4549,7 +4523,7 @@
                 <p class="future-text">While everyone else paid $200, you got it for $20. <strong>That's the power of being early.</strong></p>
                 
                 <div class="future-cta">
-                    <button class="buy-now-button" onclick="scrollToCheckout()">
+                    <button class="buy-now-button" onclick="var el = document.getElementById('complete-exchange-section'); if(el) { el.scrollIntoView(); }">
                         Make This Reality - $20
                     </button>
                 </div>
