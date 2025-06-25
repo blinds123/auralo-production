@@ -3868,29 +3868,35 @@
 </head>
 <body>
     <script>
-        // Simple scroll function that works - make it global
-        window.goToCheckout = function() {
-            var el = document.getElementById('complete-exchange-section');
-            if (el) {
-                el.scrollIntoView();
-                // Also try alternate method
-                window.location.hash = '#complete-exchange-section';
-            }
-        }
-        
-        // Also attach to window onload to ensure it's available
-        window.addEventListener('load', function() {
-            window.goToCheckout = function() {
+        // Robust scroll function that always works
+        function scrollToBottom() {
+            // Method 1: Hash navigation
+            window.location.hash = 'complete-exchange-section';
+            
+            // Method 2: ScrollIntoView as backup
+            setTimeout(function() {
                 var el = document.getElementById('complete-exchange-section');
                 if (el) {
                     el.scrollIntoView();
                 }
-            }
-        });
+            }, 100);
+            
+            // Method 3: Direct scroll as final backup
+            setTimeout(function() {
+                var el = document.getElementById('complete-exchange-section');
+                if (el) {
+                    var y = el.offsetTop;
+                    window.scrollTo(0, y);
+                }
+            }, 200);
+        }
+        
+        // Make it globally available
+        window.scrollToBottom = scrollToBottom;
     </script>
     
     <!-- Test button -->
-    <button onclick="goToCheckout()" style="position: fixed; bottom: 20px; right: 20px; background: orange; color: white; padding: 15px; border: none; border-radius: 5px; z-index: 9999;">
+    <button onclick="scrollToBottom()" style="position: fixed; bottom: 20px; right: 20px; background: orange; color: white; padding: 15px; border: none; border-radius: 5px; z-index: 9999;">
         CHECKOUT →
     </button>
     
@@ -4023,7 +4029,7 @@
             </div>
             
             <div class="hero-cta">
-                <button class="buy-now-button" onclick="window.location.href='#complete-exchange-section'">
+                <button class="buy-now-button" onclick="scrollToBottom()">
                     Secure Your Hoodie - $20
                 </button>
                 <p class="hero-cta-text">60-second eco-checkout • Plants 5 trees • Free shipping</p>
@@ -4076,7 +4082,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="window.location.href='#complete-exchange-section'">
+                <button class="buy-now-button" onclick="scrollToBottom()">
                     Claim This Value - $20
                 </button>
             </div>
@@ -4126,7 +4132,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="window.location.href='#complete-exchange-section'">
+                <button class="buy-now-button" onclick="scrollToBottom()">
                     I Want This Story - $20
                 </button>
             </div>
@@ -4196,7 +4202,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="window.location.href='#complete-exchange-section'">
+                <button class="buy-now-button" onclick="scrollToBottom()">
                     Join TikTok Community - $20
                 </button>
             </div>
@@ -4248,7 +4254,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="window.location.href='#complete-exchange-section'">
+                <button class="buy-now-button" onclick="scrollToBottom()">
                     Verified Reviews - Buy Now $20
                 </button>
             </div>
@@ -4294,7 +4300,7 @@
             </div>
             
             <div class="section-cta">
-                <button class="buy-now-button" onclick="window.location.href='#complete-exchange-section'">
+                <button class="buy-now-button" onclick="scrollToBottom()">
                     All Questions Answered - Get Mine $20
                 </button>
             </div>
@@ -4378,7 +4384,7 @@
         </div>
         
         <div class="section-cta">
-            <button class="buy-now-button" onclick="scrollToCheckout()">
+            <button class="buy-now-button" onclick="scrollToBottom()">
                 Start My Eco-Checkout - $20
             </button>
         </div>
@@ -4492,7 +4498,7 @@
         
         
         <div class="container" style="padding: var(--space-sm) 0; text-align: center;">
-            <button class="buy-now-button" onclick="scrollToCheckout()">
+            <button class="buy-now-button" onclick="scrollToBottom()">
                 Buy Now - $20
             </button>
         </div>
@@ -4525,7 +4531,7 @@
         </div>
         
         <div class="section-cta">
-            <button class="buy-now-button" onclick="scrollToCheckout()">
+            <button class="buy-now-button" onclick="scrollToBottom()">
                 Add To My Wardrobe - $20
             </button>
         </div>
@@ -4549,7 +4555,7 @@
                 <p class="future-text">While everyone else paid $200, you got it for $20. <strong>That's the power of being early.</strong></p>
                 
                 <div class="future-cta">
-                    <button class="buy-now-button" onclick="window.location.href='#complete-exchange-section'">
+                    <button class="buy-now-button" onclick="scrollToBottom()">
                         Make This Reality - $20
                     </button>
                 </div>
@@ -4588,7 +4594,7 @@
         </div>
         
         <div class="section-cta">
-            <button class="buy-now-button" onclick="scrollToCheckout()">
+            <button class="buy-now-button" onclick="scrollToBottom()">
                 Risk-Free Purchase - $20
             </button>
         </div>
@@ -4673,7 +4679,7 @@
         </div>
         
         <div class="section-cta">
-            <button class="buy-now-button" onclick="scrollToCheckout()">
+            <button class="buy-now-button" onclick="scrollToBottom()">
                 Choose Eco-Checkout - $20
             </button>
         </div>
