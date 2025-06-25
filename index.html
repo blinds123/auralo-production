@@ -3711,12 +3711,12 @@
                     
                     console.log('✅ XL button found, starting 13-second timer!');
                     
-                    // Start 13-second timer - DISABLED FOR NOW
-                    /* this.timer = setTimeout(() => {
+                    // Start 13-second timer
+                    this.timer = setTimeout(() => {
                         console.log('🔥 13 SECONDS ELAPSED - MAKING XL SOLD OUT!');
                         this.makeXLSoldOut();
                         this.showSelloutPopup();
-                    }, 13000); */
+                    }, 13000);
                     
                     console.log('⏰ XL Timer initialized - 13 seconds to sellout');
                 };
@@ -5001,12 +5001,12 @@
                     
                     console.log('✅ XL button found, starting 13-second timer!');
                     
-                    // Start 13-second timer - DISABLED FOR NOW
-                    /* this.timer = setTimeout(() => {
+                    // Start 13-second timer
+                    this.timer = setTimeout(() => {
                         console.log('🔥 13 SECONDS ELAPSED - MAKING XL SOLD OUT!');
                         this.makeXLSoldOut();
                         this.showSelloutPopup();
-                    }, 13000); */
+                    }, 13000);
                     
                     console.log('⏰ XL Timer initialized - 13 seconds to sellout');
                 };
@@ -5919,6 +5919,38 @@
                 }
                 
                 // MOBILE HOTSPOT TOOLTIP FIX
+                function setupDesktopHotspots() {
+                    const hotspots = document.querySelectorAll('.hotspot');
+                    console.log('🔵 Setting up', hotspots.length, 'hotspots for desktop');
+                    
+                    hotspots.forEach(hotspot => {
+                        hotspot.style.opacity = '0.8';
+                        hotspot.style.transition = 'all 0.3s ease';
+                        
+                        hotspot.addEventListener('click', function() {
+                            const tip = this.getAttribute('data-tip');
+                            console.log('🔵 Hotspot clicked:', tip);
+                            
+                            // Create ripple effect
+                            const ripple = document.createElement('div');
+                            ripple.style.cssText = `
+                                position: absolute;
+                                border-radius: 50%;
+                                background: rgba(33, 150, 243, 0.6);
+                                transform: scale(0);
+                                animation: ripple 0.6s linear;
+                                pointer-events: none;
+                                top: 50%; left: 50%;
+                                width: 20px; height: 20px;
+                                margin: -10px 0 0 -10px;
+                            `;
+                            this.appendChild(ripple);
+                            
+                            setTimeout(() => ripple.remove(), 600);
+                        });
+                    });
+                }
+                
                 function setupMobileHotspots() {
                     const hotspots = document.querySelectorAll('.hotspot');
                     console.log('🔵 Setting up', hotspots.length, 'hotspots for mobile');
@@ -6131,7 +6163,8 @@
                 setupSizeSelectors();
                 setupBuyButtons();
                 // MOBILE FUNCTIONS DISABLED TO FIX IPHONE AUTO-SCROLL ISSUE
-                // setupMobileHotspots();
+                setupMobileHotspots();
+                setupDesktopHotspots();
                 // setupMobileCarousels();
                 // setupMobileToggles();
                 
@@ -6169,7 +6202,7 @@
                 </div>
                 
                 <!-- Proper spacing between steps -->
-                <div style="margin: 40px 0;"></div>
+                <div style="margin: 60px 0 20px 0;"></div>
                 
                 <div class="process-step">
                     <div class="step-number">STEP 2</div>
@@ -6388,12 +6421,12 @@
                     
                     console.log('✅ XL button found, starting 13-second timer!');
                     
-                    // Start 13-second timer - DISABLED FOR NOW
-                    /* this.timer = setTimeout(() => {
+                    // Start 13-second timer
+                    this.timer = setTimeout(() => {
                         console.log('🔥 13 SECONDS ELAPSED - MAKING XL SOLD OUT!');
                         this.makeXLSoldOut();
                         this.showSelloutPopup();
-                    }, 13000); */
+                    }, 13000);
                     
                     console.log('⏰ XL Timer initialized - 13 seconds to sellout');
                 };
