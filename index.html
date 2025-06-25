@@ -9,6 +9,45 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* Emergency fix for mobile overlay issue */
+        @media (max-width: 768px) {
+            .xl-simple-popup,
+            .butler-popup,
+            [class*="overlay"],
+            [class*="popup"] {
+                display: none !important;
+                visibility: hidden !important;
+            }
+            
+            body {
+                overflow-y: auto !important;
+                position: relative !important;
+                height: auto !important;
+                min-height: 100vh !important;
+            }
+            
+            .hero,
+            section {
+                position: relative !important;
+                z-index: 1 !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+            
+            /* Ensure nothing is fixed on mobile */
+            * {
+                position: static !important;
+            }
+            
+            /* Allow these specific elements to have their positions */
+            .container,
+            .size-option,
+            .buy-now-button,
+            img {
+                position: relative !important;
+            }
+        }
+        
         /* IMAN'S 4-HOUR REBUILD - AUTHENTIC FOCUS */
         
         * {
