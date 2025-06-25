@@ -34,7 +34,7 @@
                 overflow: visible !important;
             }
             
-            /* Ensure nothing is fixed on mobile */
+            /* Ensure nothing is fixed on mobile except necessary elements */
             * {
                 position: static !important;
             }
@@ -48,7 +48,9 @@
             .carousel-nav-left,
             .carousel-nav-right,
             .story-carousel,
-            .review-carousel {
+            .review-carousel,
+            .story-slides,
+            .review-slides {
                 position: relative !important;
             }
             
@@ -3985,6 +3987,30 @@
                 );
                 
                 console.log('🎆 ALL SYSTEMS INITIALIZED - FERRARI LEVEL ACHIEVED!');
+                
+                // Add backup click handlers for mobile
+                setTimeout(() => {
+                    const leftButtons = document.querySelectorAll('.carousel-nav-left');
+                    const rightButtons = document.querySelectorAll('.carousel-nav-right');
+                    
+                    leftButtons.forEach((btn, index) => {
+                        btn.addEventListener('click', () => {
+                            if (index === 0 && window.storyCarousel) window.storyCarousel.prev();
+                            if (index === 1 && window.tiktokCarousel) window.tiktokCarousel.prev();
+                            if (index === 2 && window.trustpilotCarousel) window.trustpilotCarousel.prev();
+                        });
+                    });
+                    
+                    rightButtons.forEach((btn, index) => {
+                        btn.addEventListener('click', () => {
+                            if (index === 0 && window.storyCarousel) window.storyCarousel.next();
+                            if (index === 1 && window.tiktokCarousel) window.tiktokCarousel.next();
+                            if (index === 2 && window.trustpilotCarousel) window.trustpilotCarousel.next();
+                        });
+                    });
+                    
+                    console.log('🔧 Backup carousel handlers attached');
+                }, 500);
             }, 1000);
         });
         
@@ -4243,8 +4269,8 @@
             <h2 class="section-title">Why This Hoodie Exists</h2>
             
             <div class="story-carousel" id="storyCarousel">
-                <button class="carousel-nav carousel-nav-left" onclick="window.storyCarousel?.prev()" aria-label="Previous slide">‹</button>
-                <button class="carousel-nav carousel-nav-right" onclick="window.storyCarousel?.next()" aria-label="Next slide">›</button>
+                <button class="carousel-nav carousel-nav-left" aria-label="Previous slide">‹</button>
+                <button class="carousel-nav carousel-nav-right" aria-label="Next slide">›</button>
                 <div class="story-slides" id="storySlides">
                     <div class="story-slide">
                         <img src="./images/slide-1_final_crushed_under_20kb.jpg" alt="Story 1">
@@ -4293,8 +4319,8 @@
             <h2 class="section-title">What People Are Saying on TikTok</h2>
             
             <div class="review-carousel" id="tiktokCarousel">
-                <button class="carousel-nav carousel-nav-left" onclick="window.tiktokCarousel?.prev()" aria-label="Previous slide">‹</button>
-                <button class="carousel-nav carousel-nav-right" onclick="window.tiktokCarousel?.next()" aria-label="Next slide">›</button>
+                <button class="carousel-nav carousel-nav-left" aria-label="Previous slide">‹</button>
+                <button class="carousel-nav carousel-nav-right" aria-label="Next slide">›</button>
                 <div class="review-slides" id="tiktokSlides">
                     <div class="review-slide">
                         <div class="review-card">
@@ -4363,8 +4389,8 @@
             <h2 class="section-title">What People Are Saying on Trustpilot</h2>
             
             <div class="review-carousel" id="trustpilotCarousel">
-                <button class="carousel-nav carousel-nav-left" onclick="window.trustpilotCarousel?.prev()" aria-label="Previous slide">‹</button>
-                <button class="carousel-nav carousel-nav-right" onclick="window.trustpilotCarousel?.next()" aria-label="Next slide">›</button>
+                <button class="carousel-nav carousel-nav-left" aria-label="Previous slide">‹</button>
+                <button class="carousel-nav carousel-nav-right" aria-label="Next slide">›</button>
                 <div class="review-slides" id="trustpilotSlides">
                     <div class="review-slide">
                         <div class="review-card">
