@@ -3280,33 +3280,28 @@
                 will-change: auto !important;
             }
             
-            /* Show only first slide on mobile */
+            /* Enable all carousel slides on mobile with manual navigation */
             .story-slide,
             .review-slide {
-                display: none !important;
-            }
-            
-            .story-slide:first-child,
-            .review-slide:first-child {
                 display: block !important;
                 opacity: 1 !important;
             }
             
-            /* Hide carousel navigation on mobile */
+            /* Show carousel navigation on mobile */
             .carousel-nav {
-                display: none !important;
+                display: block !important;
             }
             
-            /* COMPLETELY REMOVE finger pointers on mobile to prevent auto-scroll */
+            /* Show finger pointers on mobile */
             .arrow-pointer,
             .arrow-pointer::before,
             .arrow-pointer::after,
             .arrow-exchange-bottom,
             .arrow-wallet-bottom,
             [class*="arrow"] {
-                display: none !important;
-                visibility: hidden !important;
-                opacity: 0 !important;
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
                 pointer-events: none !important;
             }
         }
