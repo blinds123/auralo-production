@@ -3292,7 +3292,7 @@
                 display: block !important;
             }
             
-            /* Show finger pointers on mobile */
+            /* Show finger pointers on mobile with optimized positioning */
             .arrow-pointer,
             .arrow-pointer::before,
             .arrow-pointer::after,
@@ -3303,6 +3303,31 @@
                 visibility: visible !important;
                 opacity: 1 !important;
                 pointer-events: none !important;
+            }
+            
+            /* Mobile-optimized finger positions */
+            .arrow-exchange-bottom {
+                bottom: 8% !important;
+                left: 52% !important;
+                transform: translateX(-50%) !important;
+            }
+            
+            .arrow-exchange-bottom::before {
+                font-size: 2.5rem !important;
+                transform: translateY(30px) !important;
+                padding: 10px !important;
+            }
+            
+            .arrow-wallet-bottom {
+                top: 35% !important;
+                left: 70% !important;
+                transform: translateX(-50%) !important;
+            }
+            
+            .arrow-wallet-bottom::before {
+                font-size: 2.5rem !important;
+                transform: translateY(-10px) !important;
+                padding: 10px !important;
             }
         }
 
@@ -6036,11 +6061,6 @@
                         <div class="arrow-pointer arrow-exchange-bottom"></div>
                     </div>
                     <p class="step-description">👆 <strong>Click the blue "Exchange" button</strong> when you see $20. The arrow shows you exactly where!</p>
-                    <div class="step-finer-points" style="background: #f9f9f9; padding: 12px; border-radius: 6px; margin-top: 10px;">
-                        <p style="font-size: 13px; margin: 0; color: #555;">
-                            <strong>Important:</strong> Make sure the amount shows exactly $20.00 USD before clicking Exchange. This ensures you get the best rate for your hoodie purchase.
-                        </p>
-                    </div>
                 </div>
                 
                 <!-- Gentle downward arrow guiding to Step 2 -->
